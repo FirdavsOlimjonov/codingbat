@@ -1,8 +1,10 @@
 package ai.ecma.codingbat.entity;
 
+import ai.ecma.codingbat.util.CommonUtils;
 import lombok.Getter;
 import lombok.Setter;
 import ai.ecma.codingbat.entity.template.AbsTitleIntegerEntity;
+import org.springframework.boot.CommandLineRunner;
 
 import javax.persistence.*;
 
@@ -28,4 +30,15 @@ public class Section extends AbsTitleIntegerEntity {
     @ManyToOne(optional = false)
     private Language language;
 
+
+    private void setUrl(String title) {
+        this.url = CommonUtils.makeUrl(title);
+    }
+
+    @Override
+    public void setTitle(String title) {
+        super.setTitle(title);
+        setUrl(title);
+
+    }
 }

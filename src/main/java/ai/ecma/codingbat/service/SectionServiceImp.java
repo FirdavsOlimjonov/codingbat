@@ -1,5 +1,6 @@
 package ai.ecma.codingbat.service;
 
+import ai.ecma.codingbat.util.CommonUtils;
 import lombok.RequiredArgsConstructor;
 import ai.ecma.codingbat.entity.Section;
 import ai.ecma.codingbat.exceptions.RestException;
@@ -25,7 +26,6 @@ public class SectionServiceImp implements SectionService{
     private final MessageSource messageSource;
     private final SectionRepository repository;
     private final SectionRepository sectionRepository;
-
     private final LanguageRepository languageRepository;
 
     private final ProblemRepository problemRepository;
