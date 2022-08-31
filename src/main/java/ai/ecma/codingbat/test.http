@@ -1,0 +1,21 @@
+POST localhost:8090/language/add
+Content-Type: application/json
+Authorization: Bearer eyJhbGciOiJIUzUxMiJ9.eyJzdWIiOiJ5eTA0MDkwNGJAZ21haWwuY29tIiwiaWF0IjoxNjYxNTk1MDYyLCJleHAiOjE2NjE2MDIyNjJ9.AXgkby79_K-c-qBuoOzLLXyi4VnsNxO83LlTB_mtg5yh6ClKgWLjiUhhHXOpWnoap5woVsRacGwo1AOCmbvS5g
+
+{
+  "title": "RUBY"
+}
+
+###
+POST localhost:8090/api/auth/sign-in
+Content-Type: application/json
+
+{
+  "email": "yy040904b@gmail.com",
+  "password": "yusufbek200"
+}
+
+
+
+###
+GET http://localhost/language/17

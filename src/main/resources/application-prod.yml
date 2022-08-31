@@ -1,0 +1,36 @@
+server:
+  port: 8165
+spring:
+  datasource:
+    url: jdbc:postgresql://localhost:5432/codingbat
+    username: codingbat
+    password: ketmon123
+  jpa:
+    hibernate:
+      ddl-auto: create
+    show-sql: true
+
+  mail:
+    host: smtp.gmail.com
+    port: 587
+    username: sirojiddinit@gmail.com
+    password: cqcgezivhrsvqlor
+    properties:
+      mail:
+        smtp:
+          auth: true
+          starttls:
+            enable: true
+  mvc:
+    pathmatch:
+      matching-strategy: ant_path_matcher
+jwt:
+  access:
+    key: tHaX54Hwk^YMzKd@e@p7#70@!@*6d7676K8C1%T&hBnrzgqK28o
+    expiration-time: 7200000
+  refresh:
+    key: tHaX54Hwk^Ydfd()(+__$$%#%70OZ()BK8C1%T&hBnrzgqK287
+    expiration-time: 604800000
+logging:
+  file:
+    name: codingbat.log

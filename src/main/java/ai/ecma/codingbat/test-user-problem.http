@@ -1,0 +1,20 @@
+POST localhost:8090/user-problem/api/solve-user-problem?problemId=3
+Content-Type: application/json
+Authorization: eyJhbGciOiJIUzUxMiJ9.eyJzdWIiOiJzaXJvamlkZGluZWNtYUBnbWFpbC5jb20iLCJpYXQiOjE2NjE0ODgxNjAsImV4cCI6MTY2MTQ5MTc2MH0.t5_iMPoNi73rZdh7N45G-d6MphY2uiUGyNqwTvs1ksm8t9AiPXDEhc-U_IKZ45HQvLcV9ZfIrwuBKH9HWhYSmA
+#Authorization: eyJhbGciOiJIUzUxMiJ9.eyJzdWIiOiJ5eTA0MDkwNGJAZ21haWwuY29tIiwiaWF0IjoxNjYxNTA4NjA5LCJleHAiOjE2NjE1MTU4MDl9.8Z6VDsSWLJ5WGJ5-ynIzr2wwPo9Nk6WaA1GAZLPSsYviJ4chyuJ1nh8QqtmJZ31GG7Qk1d6189DbLBj3rG9VRg
+
+{
+  "userId": 1,
+  "solution": "public boolean monkeyTrouble(boolean aSmile, boolean bSmile) { if(aSmile&&bSmile) {return true; }if (!aSmile && !bSmile) {return true;} return false;}"
+}
+
+###
+GET localhost:8090/user-problem/api/list
+Content-Type: application/json
+
+
+###
+GET localhost:8090/user-problem/api/get-user-problem?userId=1&problemId=2
+Content-Type: application/json
+
+

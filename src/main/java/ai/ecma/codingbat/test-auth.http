@@ -1,0 +1,14 @@
+#add user
+POST http://localhost:8090/api/auth/sign-up
+Content-Type: application/json
+
+{
+  "email": "yy040904b@gmail.com",
+  "password": "yusufbek200"
+}
+
+###
+
+GET http://localhost:80/api/auth/verification-email?email=firdavsolimjonov25@gmail.com
+#Content-Type: application/json
+
