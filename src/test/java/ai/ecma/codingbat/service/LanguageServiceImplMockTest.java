@@ -15,6 +15,7 @@ import org.mockito.Mock;
 import org.springframework.boot.test.context.SpringBootTest;
 import org.springframework.test.context.junit4.SpringRunner;
 
+import static org.assertj.core.api.Assertions.assertThat;
 import static org.junit.jupiter.api.Assertions.*;
 import static org.mockito.ArgumentMatchers.any;
 import static org.mockito.Mockito.when;
@@ -44,6 +45,8 @@ public class LanguageServiceImplMockTest {
         assertEquals(
                 addLanguageDTO.getTitle(),
                 apiResult.getData().getTitle());
+
+//        assertThat(apiResult.getData().getTitle()).isEqualTo(addLanguageDTO.getTitle());
 
         assertEquals(
                 CommonUtils.makeUrl(addLanguageDTO.getTitle()),
