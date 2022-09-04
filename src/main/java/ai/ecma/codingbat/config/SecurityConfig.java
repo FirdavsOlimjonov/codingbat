@@ -66,6 +66,8 @@ public class SecurityConfig {
                 .exceptionHandling()
                 .authenticationEntryPoint(myEntryPointHandler)
                 .and()
+//                .rememberMe()
+//                .and()
                 .addFilterBefore(jwtFilter, UsernamePasswordAuthenticationFilter.class)
                 .sessionManagement()
                 .sessionCreationPolicy(SessionCreationPolicy.STATELESS);

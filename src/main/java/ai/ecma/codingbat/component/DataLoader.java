@@ -20,7 +20,6 @@ public class DataLoader implements CommandLineRunner {
     @Value("${spring.jpa.hibernate.ddl-auto}")
     private String ddlMode;
 
-
     @Override
     public void run(String... args) throws Exception {
         if (Objects.equals(ddlMode, "create")) {
@@ -32,6 +31,5 @@ public class DataLoader implements CommandLineRunner {
 
             userRepository.save(admin);
         }
-        System.out.println("Hello");
     }
 }

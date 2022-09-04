@@ -80,8 +80,9 @@ public class AuthServiceImpl implements AuthService {
         User user = userRepository.findByEmail(email)
                 .orElseThrow(() -> RestException.restThrow(MessageLang.getMessageSource("EMAIL_NOT_EXIST"), HttpStatus.NOT_FOUND));
 
-        if (user.isEnabled())
+        if (user.isEnabled()) {
             return ApiResult.successResponse(MessageLang.getMessageSource("ALREADY_VERIFIED"));
+        }
 
         user.setEnabled(true);
         userRepository.save(user);
@@ -109,7 +110,7 @@ public class AuthServiceImpl implements AuthService {
                 || !user.isAccountNonExpired()
                 || !user.isAccountNonLocked()
                 || !user.isCredentialsNonExpired())
-            throw RestException.restThrow(MessageLang.getMessageSource("USER_PERMITION_RESTRICTION"), HttpStatus.UNAUTHORIZED);
+            throw RestException.restThrow(MessageLang.getMessageSource("USER_PERMISSION_RESTRICTION"), HttpStatus.UNAUTHORIZED);
 
         SecurityContextHolder.getContext().setAuthentication(new UsernamePasswordAuthenticationToken(
                 user,
@@ -150,5 +151,4 @@ public class AuthServiceImpl implements AuthService {
                 ))
                 .compact();
     }
-
 }
