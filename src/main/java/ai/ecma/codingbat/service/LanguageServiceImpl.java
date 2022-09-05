@@ -287,7 +287,9 @@ public class LanguageServiceImpl implements LanguageService {
     public ApiResult<LanguageDTO> edit(AddLanguageDTO addLanguageDTO, Integer id) {
         if (languageRepository.existsByTitleIgnoreCase(addLanguageDTO.getTitle()))
             throw RestException.restThrow("ALREADY_EXISTS", HttpStatus.ALREADY_REPORTED);
-        languageRepository.save(addLanguageDTO.get());
+        if (!languageRepository.existsById(id))
+            throw RestException.restThrow("Language not founded in this id", HttpStatus.NOT_FOUND);
+        languageRepository.save(addLanguageDTO.get(id));
         return getLanguage(id);
     }
 
