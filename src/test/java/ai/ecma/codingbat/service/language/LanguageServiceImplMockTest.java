@@ -1,12 +1,13 @@
-package ai.ecma.codingbat.service;
+package ai.ecma.codingbat.service.language;
 
 import ai.ecma.codingbat.entity.Language;
 import ai.ecma.codingbat.payload.AddLanguageDTO;
 import ai.ecma.codingbat.payload.ApiResult;
 import ai.ecma.codingbat.payload.LanguageDTO;
 import ai.ecma.codingbat.repository.LanguageRepository;
+import ai.ecma.codingbat.service.LanguageService;
+import ai.ecma.codingbat.service.LanguageServiceImpl;
 import ai.ecma.codingbat.util.CommonUtils;
-import org.junit.jupiter.api.Assertions;
 import org.junit.jupiter.api.DisplayName;
 import org.junit.Test;
 import org.junit.runner.RunWith;
@@ -25,7 +26,7 @@ import static org.mockito.Mockito.when;
 public class LanguageServiceImplMockTest {
 
     @InjectMocks
-    private LanguageServiceImpl languageService;
+    private LanguageService languageService;
     @Mock
     private LanguageRepository languageRepository;
 
@@ -40,7 +41,8 @@ public class LanguageServiceImplMockTest {
                         addLanguageDTO.getTitle(),
                         CommonUtils.makeUrl(addLanguageDTO.getTitle())));
 
-        ApiResult<LanguageDTO> apiResult = languageService.add(addLanguageDTO);
+        ApiResult<LanguageDTO> apiResult =
+                languageService.add(addLanguageDTO);
 
         assertEquals(
                 addLanguageDTO.getTitle(),

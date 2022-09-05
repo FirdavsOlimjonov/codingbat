@@ -1,8 +1,15 @@
 package ai.ecma.codingbat.util;
 
+import ai.ecma.codingbat.payload.ApiResult;
+import com.fasterxml.jackson.core.JsonProcessingException;
+import com.fasterxml.jackson.databind.JavaType;
+import com.fasterxml.jackson.databind.ObjectMapper;
+
 import java.text.Normalizer;
 import java.util.Objects;
 import java.util.regex.Pattern;
+
+import static org.junit.Assert.fail;
 
 public class CommonUtils {
 
@@ -10,8 +17,9 @@ public class CommonUtils {
     private static final Pattern WHITESPACE = Pattern.compile("[\\s]");
     private static final Pattern EDGES_DASHES = Pattern.compile("(^-|-$)");
 
+    private static final ObjectMapper objectMapper = new ObjectMapper();
+
     /**
-     *
      * @param input String
      * @return
      */
@@ -25,4 +33,24 @@ public class CommonUtils {
         slug = EDGES_DASHES.matcher(slug).replaceAll("");
         return slug.toLowerCase();
     }
+
+    public static String objectToJson(Object object) {
+        try {
+            return objectMapper.writeValueAsString(object);
+        } catch (JsonProcessingException e) {
+            fail("Failed to convert object to json");
+            return null;
+        }
+    }
+
+    public static <T> ApiResult<T> jsonToObject(String json, Class<T> contentClass) {
+        JavaType type = objectMapper.getTypeFactory().constructParametricType(ApiResult.class, contentClass);
+        try {
+            return objectMapper.readValue(json, type);
+        } catch (JsonProcessingException e) {
+            throw new RuntimeException(e);
+        }
+    }
+
+
 }

@@ -15,7 +15,7 @@ public interface AuthController {
     @PostMapping(value = "/sign-up")
     ApiResult<Boolean> signUp(@RequestBody @Valid SignDTO signDTO);
 
-    @ApiOperation(value = "Varification path")
+    @ApiOperation(value = "Verification path")
     @GetMapping(value = "/verification-email")
     ApiResult<?> verificationEmail(@RequestParam String email);
 
