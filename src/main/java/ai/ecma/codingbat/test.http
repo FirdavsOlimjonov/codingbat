@@ -1,4 +1,4 @@
-POST localhost:8090/language/add
+POST localhost:8090/api/language/add
 Content-Type: application/json
 Authorization: Bearer eyJhbGciOiJIUzUxMiJ9.eyJzdWIiOiJ5eTA0MDkwNGJAZ21haWwuY29tIiwiaWF0IjoxNjYxNTk1MDYyLCJleHAiOjE2NjE2MDIyNjJ9.AXgkby79_K-c-qBuoOzLLXyi4VnsNxO83LlTB_mtg5yh6ClKgWLjiUhhHXOpWnoap5woVsRacGwo1AOCmbvS5g
 
