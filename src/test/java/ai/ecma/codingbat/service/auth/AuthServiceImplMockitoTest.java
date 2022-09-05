@@ -34,7 +34,7 @@ import static org.mockito.Mockito.when;
 @Execution(value = ExecutionMode.CONCURRENT)
 @SpringBootTest(webEnvironment = SpringBootTest.WebEnvironment.NONE)
 public class
-AuthServiceImplUnitTest {
+AuthServiceImplMockitoTest {
     @InjectMocks
     AuthServiceImpl underTest;
     @Mock

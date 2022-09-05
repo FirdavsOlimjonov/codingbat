@@ -1,10 +1,12 @@
 package ai.ecma.codingbat.controller.auth;
 
 import ai.ecma.codingbat.entity.User;
+import ai.ecma.codingbat.payload.ApiResult;
 import ai.ecma.codingbat.payload.SignDTO;
 import ai.ecma.codingbat.repository.UserRepository;
 import com.fasterxml.jackson.core.JsonProcessingException;
 import com.fasterxml.jackson.databind.ObjectMapper;
+import io.swagger.annotations.Api;
 import org.junit.jupiter.api.BeforeAll;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
@@ -21,7 +23,6 @@ import java.util.Objects;
 import java.util.Optional;
 
 import static org.junit.jupiter.api.Assertions.*;
-import static org.mockito.BDDMockito.given;
 import static org.mockito.Mockito.when;
 import static org.springframework.test.web.servlet.request.MockMvcRequestBuilders.get;
 import static org.springframework.test.web.servlet.request.MockMvcRequestBuilders.post;
@@ -30,7 +31,7 @@ import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.
 
 @SpringBootTest
 @AutoConfigureMockMvc
-class AuthControllerImplIntegrationTest {
+class AuthControllerImplAPITest {
     @Autowired
     private MockMvc mockMvc;
     @Mock
@@ -40,7 +41,7 @@ class AuthControllerImplIntegrationTest {
 
     @Mock
     private UserRepository userRepository;
-    private JacksonTester<SignDTO> jsonSignDTO;
+    private JacksonTester<ApiResult<SignDTO>> jsonSignDTO;
 
     @BeforeAll
     static void setMocks(){
