@@ -1,5 +1,6 @@
 package ai.ecma.codingbat.service;
 
+import lombok.NonNull;
 import lombok.RequiredArgsConstructor;
 import ai.ecma.codingbat.entity.Language;
 import ai.ecma.codingbat.exceptions.RestException;
@@ -201,9 +202,19 @@ public class LanguageServiceImpl implements LanguageService {
         return res;
     }
 
+    /**
+     * Add new language
+     * <p>
+     * An exception of type {@code java.lang.NullPointerException}
+     * parameter if null
+     *
+     * @param addLanguageDTO being added language object
+     * @return {@link AddLanguageDTO}
+     * @throws NullPointerException if addLanguageDTO is null
+     */
 
     @Override
-    public ApiResult<LanguageDTO> add(AddLanguageDTO addLanguageDTO) {
+    public ApiResult<LanguageDTO> add(@NonNull AddLanguageDTO addLanguageDTO) {
 
         if (languageRepository.existsByTitleIgnoreCase(addLanguageDTO.getTitle()))
             throw RestException.restThrow("This language already exists", HttpStatus.CONFLICT);
@@ -213,12 +224,7 @@ public class LanguageServiceImpl implements LanguageService {
 
         languageRepository.save(language);
 
-        LanguageDTO languageDTO = mapLanguageToLanguageDTO(
-                language,
-                0,
-                0L,
-                0L,
-                0);
+        LanguageDTO languageDTO = mapLanguageToLanguageDTO(language);
 
         return ApiResult.successResponse("Successfully saved", languageDTO);
     }
@@ -273,6 +279,22 @@ public class LanguageServiceImpl implements LanguageService {
         return ApiResult.successResponse("success", languageDTOS);
     }
 
+
+    /**
+     * blablalk
+     *
+     * @param language
+     * @return
+     */
+    private LanguageDTO mapLanguageToLanguageDTO(
+            Language language) {
+        return new LanguageDTO(
+                language.getId(),
+                language.getTitle(),
+                language.getUrl(),
+                0, 0, 0L, 0L
+        );
+    }
 
     private LanguageDTO mapLanguageToLanguageDTO(
             Language language, int sectionCount, long tryCount,

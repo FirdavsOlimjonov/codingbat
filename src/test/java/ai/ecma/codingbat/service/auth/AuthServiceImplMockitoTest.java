@@ -52,8 +52,9 @@ AuthServiceImplMockitoTest {
     void setUnderTest() {
         underTest = new AuthServiceImpl(userRepository, passwordEncoder, javaMailSender);
     }
+
     @BeforeAll
-    static void setMocks(){
+    static void setMocks() {
         signDTO = new SignDTO("firdavsolimjonov25@gmail.com", "root123");
         user = new User(signDTO.getEmail(), signDTO.getPassword());
     }
@@ -99,55 +100,53 @@ AuthServiceImplMockitoTest {
 
         assertThat(underTest.verificationEmail(user.getEmail())).satisfies(api ->
         {
-            assertEquals( "Allaqachon tasqidlangan",api.getMessage());
+            assertEquals("Allaqachon tasqidlangan", api.getMessage());
 
         });
     }
 
     @Test
-    public void singInThrowExceptionByEmailTest(){
+    public void singInThrowExceptionByEmailTest() {
         given(userRepository.findByEmail(user.getEmail())).willReturn(Optional.empty());
 
-        assertThatThrownBy(()->underTest.signIn(signDTO))
+        assertThatThrownBy(() -> underTest.signIn(signDTO))
                 .isInstanceOf(UsernameNotFoundException.class)
-                .hasMessageContaining(user.getEmail()+" email not found");
+                .hasMessageContaining(user.getEmail() + " email not found");
     }
 
     @Test
-    public void singInThrowExceptionByPasswordEncoderTest(){
+    public void singInThrowExceptionByPasswordEncoderTest() {
         given(userRepository.findByEmail(user.getEmail())).willReturn(Optional.of(user));
 
-        assertThatThrownBy(()->underTest.signIn(signDTO))
+        assertThatThrownBy(() -> underTest.signIn(signDTO))
                 .isInstanceOf(RestException.class)
                 .hasMessageContaining("Password togri kelmadi");
     }
+
     @Test
-    public void singInThrowExceptionByPermissionTest(){
+    public void singInThrowExceptionByPermissionTest() {
         given(userRepository.findByEmail(user.getEmail())).willReturn(Optional.of(user));
 
-        given(passwordEncoder.matches(signDTO.getPassword(),user.getPassword())).willReturn(true);
+        given(passwordEncoder.matches(signDTO.getPassword(), user.getPassword())).willReturn(true);
 
-        assertThatThrownBy(()->underTest.signIn(signDTO))
+        assertThatThrownBy(() -> underTest.signIn(signDTO))
                 .isInstanceOf(RestException.class)
                 .hasMessageContaining("Userga ma'lum bir cheklovlar yuklangan");
-
     }
 
     @Test
-    public void singInHappyTest(){
+    public void singInHappyTest() {
         user.setEnabled(true);
 
         given(userRepository.findByEmail(user.getEmail())).willReturn(Optional.of(user));
 
-        given(passwordEncoder.matches(signDTO.getPassword(),user.getPassword())).willReturn(true);
+        given(passwordEncoder.matches(signDTO.getPassword(), user.getPassword())).willReturn(true);
 
         assertThat(underTest.signIn(signDTO))
-                .satisfies( p ->{
-                    assertEquals("Muvvafaqiyatli token yaratildi",p.getMessage());
+                .satisfies(p -> {
+                    assertEquals("Muvvafaqiyatli token yaratildi", p.getMessage());
                 });
     }
-
-
 
 
 }
