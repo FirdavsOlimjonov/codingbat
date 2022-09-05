@@ -9,7 +9,6 @@ import javax.persistence.*;
 @Setter
 @MappedSuperclass
 public abstract class AbsTitleIntegerEntity extends AbsIntegerEntity  {
-
     @Column(nullable = false)
     private String title;
 }
