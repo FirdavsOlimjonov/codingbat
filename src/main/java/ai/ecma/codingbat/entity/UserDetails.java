@@ -10,16 +10,12 @@ import javax.persistence.*;
 import java.time.LocalDateTime;
 import java.util.List;
 
-/**
- * Created on 09/August/2021 By Author Eresh, Gorantla
- **/
 @Entity
 @Table(name = "user_details")
 @Getter
 @Setter
 //@NamedEntityGraph(name = "user_details_entity_graph", attributeNodes = @NamedAttributeNode("addresses"))
 public class UserDetails {
-
     @Id
     @GeneratedValue(generator = "system-uuid")
     @GenericGenerator(name = "system-uuid", strategy = "org.hibernate.id.UUIDGenerator")

@@ -9,7 +9,6 @@ import java.util.List;
 
 @Repository
 public interface UserDetailsRepository extends JpaRepository<UserDetails, String> {
-
    @EntityGraph(type = EntityGraph.EntityGraphType.FETCH,
 //           value = "user_details_entity_graph",
            attributePaths = "addresses"
