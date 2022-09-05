@@ -12,10 +12,4 @@ public class AppCodingbatApplication {
         SpringApplication.run(AppCodingbatApplication.class, args);
     }
 
-
-//    @Bean
-//    public HttpSecurity httpSecurity(){
-//        return new HttpSecurity();
-//    }
-
 }
