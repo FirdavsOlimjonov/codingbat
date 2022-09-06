@@ -10,7 +10,7 @@ import java.lang.reflect.Method;
 
 import static org.junit.jupiter.api.Assertions.assertEquals;
 
-public class LanguageUnitTest {
+public class  LanguageUnitTest {
 
     @Test
     public void mapLanguageToLanguageDTOTest() {
