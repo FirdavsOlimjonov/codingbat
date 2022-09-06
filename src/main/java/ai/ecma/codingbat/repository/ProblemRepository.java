@@ -16,4 +16,6 @@ public interface ProblemRepository extends JpaRepository<Problem,Integer> {
     boolean existsByTitleAndSectionId(String title, Integer section);
 
     int countAllBySectionId(Integer id);
+
+    Object countAllBySection_Section_Id(Integer id);
 }

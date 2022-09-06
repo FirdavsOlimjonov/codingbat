@@ -1,7 +1,6 @@
 package ai.ecma.codingbat.entity;
 
 import ai.ecma.codingbat.util.CommonUtils;
-import lombok.AllArgsConstructor;
 import lombok.Getter;
 import lombok.NoArgsConstructor;
 import lombok.Setter;
@@ -13,6 +12,7 @@ import javax.persistence.*;
 @Entity
 @Setter
 @Getter
+@NoArgsConstructor
 @Table(uniqueConstraints = {
         @UniqueConstraint(columnNames = {"title", "language_id"}),
         @UniqueConstraint(columnNames = {"url", "language_id"}),
@@ -32,8 +32,18 @@ public class Section extends AbsTitleIntegerEntity {
     @ManyToOne(optional = false)
     private Language language;
 
+    public Section(String title, String url) {
+        this.url = url;
+        super.setTitle(title);
+    }
+    public Section(String title, String url, Integer id) {
+        this.url = url;
+        super.setTitle(title);
+        this.setId(id);
+    }
 
-    private void setUrl(String title) {
+
+    public void setUrl(String title) {
         this.url = CommonUtils.makeUrl(title);
     }
 
