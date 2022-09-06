@@ -5,6 +5,7 @@ import lombok.Getter;
 import lombok.ToString;
 
 import java.util.List;
+import java.util.Objects;
 
 @Getter
 @JsonInclude(JsonInclude.Include.NON_NULL)
@@ -37,6 +38,17 @@ public class ApiResult<E> {
 
     private ApiResult() {
         this.success = true;
+    }
+
+    @Override
+    public boolean equals(Object o) {
+        if (this == o) return true;
+        if (!(o instanceof ApiResult)) return false;
+        ApiResult<?> that = (ApiResult<?>) o;
+        return this.isSuccess() == that.isSuccess() &&
+                Objects.equals(this.getMessage(), that.getMessage()) &&
+                Objects.equals(this.getData(), that.getData()) &&
+                Objects.equals(this.getErrors(), that.getErrors());
     }
 
     public static <T> ApiResult<T> successResponse(String message, T data) {

@@ -33,6 +33,13 @@ public final class Language extends AbsTitleIntegerEntity {
         this.url = url;
     }
 
+    public Language(String title, String url, Integer id) {
+        this(title,url);
+        setId(id);
+    }
+
+
+
     private void setUrl() {
         this.url = CommonUtils.makeUrl(super.getTitle());
     }
