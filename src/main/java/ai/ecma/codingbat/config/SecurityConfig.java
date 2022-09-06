@@ -1,10 +1,12 @@
 package ai.ecma.codingbat.config;
 
+import ai.ecma.codingbat.util.RestConstants;
 import lombok.RequiredArgsConstructor;
 import ai.ecma.codingbat.exceptions.MyEntryPointHandler;
 import ai.ecma.codingbat.security.JWTFilter;
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
+import org.springframework.http.HttpMethod;
 import org.springframework.security.config.annotation.method.configuration.EnableGlobalMethodSecurity;
 import org.springframework.security.config.annotation.method.configuration.EnableMethodSecurity;
 import org.springframework.security.config.annotation.web.builders.HttpSecurity;
@@ -40,7 +42,7 @@ public class SecurityConfig {
                 .authorizeHttpRequests(
                         auth ->
                                 auth
-                                        .antMatchers("/**")
+                                        .antMatchers(RestConstants.OPEN_PAGES)
                                         .permitAll()
                                         .antMatchers("/",
                                                 "/favicon.ico",
@@ -59,7 +61,7 @@ public class SecurityConfig {
                                                 "/v2/api-docs",
                                                 "/configuration/ui")
                                         .permitAll()
-                                        .anyRequest()
+                                        .antMatchers("/api/**")
                                         .authenticated()
                 )
 

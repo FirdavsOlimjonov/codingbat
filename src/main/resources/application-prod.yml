@@ -34,3 +34,8 @@ jwt:
 logging:
   file:
     name: codingbat.log
+
+app:
+  admin:
+    username: admin@codingbat.com
+    password: root123

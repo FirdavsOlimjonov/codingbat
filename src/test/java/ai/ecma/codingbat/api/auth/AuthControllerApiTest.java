@@ -1,5 +1,6 @@
 package ai.ecma.codingbat.api.auth;
 
+import ai.ecma.codingbat.controller.cotract.AuthController;
 import ai.ecma.codingbat.entity.User;
 import ai.ecma.codingbat.payload.ApiResult;
 import ai.ecma.codingbat.payload.ErrorData;
@@ -7,28 +8,26 @@ import ai.ecma.codingbat.payload.SignDTO;
 import ai.ecma.codingbat.payload.TokenDTO;
 import ai.ecma.codingbat.repository.UserRepository;
 import ai.ecma.codingbat.util.CommonUtils;
-import com.fasterxml.jackson.databind.ObjectMapper;
+import ai.ecma.codingbat.utils.TestUtils;
 import org.junit.jupiter.api.*;
 import org.mockito.Mock;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.beans.factory.annotation.Value;
 import org.springframework.boot.test.autoconfigure.web.servlet.AutoConfigureMockMvc;
 import org.springframework.boot.test.context.SpringBootTest;
-import org.springframework.boot.test.json.JacksonTester;
+import org.springframework.http.HttpStatus;
 import org.springframework.http.MediaType;
 import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.test.web.servlet.MockMvc;
 import org.springframework.test.web.servlet.ResultActions;
 
 import java.util.Objects;
-import java.util.Optional;
 
 import static org.junit.jupiter.api.Assertions.assertEquals;
 import static org.junit.jupiter.api.Assertions.assertTrue;
 import static org.mockito.BDDMockito.given;
-import static org.mockito.Mockito.when;
 import static org.springframework.test.web.servlet.request.MockMvcRequestBuilders.get;
 import static org.springframework.test.web.servlet.request.MockMvcRequestBuilders.post;
-import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.content;
 import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.status;
 
 @SpringBootTest
@@ -47,15 +46,16 @@ class AuthControllerApiTest {
     @Autowired
     private UserRepository userRepository;
 
-    static String adminAccessToken;
-    static String tokenType;
-    static String adminRefreshToken;
+    private static String adminAccessToken;
+    private static String tokenType;
+    private static String adminRefreshToken;
 
     @BeforeAll
     static void setMocks() {
         signDTO = new SignDTO("firdavsolimjonov25@gmail.com", "root123");
         user = new User(signDTO.getEmail(), signDTO.getPassword());
     }
+
     @Test
     public void signUpSuccessfully() throws Exception {
         signDTO = new SignDTO("firdavsolimjonov25@gmail.com", "root123");
@@ -79,7 +79,7 @@ class AuthControllerApiTest {
         user = new User(signDTO.getEmail(), signDTO.getPassword());
 
         ResultActions verificationEmailActions = mockMvc.perform(get("/api/auth/verification-email")
-                .param("email",user.getEmail())
+                .param("email", user.getEmail())
                 .contentType(MediaType.APPLICATION_JSON)
                 .content(Objects.requireNonNull(CommonUtils.objectToJson(signDTO.getEmail()))));
 
@@ -87,14 +87,22 @@ class AuthControllerApiTest {
     }
 
 
+    @Value("${app.admin.username}")
+    private String adminUsername;
+
+    @Value("${app.admin.password}")
+    private String adminPassword;
+
     @Test
     public void signInHappyTest() throws Exception {
-        SignDTO signDTO = new SignDTO("admin@codingbat.com", "root123");
+        SignDTO signDTO = new SignDTO(adminUsername, adminPassword);
 
         ResultActions signInActions = mockMvc
-                .perform(post("/api/auth/sign-in")
+                .perform(post(AuthController.AUTH_CONTROLLER_BASE_PATH +
+                        AuthController.SIGN_IN_PATH)
                         .contentType(MediaType.APPLICATION_JSON)
                         .content(Objects.requireNonNull(CommonUtils.objectToJson(signDTO))));
+
 
         signInActions.andExpect(status().isOk());
 
@@ -116,7 +124,7 @@ class AuthControllerApiTest {
         User user = new User(signDTO.getEmail(), signDTO.getPassword());
 
         if (!userRepository.existsByEmail(user.getEmail()))
-                userRepository.save(user);
+            userRepository.save(user);
 
         given(passwordEncoder.matches(signDTO.getPassword(), user.getPassword())).willReturn(true);
 
@@ -131,7 +139,7 @@ class AuthControllerApiTest {
 
         ErrorData errorData = apiResult.getErrors().get(0);
         String msg = errorData.getMsg();
-        assertEquals("Password togri kelmadi",msg);
+        assertEquals("Password togri kelmadi", msg);
     }
 
 

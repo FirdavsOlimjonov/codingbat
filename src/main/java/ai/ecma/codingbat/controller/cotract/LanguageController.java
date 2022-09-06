@@ -13,21 +13,25 @@ import javax.validation.constraints.NotNull;
 import java.util.List;
 
 
-@RequestMapping(path = "/api/language")
+@RequestMapping(path = LanguageController.BASE_PATH)
 public interface LanguageController {
 
-    @PostMapping(path = "/add")
+    String BASE_PATH = "/api/language";
+    String ADD_PATH = "/add";
+    String LIST_FOR_USERS_PATH = "/list-for-users";
+
+    @PostMapping(path = ADD_PATH)
     ApiResult<LanguageDTO> add(@Valid @RequestBody AddLanguageDTO addLanguageDTO);
 
 
     @PostMapping("/list")
-    ApiResult<List<LanguageDTOProjection>> getLanguages (@RequestBody(required = false) ViewDTO viewDTO,
-                                                         @RequestParam(defaultValue = RestConstants.DEFAULT_PAGE_NUMBER) int page,
-                                                         @RequestParam(defaultValue = RestConstants.DEFAULT_PAGE_SIZE) int size);
+    ApiResult<List<LanguageDTOProjection>> getLanguages(@RequestBody(required = false) ViewDTO viewDTO,
+                                                        @RequestParam(defaultValue = RestConstants.DEFAULT_PAGE_NUMBER) int page,
+                                                        @RequestParam(defaultValue = RestConstants.DEFAULT_PAGE_SIZE) int size);
 
     @GetMapping("/{id}")
     ApiResult<LanguageDTO> getLanguage(@PathVariable
-            @NotNull(message = "Id must be not null") Integer id);
+                                       @NotNull(message = "Id must be not null") Integer id);
 
     @DeleteMapping("/{id}")
     ApiResult<?> delete(@PathVariable @NotNull Integer id);
@@ -38,7 +42,7 @@ public interface LanguageController {
                                 @PathVariable Integer id);
 
 
-    @GetMapping("/list-for-users")
+    @GetMapping(LIST_FOR_USERS_PATH)
     ApiResult<List<LanguageDTO>> getLanguagesForUser();
 
 

@@ -17,6 +17,7 @@ import org.springframework.stereotype.Service;
 import java.util.ArrayList;
 import java.util.List;
 import java.util.Objects;
+import java.util.stream.Collectors;
 
 @Service
 @RequiredArgsConstructor
@@ -79,152 +80,6 @@ public class LanguageServiceImpl implements LanguageService {
         List<LanguageDTOProjection> languagesByStringQuery = languageRepository.getLanguagesByStringQuery(query);
 
         return ApiResult.successResponse(languagesByStringQuery);
-    }
-
-    public void orderBy(StringBuilder sb, List<SortingDTO> list) {
-        sb.append("\n ORDER BY ");
-        if (list == null || list.isEmpty()) {
-            sb.append(" title ");
-            return;
-        }
-
-        sb.append(" ").append(list.get(0).getName()).append(" ").append(list.get(0).getType().toString());
-        for (int i = 1; i < list.size(); i++)
-            sb.append(" , ").append(list.get(i).getName()).append(" ")
-                    .append(list.get(i).getType().toString()).append(" ");
-
-    }
-
-    public void whereForHaving(StringBuilder sb, FilterDTO filterDTO) {
-        // TODO
-        if (filterDTO == null || forFilterDto(filterDTO.getColumns(), false).isEmpty())
-            return;
-        sb.append("\n WHERE ");
-        List<FilterColumnDTO> list = forFilterDto(filterDTO.getColumns(), false);
-        String operator = filterDTO.getOperatorType().toString();
-
-        subWhere(sb, list.get(0).getName(), list.get(0).getConditionType(),
-                list.get(0).getValue(), list.get(0).getFrom(), list.get(0).getTill());
-
-        for (int i = 1; i < list.size(); i++)
-            subWhere(sb.append(" ").append(operator).append(" "), list.get(0).getName(), list.get(0).getConditionType(),
-                    list.get(0).getValue(), list.get(0).getFrom(), list.get(0).getTill());
-
-    }
-
-    public void mainWhere(StringBuilder sb, FilterDTO filterDTO, SearchingDTO searchingDTO) {
-        if ((filterDTO == null ||
-                forFilterDto(filterDTO.getColumns(), true).isEmpty())
-                && (searchingDTO == null || searchingDTO.getColumns().isEmpty()))
-            return;
-        sb.append("\n WHERE ");
-
-        boolean filtered = false;
-
-        List<FilterColumnDTO> filterColumns;
-        if (filterDTO != null
-                && !(filterColumns = forFilterDto(filterDTO.getColumns(), true)).isEmpty()) {
-            String operatorType = " " + filterDTO.getOperatorType().toString() + " ";
-            FilterColumnDTO item = filterColumns.get(0);
-            subWhere(sb, item.getName(), item.getConditionType(),
-                    item.getValue(), item.getFrom(), item.getTill());
-            filtered = true;
-            for (int i = 1; i < filterColumns.size(); i++) {
-                item = filterColumns.get(i);
-                sb.append(operatorType);
-                subWhere(sb, item.getName(), item.getConditionType(),
-                        item.getValue(), item.getFrom(), item.getTill());
-            }
-        }
-
-        List<String> searchingColumns;
-        if (searchingDTO != null
-                && !(searchingColumns = searchingDTO.getColumns()).isEmpty()) {
-            String operatorType = " OR ";
-
-            if (filtered)
-                sb.append(" OR ");
-
-            String item = searchingColumns.get(0);
-            String val = searchingDTO.getValue();
-            subWhere(sb, item, ConditionTypeEnum.CONTAINS,
-                    val, null, null);
-            for (int i = 1; i < searchingColumns.size(); i++) {
-                item = searchingColumns.get(i);
-                sb.append(operatorType);
-                subWhere(sb, item, ConditionTypeEnum.CONTAINS,
-                        val, null, null);
-            }
-        }
-
-    }
-
-    public void subWhere(StringBuilder sb, String column, ConditionTypeEnum cond,
-                         String val, String from, String till) {
-        if ((column.equals("title") || column.equals("url")))
-            sb.append(" l.").append(column).append(" ");
-        else
-            sb.append(" ").append(column).append(" ");
-
-        String res;
-        switch (cond) {
-            case IS_SET:
-                res = " IS NOT NULL ";
-                break;
-            case IS_NOT_SET:
-                res = (" IS NULL");
-                break;
-            case CONTAINS:
-                res = (" ILIKE '%" + val + "%'");
-                break;
-            case NOT_CONTAINS:
-                res = (" NOT ILIKE '%" + val + "%'");
-                break;
-            case EQ:
-                res = (" = " + val);
-                break;
-            case NOT_EQ:
-                res = (" != " + val);
-                break;
-            case GT:
-                res = (" > " + val);
-                break;
-            case LT:
-                res = (" < " + val);
-                break;
-            case GTE:
-                res = (" >= " + val);
-                break;
-            case LTE:
-                res = (" <= " + val);
-                break;
-            case RA:
-                res = (" BETWEEN " + from + " AND " + till + " ");
-                break;
-            default:
-                res = "";
-        }
-        sb.append(res);
-    }
-
-    private List<FilterColumnDTO> forFilterDto(List<FilterColumnDTO> list, boolean needTitleAndUrl) {
-        List<FilterColumnDTO> res = new ArrayList<>();
-        if (needTitleAndUrl)
-            for (FilterColumnDTO fcd : list) {
-                String s = fcd.getName();
-                if ((s.equalsIgnoreCase("title")
-                        || s.equalsIgnoreCase("url")))
-                    res.add(fcd);
-            }
-        else
-            for (FilterColumnDTO fcd : list) {
-                String s = fcd.getName();
-                if (!(s.equalsIgnoreCase("title")
-                        || s.equalsIgnoreCase("url")))
-                    res.add(fcd);
-            }
-
-        return res;
     }
 
     /**
@@ -296,14 +151,19 @@ public class LanguageServiceImpl implements LanguageService {
 
     @Override
     public ApiResult<List<LanguageDTO>> getLanguagesForUser() {
-        List<Language> all = languageRepository.findAll();
+        List<Language> languages = languageRepository.findAll();
 
-        List<LanguageDTO> languageDTOS = new ArrayList<>(all.size() + 1);
+        List<LanguageDTO> languageDTOList = mapLanguagesToLanguageDTOList(languages);
 
-        for (Language language : all)
-            languageDTOS.add(new LanguageDTO(language));
+        return ApiResult.successResponse(languageDTOList);
+    }
 
-        return ApiResult.successResponse("success", languageDTOS);
+    private List<LanguageDTO> mapLanguagesToLanguageDTOList(List<Language> languages) {
+        return
+                languages
+                        .stream()
+                        .map(this::mapLanguageToLanguageDTO)
+                        .collect(Collectors.toList());
     }
 
 
@@ -335,6 +195,154 @@ public class LanguageServiceImpl implements LanguageService {
                 tryCount,
                 solvedCount
         );
+    }
+
+
+
+    private void orderBy(StringBuilder sb, List<SortingDTO> list) {
+        sb.append("\n ORDER BY ");
+        if (list == null || list.isEmpty()) {
+            sb.append(" title ");
+            return;
+        }
+
+        sb.append(" ").append(list.get(0).getName()).append(" ").append(list.get(0).getType().toString());
+        for (int i = 1; i < list.size(); i++)
+            sb.append(" , ").append(list.get(i).getName()).append(" ")
+                    .append(list.get(i).getType().toString()).append(" ");
+
+    }
+
+    private void whereForHaving(StringBuilder sb, FilterDTO filterDTO) {
+        // TODO
+        if (filterDTO == null || forFilterDto(filterDTO.getColumns(), false).isEmpty())
+            return;
+        sb.append("\n WHERE ");
+        List<FilterColumnDTO> list = forFilterDto(filterDTO.getColumns(), false);
+        String operator = filterDTO.getOperatorType().toString();
+
+        subWhere(sb, list.get(0).getName(), list.get(0).getConditionType(),
+                list.get(0).getValue(), list.get(0).getFrom(), list.get(0).getTill());
+
+        for (int i = 1; i < list.size(); i++)
+            subWhere(sb.append(" ").append(operator).append(" "), list.get(0).getName(), list.get(0).getConditionType(),
+                    list.get(0).getValue(), list.get(0).getFrom(), list.get(0).getTill());
+
+    }
+
+    private void mainWhere(StringBuilder sb, FilterDTO filterDTO, SearchingDTO searchingDTO) {
+        if ((filterDTO == null ||
+                forFilterDto(filterDTO.getColumns(), true).isEmpty())
+                && (searchingDTO == null || searchingDTO.getColumns().isEmpty()))
+            return;
+        sb.append("\n WHERE ");
+
+        boolean filtered = false;
+
+        List<FilterColumnDTO> filterColumns;
+        if (filterDTO != null
+                && !(filterColumns = forFilterDto(filterDTO.getColumns(), true)).isEmpty()) {
+            String operatorType = " " + filterDTO.getOperatorType().toString() + " ";
+            FilterColumnDTO item = filterColumns.get(0);
+            subWhere(sb, item.getName(), item.getConditionType(),
+                    item.getValue(), item.getFrom(), item.getTill());
+            filtered = true;
+            for (int i = 1; i < filterColumns.size(); i++) {
+                item = filterColumns.get(i);
+                sb.append(operatorType);
+                subWhere(sb, item.getName(), item.getConditionType(),
+                        item.getValue(), item.getFrom(), item.getTill());
+            }
+        }
+
+        List<String> searchingColumns;
+        if (searchingDTO != null
+                && !(searchingColumns = searchingDTO.getColumns()).isEmpty()) {
+            String operatorType = " OR ";
+
+            if (filtered)
+                sb.append(" OR ");
+
+            String item = searchingColumns.get(0);
+            String val = searchingDTO.getValue();
+            subWhere(sb, item, ConditionTypeEnum.CONTAINS,
+                    val, null, null);
+            for (int i = 1; i < searchingColumns.size(); i++) {
+                item = searchingColumns.get(i);
+                sb.append(operatorType);
+                subWhere(sb, item, ConditionTypeEnum.CONTAINS,
+                        val, null, null);
+            }
+        }
+
+    }
+
+    private void subWhere(StringBuilder sb, String column, ConditionTypeEnum cond,
+                          String val, String from, String till) {
+        if ((column.equals("title") || column.equals("url")))
+            sb.append(" l.").append(column).append(" ");
+        else
+            sb.append(" ").append(column).append(" ");
+
+        String res;
+        switch (cond) {
+            case IS_SET:
+                res = " IS NOT NULL ";
+                break;
+            case IS_NOT_SET:
+                res = (" IS NULL");
+                break;
+            case CONTAINS:
+                res = (" ILIKE '%" + val + "%'");
+                break;
+            case NOT_CONTAINS:
+                res = (" NOT ILIKE '%" + val + "%'");
+                break;
+            case EQ:
+                res = (" = " + val);
+                break;
+            case NOT_EQ:
+                res = (" != " + val);
+                break;
+            case GT:
+                res = (" > " + val);
+                break;
+            case LT:
+                res = (" < " + val);
+                break;
+            case GTE:
+                res = (" >= " + val);
+                break;
+            case LTE:
+                res = (" <= " + val);
+                break;
+            case RA:
+                res = (" BETWEEN " + from + " AND " + till + " ");
+                break;
+            default:
+                res = "";
+        }
+        sb.append(res);
+    }
+
+    private List<FilterColumnDTO> forFilterDto(List<FilterColumnDTO> list, boolean needTitleAndUrl) {
+        List<FilterColumnDTO> res = new ArrayList<>();
+        if (needTitleAndUrl)
+            for (FilterColumnDTO fcd : list) {
+                String s = fcd.getName();
+                if ((s.equalsIgnoreCase("title")
+                        || s.equalsIgnoreCase("url")))
+                    res.add(fcd);
+            }
+        else
+            for (FilterColumnDTO fcd : list) {
+                String s = fcd.getName();
+                if (!(s.equalsIgnoreCase("title")
+                        || s.equalsIgnoreCase("url")))
+                    res.add(fcd);
+            }
+
+        return res;
     }
 
 }

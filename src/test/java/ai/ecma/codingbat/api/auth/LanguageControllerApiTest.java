@@ -2,63 +2,105 @@ package ai.ecma.codingbat.api.auth;
 
 import ai.ecma.codingbat.payload.*;
 import ai.ecma.codingbat.util.CommonUtils;
+import ai.ecma.codingbat.utils.TestUtils;
+import ai.ecma.codingbat.utils.ValidateUtils;
+import io.restassured.module.mockmvc.RestAssuredMockMvc;
 import org.junit.jupiter.api.*;
+import org.mockito.MockitoAnnotations;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.beans.factory.annotation.Value;
 import org.springframework.boot.test.autoconfigure.web.servlet.AutoConfigureMockMvc;
 import org.springframework.boot.test.context.SpringBootTest;
-import org.springframework.http.MediaType;
-import org.springframework.test.web.servlet.MockMvc;
-import org.springframework.test.web.servlet.ResultActions;
+import org.springframework.http.HttpStatus;
+import org.springframework.test.annotation.DirtiesContext;
+import org.springframework.test.web.servlet.setup.MockMvcBuilders;
+import org.springframework.web.context.WebApplicationContext;
 
-import java.util.Objects;
-
-import static org.junit.jupiter.api.Assertions.assertTrue;
-import static org.springframework.test.web.servlet.request.MockMvcRequestBuilders.get;
-import static org.springframework.test.web.servlet.request.MockMvcRequestBuilders.post;
-import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.status;
+import static org.assertj.core.api.Assertions.assertThat;
+import static org.springframework.security.test.web.servlet.setup.SecurityMockMvcConfigurers.springSecurity;
 
 @SpringBootTest
 @AutoConfigureMockMvc
-@TestClassOrder(ClassOrderer.OrderAnnotation.class)
-@Order(value = 2)
+@TestMethodOrder(MethodOrderer.OrderAnnotation.class)
+@DirtiesContext//CONTEXTDAN OBJECTLARNI TOZALAMA
+@TestInstance(TestInstance.Lifecycle.PER_CLASS)//TESTNING HAYOTI QANDAY KECHISHI
 class LanguageControllerApiTest {
 
+    private static String adminAccessToken;
+
+    private static String tokenType;
+
+    @Value("${app.admin.username}")
+    private String adminUsername;
+
+    @Value("${app.admin.password}")
+    private String adminPassword;
+
+
     @Autowired
-    private MockMvc mockMvc;
+    private WebApplicationContext context;
 
 
-    @Test
-    public void addSuccessfullyPath() throws Exception {
+    @BeforeAll
+    public void setMockMvc() {
+        //CONFIG
+        MockitoAnnotations.openMocks(this);
+        RestAssuredMockMvc.standaloneSetup(MockMvcBuilders
 
-        AddLanguageDTO addLanguageDTO = new AddLanguageDTO("Java");
+                .webAppContextSetup(context)
+                .apply(springSecurity()));
 
-        ResultActions addLanguageActions = mockMvc.perform(post("/api/language/add")
-                .contentType(MediaType.APPLICATION_JSON)
-                .header("Authorization", AuthControllerApiTest.tokenType + " " + AuthControllerApiTest.adminAccessToken)
-                .content(Objects.requireNonNull(CommonUtils.objectToJson(addLanguageDTO))));
 
-        addLanguageActions.andExpect(status().isOk());
+        SignDTO signDTO = new SignDTO(adminUsername, adminPassword);
 
-        String resultString = addLanguageActions.andReturn().getResponse().getContentAsString();
-        ApiResult<LanguageDTO> apiResult = CommonUtils.jsonToObject(resultString, LanguageDTO.class);
-        assertTrue(Objects.nonNull(apiResult.getData().getId()));
+        ApiResult<TokenDTO> tokenDTOApiResult = TestUtils.signIn(
+                signDTO,
+                HttpStatus.OK
+        );
+
+        ValidateUtils.validateSuccessDataApiResponse(tokenDTOApiResult);
+
+        adminAccessToken = tokenDTOApiResult.getData().getAccessToken();
+        tokenType = tokenDTOApiResult.getData().getTokenType();
+
     }
 
     @Test
-    public void addAccessDeniedPath() throws Exception {
+    @Order(100)
+    public void addSuccessfullyPath() {
 
         AddLanguageDTO addLanguageDTO = new AddLanguageDTO("Java");
 
-        ResultActions addLanguageActions = mockMvc.perform(post("/api/language/add")
-                .contentType(MediaType.APPLICATION_JSON)
-                .content(Objects.requireNonNull(CommonUtils.objectToJson(addLanguageDTO))));
+        ApiResult<LanguageDTO> apiResult = TestUtils.addLanguage(addLanguageDTO,
+                HttpStatus.OK,
+                TestUtils.concatToken(tokenType, adminAccessToken));
 
-        addLanguageActions.andExpect(status().isForbidden());
+        ValidateUtils.validateSuccessDataApiResponse(apiResult);
 
-        String resultString = addLanguageActions.andReturn().getResponse().getContentAsString();
-        ApiResult<Object[]> apiResult = CommonUtils.jsonToObject(resultString, Object[].class);
-        assertTrue(Objects.nonNull(apiResult.getErrors()));
+        assertThat(apiResult.getData().getId()).isNotNull();
+        assertThat(apiResult.getData().getTitle()).isEqualTo(addLanguageDTO.getTitle());
+        assertThat(apiResult.getData().getUrl()).isEqualTo(CommonUtils.makeUrl(addLanguageDTO.getTitle()));
+
     }
 
+    @Test
+    @Order(200)
+    public void addThrowPath() {
+
+        AddLanguageDTO addLanguageDTO = new AddLanguageDTO("Java");
+
+        ApiResult<LanguageDTO> apiResult = TestUtils.addLanguage(addLanguageDTO,
+                HttpStatus.CONFLICT,
+                TestUtils.concatToken(tokenType, adminAccessToken));
+
+        ValidateUtils.validateFailApiResponse(apiResult);
+
+        assertThat(apiResult.getErrors().get(0).getMsg())
+                .isEqualTo("This language already exists");
+
+        assertThat(apiResult.getErrors().get(0).getCode())
+                .isEqualTo(HttpStatus.CONFLICT.value());
+
+    }
 
 }

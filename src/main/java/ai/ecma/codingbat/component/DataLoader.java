@@ -4,6 +4,7 @@ import lombok.RequiredArgsConstructor;
 import ai.ecma.codingbat.entity.User;
 import ai.ecma.codingbat.entity.enums.RoleEnum;
 import ai.ecma.codingbat.repository.UserRepository;
+import net.bytebuddy.asm.Advice;
 import org.springframework.beans.factory.annotation.Value;
 import org.springframework.boot.CommandLineRunner;
 import org.springframework.security.crypto.password.PasswordEncoder;
@@ -20,12 +21,18 @@ public class DataLoader implements CommandLineRunner {
     @Value("${spring.jpa.hibernate.ddl-auto}")
     private String ddlMode;
 
+    @Value("${app.admin.username}")
+    private String adminUsername;
+
+    @Value("${app.admin.password}")
+    private String adminPassword;
+
     @Override
     public void run(String... args) throws Exception {
         if (Objects.equals(ddlMode, "create")) {
             User admin = new User(
-                    "admin@codingbat.com",
-                    passwordEncoder.encode("root123"));
+                    adminUsername,
+                    passwordEncoder.encode(adminPassword));
             admin.setRole(RoleEnum.ROLE_ADMIN);
             admin.setEnabled(true);
 
