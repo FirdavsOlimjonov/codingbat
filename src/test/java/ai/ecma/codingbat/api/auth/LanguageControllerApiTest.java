@@ -21,7 +21,7 @@ import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.
 @AutoConfigureMockMvc
 @TestClassOrder(ClassOrderer.OrderAnnotation.class)
 @Order(value = 2)
-class ALanguageControllerApiTest {
+class LanguageControllerApiTest {
 
     @Autowired
     private MockMvc mockMvc;
