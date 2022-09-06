@@ -4,16 +4,20 @@ import ai.ecma.codingbat.entity.User;
 import ai.ecma.codingbat.exceptions.RestException;
 import ai.ecma.codingbat.payload.ApiResult;
 import ai.ecma.codingbat.payload.SignDTO;
+import ai.ecma.codingbat.payload.TokenDTO;
 import ai.ecma.codingbat.repository.UserRepository;
 import ai.ecma.codingbat.service.AuthServiceImpl;
 import org.junit.Test;
-import org.junit.jupiter.api.BeforeAll;
 import org.junit.jupiter.api.BeforeEach;
+import org.junit.jupiter.api.MethodOrderer;
+import org.junit.jupiter.api.Order;
+import org.junit.jupiter.api.TestMethodOrder;
 import org.junit.jupiter.api.parallel.Execution;
 import org.junit.jupiter.api.parallel.ExecutionMode;
 import org.junit.runner.RunWith;
 import org.mockito.InjectMocks;
 import org.mockito.Mock;
+import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.test.context.SpringBootTest;
 import org.springframework.mail.javamail.JavaMailSender;
 import org.springframework.security.core.userdetails.UsernameNotFoundException;
@@ -24,57 +28,52 @@ import java.util.Optional;
 
 import static org.assertj.core.api.Assertions.assertThat;
 import static org.assertj.core.api.Assertions.assertThatThrownBy;
-import static org.junit.jupiter.api.Assertions.assertEquals;
-import static org.junit.jupiter.api.Assertions.assertTrue;
-import static org.mockito.ArgumentMatchers.any;
+import static org.junit.jupiter.api.Assertions.*;
 import static org.mockito.BDDMockito.given;
-import static org.mockito.Mockito.when;
 
 @RunWith(SpringJUnit4ClassRunner.class)
-@Execution(value = ExecutionMode.CONCURRENT)
+//@Execution(value = ExecutionMode.CONCURRENT)
 @SpringBootTest(webEnvironment = SpringBootTest.WebEnvironment.NONE)
-public class
-AuthServiceImplMockitoTest {
+@TestMethodOrder(MethodOrderer.OrderAnnotation.class)
+public class AuthServiceMockitoTest {
     @InjectMocks
     AuthServiceImpl underTest;
     @Mock
     private UserRepository userRepository;
+
+    private UserRepository userRepositoryBean;
+
+    @Autowired
+    public void setProductRepository(UserRepository userRepository) {
+        this.userRepositoryBean = userRepositoryBean;
+    }
     @Mock
     private PasswordEncoder passwordEncoder;
     @Mock
     private JavaMailSender javaMailSender;
-    @Mock
-    private static User user;
-    @Mock
-    private static SignDTO signDTO;
-
     @BeforeEach
     void setUnderTest() {
         underTest = new AuthServiceImpl(userRepository, passwordEncoder, javaMailSender);
     }
 
-    @BeforeAll
-    static void setMocks() {
-        signDTO = new SignDTO("firdavsolimjonov25@gmail.com", "root123");
-        user = new User(signDTO.getEmail(), signDTO.getPassword());
-    }
-
     @Test
+    @Order(10)
     public void signUpHappyTest() {
+        SignDTO signDTO = new SignDTO("firdavsolimjonov25@gmail.com", "root123");
+        User user = new User(signDTO.getEmail(), signDTO.getPassword());
 
-        user = new User(signDTO.getEmail(), signDTO.getPassword());
-
-        when(userRepository.save(any(User.class))).thenReturn(user);
         ApiResult<Boolean> apiResult = underTest.signUp(signDTO);
 
         assertTrue(apiResult.isSuccess());
     }
 
-
     @Test
+    @Order(20)
     public void signUpWorthTest() {
+        SignDTO signDTO = new SignDTO("firdavsolimjonov25@gmail.com", "root123");
+        User user = new User(signDTO.getEmail(), signDTO.getPassword());
 
-        given(userRepository.existsByEmail("firdavsolimjonov25@gmail.com")).willReturn(true);
+        given(userRepository.existsByEmail(user.getEmail())).willReturn(true);
 
         assertThatThrownBy(() -> underTest.signUp(signDTO))
                 .isInstanceOf(RuntimeException.class)
@@ -84,6 +83,8 @@ AuthServiceImplMockitoTest {
 
     @Test
     public void verificationFindByEmailThrowTest() {
+        SignDTO signDTO = new SignDTO("firdavsolimjonov25@gmail.com", "root123");
+        User user = new User(signDTO.getEmail(), signDTO.getPassword());
 
         given(userRepository.findByEmail(user.getEmail())).willReturn(Optional.empty());
 
@@ -95,8 +96,8 @@ AuthServiceImplMockitoTest {
 
     @Test
     public void verificationIsEnabledTest() {
-
-        when(userRepository.findByEmail(user.getEmail())).thenReturn(Optional.of(user));
+        SignDTO signDTO = new SignDTO("admin@codingbat.com", "root123");
+        User user = new User(signDTO.getEmail(), signDTO.getPassword());
 
         assertThat(underTest.verificationEmail(user.getEmail())).satisfies(api ->
         {
@@ -106,7 +107,26 @@ AuthServiceImplMockitoTest {
     }
 
     @Test
+    public void verificationHappyTest(){
+        SignDTO signDTO = new SignDTO("firdavs@gmail.com", "root123");
+        User user = new User(signDTO.getEmail(), signDTO.getPassword());
+
+        userRepositoryBean.save(user);
+
+        assertThat(underTest.verificationEmail("admin@codingbat.com")).satisfies(api ->
+        {
+            assertEquals("Tasdiqlandi", api.getMessage());
+
+        });
+
+    }
+
+    @Test
+    @Order(30)
     public void singInThrowExceptionByEmailTest() {
+        SignDTO signDTO = new SignDTO("firdavsolimjonov25@gmail.com", "root123");
+        User user = new User(signDTO.getEmail(), signDTO.getPassword());
+
         given(userRepository.findByEmail(user.getEmail())).willReturn(Optional.empty());
 
         assertThatThrownBy(() -> underTest.signIn(signDTO))
@@ -115,7 +135,11 @@ AuthServiceImplMockitoTest {
     }
 
     @Test
+    @Order(40)
     public void singInThrowExceptionByPasswordEncoderTest() {
+        SignDTO signDTO = new SignDTO("firdavsolimjonov25@gmail.com", "root123");
+        User user = new User(signDTO.getEmail(), signDTO.getPassword());
+
         given(userRepository.findByEmail(user.getEmail())).willReturn(Optional.of(user));
 
         assertThatThrownBy(() -> underTest.signIn(signDTO))
@@ -124,7 +148,11 @@ AuthServiceImplMockitoTest {
     }
 
     @Test
+    @Order(50)
     public void singInThrowExceptionByPermissionTest() {
+        SignDTO signDTO = new SignDTO("firdavsolimjonov25@gmail.com", "root123");
+        User user = new User(signDTO.getEmail(), signDTO.getPassword());
+
         given(userRepository.findByEmail(user.getEmail())).willReturn(Optional.of(user));
 
         given(passwordEncoder.matches(signDTO.getPassword(), user.getPassword())).willReturn(true);
@@ -135,12 +163,12 @@ AuthServiceImplMockitoTest {
     }
 
     @Test
+    @Order(60)
     public void singInHappyTest() {
-        user.setEnabled(true);
+        SignDTO signDTO = new SignDTO("firdavsjhhjjjgghjholimjvvvyv25@gmail.com", "root123");
+        User user = new User(signDTO.getEmail(), signDTO.getPassword());
 
-        given(userRepository.findByEmail(user.getEmail())).willReturn(Optional.of(user));
-
-        given(passwordEncoder.matches(signDTO.getPassword(), user.getPassword())).willReturn(true);
+        User save = userRepositoryBean.save(user);
 
         assertThat(underTest.signIn(signDTO))
                 .satisfies(p -> {
@@ -148,6 +176,22 @@ AuthServiceImplMockitoTest {
                 });
     }
 
+    @Test
+    @Order(10)
+    public void saveDBTest(){
+        SignDTO signDTO = new SignDTO("firdavsolimjonov@gmail.com", "root123");
+        User user = new User(signDTO.getEmail(), signDTO.getPassword());
 
+        assertTrue(userRepositoryBean.findByEmail(user.getEmail()).isEmpty());
+        userRepositoryBean.save(user);
+
+        Optional<User> optionalUser = userRepositoryBean.findByEmail(user.getEmail());
+        assertFalse(optionalUser.isEmpty());
+        assertFalse(optionalUser.get().isEnabled());
+
+        user.setEnabled(true);
+        userRepositoryBean.save(user);
+        assertTrue(userRepositoryBean.findByEmail(user.getEmail()).get().isEnabled());
+    }
 }
 
