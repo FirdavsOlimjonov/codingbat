@@ -9,8 +9,6 @@ import java.text.Normalizer;
 import java.util.Objects;
 import java.util.regex.Pattern;
 
-import static org.junit.Assert.fail;
-
 public class CommonUtils {
 
         private static final Pattern NON_LATIN = Pattern.compile("[^\\w-]");
@@ -38,8 +36,7 @@ public class CommonUtils {
         try {
             return objectMapper.writeValueAsString(object);
         } catch (JsonProcessingException e) {
-            fail("Failed to convert object to json");
-            return null;
+            throw new RuntimeException();
         }
     }
 

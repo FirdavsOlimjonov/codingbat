@@ -15,6 +15,7 @@
     <description>app-codingbat</description>
     <properties>
         <java.version>11</java.version>
+        <rest-assured.version>5.1.1</rest-assured.version>
     </properties>
     <dependencies>
         <dependency>
@@ -27,8 +28,6 @@
             <artifactId>spring-boot-starter-test</artifactId>
             <scope>test</scope>
         </dependency>
-
-
 
         <dependency>
             <groupId>org.springframework.boot</groupId>
@@ -43,7 +42,7 @@
         <dependency>
             <groupId>org.postgresql</groupId>
             <artifactId>postgresql</artifactId>
-            <version>42.4.1</version>
+            <version>42.5.0</version>
             <scope>runtime</scope>
         </dependency>
 
@@ -85,6 +84,28 @@
             <artifactId>junit</artifactId>
             <scope>test</scope>
         </dependency>
+
+        <!--        TEST TOOL ISHLASHI UCHUN-->
+        <dependency>
+            <groupId>io.rest-assured</groupId>
+            <artifactId>rest-assured</artifactId>
+            <version>${rest-assured.version}</version>
+            <scope>test</scope>
+        </dependency>
+
+        <!--        TEST TOOL ISHLASHI MOCKMVC UCHUN-->
+        <dependency>
+            <groupId>io.rest-assured</groupId>
+            <artifactId>spring-mock-mvc</artifactId>
+            <version>${rest-assured.version}</version>
+            <scope>test</scope>
+        </dependency>
+
+        <dependency>
+            <groupId>org.springframework.security</groupId>
+            <artifactId>spring-security-test</artifactId>
+            <scope>test</scope>
+        </dependency>
     </dependencies>
 
     <build>
@@ -97,8 +118,8 @@
                 <groupId>org.apache.maven.plugins</groupId>
                 <artifactId>maven-compiler-plugin</artifactId>
                 <configuration>
-                    <source>15</source>
-                    <target>15</target>
+                    <source>11</source>
+                    <target>11</target>
                 </configuration>
             </plugin>
         </plugins>

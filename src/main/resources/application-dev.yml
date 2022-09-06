@@ -42,3 +42,8 @@ logging:
 #    org.springframework.web: ERROR
 #    org.example: ERROR
 #    org.hibernate: ERROR
+
+app:
+  admin:
+    username: admin@codingbat.com
+    password: root123

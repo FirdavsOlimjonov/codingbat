@@ -1,5 +1,6 @@
 package ai.ecma.codingbat.security;
 
+import ai.ecma.codingbat.util.RestConstants;
 import io.jsonwebtoken.Jwts;
 import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
@@ -36,7 +37,7 @@ public class JWTFilter extends OncePerRequestFilter {
     }
 
     private void setSecurityContext(HttpServletRequest request) {
-        String authorization = request.getHeader("Authorization");
+        String authorization = request.getHeader(RestConstants.AUTHENTICATION_HEADER);
         if (Objects.nonNull(authorization) && authorization.startsWith("Bearer")) {
 
             authorization = authorization.substring(6).trim();

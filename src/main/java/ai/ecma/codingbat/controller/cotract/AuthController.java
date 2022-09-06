@@ -9,8 +9,12 @@ import org.springframework.web.bind.annotation.*;
 import javax.validation.Valid;
 
 
-@RequestMapping(path = "/api/auth")
+@RequestMapping(path = AuthController.AUTH_CONTROLLER_BASE_PATH)
 public interface AuthController {
+
+    String AUTH_CONTROLLER_BASE_PATH = "/api/auth";
+    String SIGN_IN_PATH = "/sign-in";
+
     @ApiOperation(value = "Sign up path")
     @PostMapping(value = "/sign-up")
     ApiResult<Boolean> signUp(@RequestBody @Valid SignDTO signDTO);
@@ -20,7 +24,7 @@ public interface AuthController {
     ApiResult<?> verificationEmail(@RequestParam String email);
 
     @ApiOperation(value = "Sign in path")
-    @PostMapping(value = "/sign-in")
+    @PostMapping(value = SIGN_IN_PATH)
     ApiResult<TokenDTO> signIn(@Valid @RequestBody SignDTO signDTO);
 
 }

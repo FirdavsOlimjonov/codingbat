@@ -13,14 +13,12 @@ public interface LanguageService {
 
     ApiResult<LanguageDTO> add(AddLanguageDTO addLanguageDTO);
 
-    ApiResult<List<LanguageDTO>> getLanguagesForUser();
-
     ApiResult<LanguageDTO> getLanguage(Integer id);
 
     ApiResult<?> delete(Integer id);
 
     ApiResult<LanguageDTO> edit(AddLanguageDTO addLanguageDTO, Integer id);
 
-
+    ApiResult<List<LanguageDTO>> getLanguagesForUser();
 
 }

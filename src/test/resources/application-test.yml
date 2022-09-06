@@ -7,7 +7,7 @@ spring:
   datasource:
     url: jdbc:postgresql://localhost:5432/postgres
     username: postgres
-    password: cyberhack25
+    password: root123
 
   jpa:
     hibernate:
@@ -48,3 +48,9 @@ junit:
       testclass:
         order:
           default: org.junit.jupiter.api.ClassOrderer$OrderAnnotation
+
+
+app:
+  admin:
+    username: admin@codingbat.com
+    password: root123
