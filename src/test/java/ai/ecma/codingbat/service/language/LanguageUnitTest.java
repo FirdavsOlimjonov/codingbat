@@ -4,6 +4,7 @@ import ai.ecma.codingbat.entity.Language;
 import ai.ecma.codingbat.payload.LanguageDTO;
 import ai.ecma.codingbat.service.LanguageServiceImpl;
 import org.junit.Test;
+import org.junit.jupiter.api.DisplayName;
 
 import java.lang.reflect.InvocationTargetException;
 import java.lang.reflect.Method;
@@ -13,6 +14,7 @@ import static org.junit.jupiter.api.Assertions.assertEquals;
 public class  LanguageUnitTest {
 
     @Test
+    @DisplayName(value = "happy test method [mapLanguageToLanguageDTO.method]")
     public void mapLanguageToLanguageDTOTest() {
         LanguageServiceImpl languageService = new LanguageServiceImpl(null,
                 null,
@@ -54,4 +56,7 @@ public class  LanguageUnitTest {
 //        assertEquals(returnValue.getUrlAndTitle(), language.getUrl().concat(language.getTitle()));
 
     }
+
+
+
 }

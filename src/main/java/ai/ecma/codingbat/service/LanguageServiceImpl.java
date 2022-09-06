@@ -166,20 +166,45 @@ public class LanguageServiceImpl implements LanguageService {
         else
             sb.append(" ").append(column).append(" ");
 
-//        String res = switch (cond) {
-//            case IS_SET -> " IS NOT NULL ";
-//            case IS_NOT_SET -> " IS NULL";
-//            case CONTAINS -> " ILIKE '%" + val + "%'";
-//            case NOT_CONTAINS -> " NOT ILIKE '%" + val + "%'";
-//            case EQ -> " = " + val;
-//            case NOT_EQ -> " != " + val;
-//            case GT -> " > " + val;
-//            case LT -> " < " + val;
-//            case GTE -> " >= " + val;
-//            case LTE -> " <= " + val;
-//            case RA -> " BETWEEN " + from + " AND " + till + " ";
-//        };
-//        sb.append(res);
+        String res;
+        switch (cond) {
+            case IS_SET:
+                res = " IS NOT NULL ";
+                break;
+            case IS_NOT_SET:
+                res = (" IS NULL");
+                break;
+            case CONTAINS:
+                res = (" ILIKE '%" + val + "%'");
+                break;
+            case NOT_CONTAINS:
+                res = (" NOT ILIKE '%" + val + "%'");
+                break;
+            case EQ:
+                res = (" = " + val);
+                break;
+            case NOT_EQ:
+                res = (" != " + val);
+                break;
+            case GT:
+                res = (" > " + val);
+                break;
+            case LT:
+                res = (" < " + val);
+                break;
+            case GTE:
+                res = (" >= " + val);
+                break;
+            case LTE:
+                res = (" <= " + val);
+                break;
+            case RA:
+                res = (" BETWEEN " + from + " AND " + till + " ");
+                break;
+            default:
+                res = "";
+        }
+        sb.append(res);
     }
 
     private List<FilterColumnDTO> forFilterDto(List<FilterColumnDTO> list, boolean needTitleAndUrl) {
@@ -262,7 +287,9 @@ public class LanguageServiceImpl implements LanguageService {
     public ApiResult<LanguageDTO> edit(AddLanguageDTO addLanguageDTO, Integer id) {
         if (languageRepository.existsByTitleIgnoreCase(addLanguageDTO.getTitle()))
             throw RestException.restThrow("ALREADY_EXISTS", HttpStatus.ALREADY_REPORTED);
-        languageRepository.save(addLanguageDTO.get());
+        if (!languageRepository.existsById(id))
+            throw RestException.restThrow("Language not founded in this id", HttpStatus.NOT_FOUND);
+        languageRepository.save(addLanguageDTO.get(id));
         return getLanguage(id);
     }
 
