@@ -18,6 +18,7 @@ public interface LanguageController {
 
     String BASE_PATH = "/api/language";
     String ADD_PATH = "/add";
+    String LIST_FOR_USERS_PATH = "/list-for-users";
 
     @PostMapping(path = ADD_PATH)
     ApiResult<LanguageDTO> add(@Valid @RequestBody AddLanguageDTO addLanguageDTO);
@@ -41,7 +42,7 @@ public interface LanguageController {
                                 @PathVariable Integer id);
 
 
-    @GetMapping("/list-for-users")
+    @GetMapping(LIST_FOR_USERS_PATH)
     ApiResult<List<LanguageDTO>> getLanguagesForUser();
 
 

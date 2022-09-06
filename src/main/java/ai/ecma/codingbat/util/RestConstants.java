@@ -1,6 +1,7 @@
 package ai.ecma.codingbat.util;
 
 import ai.ecma.codingbat.controller.cotract.AuthController;
+import ai.ecma.codingbat.controller.cotract.LanguageController;
 
 public interface RestConstants {
     String DEFAULT_PAGE_NUMBER = "0";
@@ -9,6 +10,8 @@ public interface RestConstants {
     String AUTHENTICATION_HEADER = "Authorization";
 
     String[] OPEN_PAGES = {
-            AuthController.AUTH_CONTROLLER_BASE_PATH + "/**"
+            "/*",
+            AuthController.AUTH_CONTROLLER_BASE_PATH + "/**",
+            LanguageController.BASE_PATH+LanguageController.LIST_FOR_USERS_PATH
     };
 }

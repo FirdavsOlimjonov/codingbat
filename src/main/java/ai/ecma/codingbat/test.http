@@ -18,4 +18,4 @@ Content-Type: application/json
 
 
 ###
-GET http://localhost/language/17
+GET http://localhost:8090/api/language/list

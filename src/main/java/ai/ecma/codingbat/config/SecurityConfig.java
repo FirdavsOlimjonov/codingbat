@@ -61,7 +61,7 @@ public class SecurityConfig {
                                                 "/v2/api-docs",
                                                 "/configuration/ui")
                                         .permitAll()
-                                        .anyRequest()
+                                        .antMatchers("/api/**")
                                         .authenticated()
                 )
 
