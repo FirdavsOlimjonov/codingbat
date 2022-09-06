@@ -1,6 +1,7 @@
 package ai.ecma.codingbat.payload;
 
 
+import ai.ecma.codingbat.util.CommonUtils;
 import lombok.*;
 import ai.ecma.codingbat.entity.Language;
 
@@ -22,6 +23,9 @@ public class AddLanguageDTO {
 
     public Language get() {
         return new Language(title);
+    }
+    public Language get(Integer id) {
+        return new Language(title, CommonUtils.makeUrl(title),id);
     }
 
 }

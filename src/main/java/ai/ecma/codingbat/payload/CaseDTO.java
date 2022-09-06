@@ -2,6 +2,7 @@ package ai.ecma.codingbat.payload;
 
 import lombok.AllArgsConstructor;
 import lombok.Getter;
+import lombok.NoArgsConstructor;
 import lombok.Setter;
 import ai.ecma.codingbat.entity.Case;
 import ai.ecma.codingbat.entity.Problem;
@@ -12,6 +13,7 @@ import java.util.List;
 @Getter
 @Setter
 @AllArgsConstructor
+@NoArgsConstructor
 public class CaseDTO {
     private Long id;
 

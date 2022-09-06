@@ -1,7 +1,9 @@
 package ai.ecma.codingbat.entity;
 
 import ai.ecma.codingbat.util.CommonUtils;
+import lombok.AllArgsConstructor;
 import lombok.Getter;
+import lombok.NoArgsConstructor;
 import lombok.Setter;
 import ai.ecma.codingbat.entity.template.AbsTitleIntegerEntity;
 import org.springframework.boot.CommandLineRunner;

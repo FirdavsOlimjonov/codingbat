@@ -2,6 +2,7 @@ package ai.ecma.codingbat.api.auth;
 
 import ai.ecma.codingbat.entity.User;
 import ai.ecma.codingbat.payload.ApiResult;
+import ai.ecma.codingbat.payload.ErrorData;
 import ai.ecma.codingbat.payload.SignDTO;
 import ai.ecma.codingbat.payload.TokenDTO;
 import ai.ecma.codingbat.repository.UserRepository;
@@ -14,13 +15,16 @@ import org.springframework.boot.test.autoconfigure.web.servlet.AutoConfigureMock
 import org.springframework.boot.test.context.SpringBootTest;
 import org.springframework.boot.test.json.JacksonTester;
 import org.springframework.http.MediaType;
+import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.test.web.servlet.MockMvc;
 import org.springframework.test.web.servlet.ResultActions;
 
 import java.util.Objects;
 import java.util.Optional;
 
+import static org.junit.jupiter.api.Assertions.assertEquals;
 import static org.junit.jupiter.api.Assertions.assertTrue;
+import static org.mockito.BDDMockito.given;
 import static org.mockito.Mockito.when;
 import static org.springframework.test.web.servlet.request.MockMvcRequestBuilders.get;
 import static org.springframework.test.web.servlet.request.MockMvcRequestBuilders.post;
@@ -38,13 +42,10 @@ class AuthControllerApiTest {
     private static User user;
     @Mock
     private static SignDTO signDTO;
-
     @Mock
-    private ObjectMapper objectMapper;
-
-    @Mock
+    private PasswordEncoder passwordEncoder;
+    @Autowired
     private UserRepository userRepository;
-    private JacksonTester<SignDTO> jsonSignDTO;
 
     static String adminAccessToken;
     static String tokenType;
@@ -55,36 +56,36 @@ class AuthControllerApiTest {
         signDTO = new SignDTO("firdavsolimjonov25@gmail.com", "root123");
         user = new User(signDTO.getEmail(), signDTO.getPassword());
     }
+    @Test
+    public void signUpSuccessfully() throws Exception {
+        signDTO = new SignDTO("firdavsolimjonov25@gmail.com", "root123");
+        user = new User(signDTO.getEmail(), signDTO.getPassword());
+        // Register
+        ResultActions userRegistrationActions = mockMvc.perform(post("/api/auth/sign-up")
+                .contentType(MediaType.APPLICATION_JSON)
+                .content(Objects.requireNonNull(CommonUtils.objectToJson(signDTO))));
 
-    @BeforeEach
-    void setJson() {
-        JacksonTester.initFields(this, new ObjectMapper());
+        String resultString = userRegistrationActions.andReturn().getResponse().getContentAsString();
+        ApiResult<Boolean> apiResult = CommonUtils.jsonToObject(resultString, Boolean.class);
+
+        userRegistrationActions.andExpect(status().isOk());
+        assertTrue(apiResult.isSuccess());
     }
-//
-//    @Test
-//    public void isShouldSignUpSuccessfully() throws Exception {
-//        // Register
-//        ResultActions userRegistrationActions = mockMvc.perform(post("/api/auth/sign-up")
-//                .contentType(MediaType.APPLICATION_JSON)
-//                .content(Objects.requireNonNull(CommonUtils.objectToJson(signDTO))));
-//
-//        userRegistrationActions.andExpect(status().isOk());
-//    }
-//
-//
-//    @Test
-//    public void isShouldVerifiedWithEmail() throws Exception {
-//        when(userRepository.findByEmail(signDTO.getEmail())).thenReturn(Optional.of(user));
-//
-//        ResultActions verificationEmailActions = mockMvc.perform(get("/api/auth/verification-email")
-//                .param(signDTO.getEmail())
-//                .contentType(MediaType.APPLICATION_JSON)
-//                .content(Objects.requireNonNull(CommonUtils.objectToJson(signDTO.getEmail()))));
-//
-//        verificationEmailActions.andExpect(status().isOk());
-//
-//    }
-//
+
+
+    @Test
+    public void verifiedWithEmail() throws Exception {
+        SignDTO signDTO = new SignDTO("admin@codingbat.com", "root123");
+        user = new User(signDTO.getEmail(), signDTO.getPassword());
+
+        ResultActions verificationEmailActions = mockMvc.perform(get("/api/auth/verification-email")
+                .param("email",user.getEmail())
+                .contentType(MediaType.APPLICATION_JSON)
+                .content(Objects.requireNonNull(CommonUtils.objectToJson(signDTO.getEmail()))));
+
+        verificationEmailActions.andExpect(status().isOk());
+    }
+
 
     @Test
     public void signInHappyTest() throws Exception {
@@ -109,19 +110,29 @@ class AuthControllerApiTest {
         tokenType = apiResult.getData().getTokenType();
     }
 
-//    @Test
-//    public void isShouldSignInEmailNotFoundTest() throws Exception {
-//        SignDTO signDTO = new SignDTO("firdavsolimjonov25@gmail.com", "root123");
-//        User user = new User(signDTO.getEmail(), signDTO.getPassword());
-//        when(userRepository.findByEmail(signDTO.getEmail())).thenReturn(Optional.of(user));
-//
-//        ResultActions signInActions = mockMvc.perform(post("/api/auth/sign-in")
-//                .contentType(MediaType.APPLICATION_JSON)
-//                .content(jsonSignDTO.write(signDTO).getJson()));
-//
-//        signInActions.andExpect(status().is(409));
-//        signInActions.andExpect(content().string("{\"success\":false,\"errors\":[{\"msg\":\"firdavsolimjonov25@gmail.com email not found\",\"code\":409}]}"));
-//    }
+    @Test
+    public void signInEmailNotFoundTest() throws Exception {
+        SignDTO signDTO = new SignDTO("firdavsolimjonov@gmail.com", "root123");
+        User user = new User(signDTO.getEmail(), signDTO.getPassword());
+
+        if (!userRepository.existsByEmail(user.getEmail()))
+                userRepository.save(user);
+
+        given(passwordEncoder.matches(signDTO.getPassword(), user.getPassword())).willReturn(true);
+
+        ResultActions signInActions = mockMvc.perform(post("/api/auth/sign-in")
+                .contentType(MediaType.APPLICATION_JSON)
+                .content(Objects.requireNonNull(CommonUtils.objectToJson(signDTO))));
+
+        signInActions.andExpect(status().is(401));
+
+        String resultString = signInActions.andReturn().getResponse().getContentAsString();
+        ApiResult<TokenDTO> apiResult = CommonUtils.jsonToObject(resultString, TokenDTO.class);
+
+        ErrorData errorData = apiResult.getErrors().get(0);
+        String msg = errorData.getMsg();
+        assertEquals("Password togri kelmadi",msg);
+    }
 
 
 }

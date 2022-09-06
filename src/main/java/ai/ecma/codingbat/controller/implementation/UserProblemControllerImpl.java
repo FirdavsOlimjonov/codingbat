@@ -8,6 +8,7 @@ import ai.ecma.codingbat.payload.UserProblemDTO;
 import ai.ecma.codingbat.service.UserProblemService;
 import org.springframework.web.bind.annotation.RestController;
 
+import javax.validation.constraints.NotNull;
 import java.util.List;
 
 @RestController
@@ -17,7 +18,8 @@ public class UserProblemControllerImpl implements UserProblemController {
     private final UserProblemService userProblemService;
 
     @Override
-    public ApiResult<UserProblemDTO> getUserProblem(Integer userId, Integer problemId) {
+    public ApiResult<UserProblemDTO> getUserProblem(@NotNull(message = "user id must be not null") Integer userId,
+                                                    @NotNull(message = "problem id must be not null") Integer problemId) {
         return userProblemService.get(userId, problemId);
     }
 

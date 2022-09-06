@@ -26,6 +26,7 @@ public class LanguageControllerTest {
     private LanguageController languageController;
 
 
+
     @Test
     public void addHappyTest() {
 
@@ -39,11 +40,11 @@ public class LanguageControllerTest {
                         List.of(role_admin)
                 ));
         AddLanguageDTO addLanguageDTO = new AddLanguageDTO("Java");
-
+        String title = addLanguageDTO.getTitle();
         ApiResult<LanguageDTO> apiResult = languageController.add(addLanguageDTO);
 
         assertEquals(
-                addLanguageDTO.getTitle(),
+                title,
                 apiResult.getData().getTitle()
         );
     }
