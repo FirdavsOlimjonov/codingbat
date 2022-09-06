@@ -1,30 +1,34 @@
-package ai.ecma.codingbat.service;
+package ai.ecma.codingbat.service.language;
 
 import ai.ecma.codingbat.entity.Language;
 import ai.ecma.codingbat.payload.AddLanguageDTO;
 import ai.ecma.codingbat.payload.ApiResult;
 import ai.ecma.codingbat.payload.LanguageDTO;
 import ai.ecma.codingbat.repository.LanguageRepository;
+import ai.ecma.codingbat.service.LanguageService;
+import ai.ecma.codingbat.service.LanguageServiceImpl;
 import ai.ecma.codingbat.util.CommonUtils;
-import org.junit.Test;
 import org.junit.jupiter.api.DisplayName;
+import org.junit.Test;
 import org.junit.runner.RunWith;
 import org.mockito.InjectMocks;
 import org.mockito.Mock;
-import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.test.context.SpringBootTest;
 import org.springframework.test.context.junit4.SpringRunner;
 
-import static org.junit.jupiter.api.Assertions.assertEquals;
+import static org.assertj.core.api.Assertions.assertThat;
+import static org.junit.jupiter.api.Assertions.*;
 import static org.mockito.ArgumentMatchers.any;
 import static org.mockito.Mockito.when;
 
 @RunWith(SpringRunner.class)
 @SpringBootTest(webEnvironment = SpringBootTest.WebEnvironment.NONE)
-public class LanguageServiceImplTest {
+public class LanguageServiceImplMockTest {
 
-    @Autowired
-    private LanguageServiceImpl languageService;
+    @InjectMocks
+    private LanguageService languageService;
+    @Mock
+    private LanguageRepository languageRepository;
 
 
     @Test
@@ -32,11 +36,19 @@ public class LanguageServiceImplTest {
     public void addLanguageHappyTest() {
         AddLanguageDTO addLanguageDTO = new AddLanguageDTO("Java");
 
-        ApiResult<LanguageDTO> apiResult = languageService.add(addLanguageDTO);
+        when(languageRepository.save(any(Language.class)))
+                .thenReturn(new Language(
+                        addLanguageDTO.getTitle(),
+                        CommonUtils.makeUrl(addLanguageDTO.getTitle())));
+
+        ApiResult<LanguageDTO> apiResult =
+                languageService.add(addLanguageDTO);
 
         assertEquals(
                 addLanguageDTO.getTitle(),
                 apiResult.getData().getTitle());
+
+//        assertThat(apiResult.getData().getTitle()).isEqualTo(addLanguageDTO.getTitle());
 
         assertEquals(
                 CommonUtils.makeUrl(addLanguageDTO.getTitle()),

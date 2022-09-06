@@ -17,10 +17,8 @@ import javax.validation.Valid;
 @RestController
 @Slf4j
 public class AuthControllerImpl implements AuthController {
-
     private final AuthService authService;
     private final UserDetailsRepository userDetailsRepository;
-
 
     public ApiResult<Boolean> signUp(@RequestBody @Valid SignDTO signDTO) {
         log.info("SIgn up method entered: {}", signDTO);

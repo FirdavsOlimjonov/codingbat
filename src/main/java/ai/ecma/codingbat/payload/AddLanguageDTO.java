@@ -6,6 +6,10 @@ import ai.ecma.codingbat.entity.Language;
 
 import javax.validation.constraints.NotBlank;
 
+/**
+ * API DAN CLIENTL LARGA BORADIGAN HAR QANDAY SUCCESS VA ERROR RESPONSE LAR QAYTADIGAN CLASS
+ */
+
 @Setter
 @Getter
 @AllArgsConstructor

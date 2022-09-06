@@ -16,7 +16,6 @@ import java.util.List;
 @Table(uniqueConstraints = @UniqueConstraint(columnNames = {"title"}))
 @NoArgsConstructor
 public final class Language extends AbsTitleIntegerEntity {
-
     @Column(unique = true, nullable = false)
     private String url;
 
