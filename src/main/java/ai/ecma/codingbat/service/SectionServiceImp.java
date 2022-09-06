@@ -47,7 +47,7 @@ public class SectionServiceImp implements SectionService{
 
         sectionRepository.save(section);
 
-        SectionDTO sectionDTO = mapSectionToSectionDTO(section, true);
+        SectionDTO sectionDTO = mapSectionToSectionDTO(section, 0,0L,0L);
 
         return ApiResult.successResponse(messageSource.getMessage("SUCCESSFULLY_ADDED", null, LocaleContextHolder.getLocale()), sectionDTO);
     }
@@ -57,7 +57,10 @@ public class SectionServiceImp implements SectionService{
         Section section = sectionRepository.findById(id).orElseThrow(() ->
                 RestException.restThrow(messageSource.getMessage("SECTION_NOT_FOUND", null, LocaleContextHolder.getLocale()), HttpStatus.BAD_REQUEST));
 
-        SectionDTO sectionDTO = mapSectionToSectionDTO(section);
+        int countProblem = problemRepository.countAllBySectionId(section.getId());
+        long tryCount = userProblemRepository.countAllByProblem_SectionId(section.getId());
+        long solutionCount = userProblemRepository.countAllBySolvedIsTrueAndProblem_SectionId(section.getId());
+        SectionDTO sectionDTO = mapSectionToSectionDTO(section,countProblem,tryCount,solutionCount);
         return ApiResult.successResponse(sectionDTO);
     }
 
@@ -98,7 +101,10 @@ public class SectionServiceImp implements SectionService{
         section.setDescription(addSectionDTO.getDescription());
 
         sectionRepository.save(section);
-        SectionDTO sectionDTO = mapSectionToSectionDTO(section);
+        int countProblem = problemRepository.countAllBySectionId(section.getId());
+        long tryCount = userProblemRepository.countAllByProblem_SectionId(section.getId());
+        long solutionCount = userProblemRepository.countAllBySolvedIsTrueAndProblem_SectionId(section.getId());
+        SectionDTO sectionDTO = mapSectionToSectionDTO(section,countProblem,tryCount,solutionCount);
         return ApiResult.successResponse(messageSource.getMessage("SUCCESSFULLY_EDITED",null,LocaleContextHolder.getLocale()),sectionDTO);
     }
 
@@ -225,31 +231,15 @@ public class SectionServiceImp implements SectionService{
                 section.getMaxRate(),
                 section.getLanguage().getId());
     }
-    private SectionDTO mapSectionToSectionDTO(Section section, boolean isNew) {
+    private SectionDTO mapSectionToSectionDTO(Section section, int problemCount,
+                                              long tryCount, long solvedCount) {
         return new SectionDTO(
                 section.getId(),
                 section.getTitle(),
                 section.getUrl(),
                 section.getDescription(),
                 section.getMaxRate(),
-                section.getLanguage().getId(), 0, 0L, 0L);
-    }
-
-    private SectionDTO mapSectionToSectionDTO(Section section) {
-        int countProblem = problemRepository.countAllBySectionId(section.getId());
-        long tryCount = userProblemRepository.countAllByProblem_SectionId(section.getId());
-        long solutionCount = userProblemRepository.countAllBySolvedIsTrueAndProblem_SectionId(section.getId());
-
-        return new SectionDTO(
-                section.getId(),
-                section.getTitle(),
-                section.getUrl(),
-                section.getDescription(),
-                section.getMaxRate(),
-                section.getLanguage().getId(),
-                countProblem,
-                tryCount,
-                solutionCount);
+                null, problemCount,tryCount,solvedCount);
     }
 
     private Section getSectionByAddSectionDTO(AddSectionDTO addSectionDTO) {
