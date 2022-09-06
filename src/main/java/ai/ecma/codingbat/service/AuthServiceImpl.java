@@ -21,6 +21,7 @@ import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.stereotype.Service;
 
 import java.util.Date;
+import java.util.List;
 
 @Service
 @RequiredArgsConstructor
@@ -37,7 +38,6 @@ public class AuthServiceImpl implements AuthService {
 
     @Value("${jwt.refresh.expiration-time}")
     private long REFRESH_TOKEN_EXPIRATION_TIME;
-
 
     private final UserRepository userRepository;
     private final PasswordEncoder passwordEncoder;
@@ -92,10 +92,9 @@ public class AuthServiceImpl implements AuthService {
 
     @Override
     public ApiResult<TokenDTO> signIn(SignDTO signDTO) {
-
         //1. check User
         User user = userRepository
-                .findByEmail(signDTO.getEmail())
+                .findByEmailEqualsIgnoreCase(signDTO.getEmail())
                 .orElseThrow(() -> new UsernameNotFoundException(String.format("%s email not found", signDTO.getEmail())));
 
         //2. root123 -> encode
