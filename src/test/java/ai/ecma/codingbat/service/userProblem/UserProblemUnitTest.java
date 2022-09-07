@@ -106,7 +106,6 @@ public class UserProblemUnitTest {
 
     }
 
-
     @Test
     public void mapUserProblemToUserProblemDTOHappyTest() {
 
@@ -213,7 +212,7 @@ public class UserProblemUnitTest {
 
         Method method = null;
         try {
-             method = UserProblemServiceImpl.class.getDeclaredMethod("checkTrue", List.class);
+            method = UserProblemServiceImpl.class.getDeclaredMethod("checkTrue", List.class);
         } catch (NoSuchMethodException e) {
             fail("method not found");
         }
@@ -230,7 +229,7 @@ public class UserProblemUnitTest {
 
     }
 
-  @Test
+    @Test
     public void checkTrueFalseTest() {
         Language language = new Language("Java");
         UserProblemService userProblemService = new UserProblemServiceImpl(null, null, null, null);
@@ -257,7 +256,7 @@ public class UserProblemUnitTest {
 
         Method method = null;
         try {
-             method = UserProblemServiceImpl.class.getDeclaredMethod("checkTrue", List.class);
+            method = UserProblemServiceImpl.class.getDeclaredMethod("checkTrue", List.class);
         } catch (NoSuchMethodException e) {
             fail("method not found");
         }
