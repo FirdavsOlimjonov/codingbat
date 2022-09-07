@@ -39,3 +39,5 @@ app:
   admin:
     username: admin@codingbat.com
     password: root123
+  upload:
+    folder: /home/ubuntu/codingbat/uploads
