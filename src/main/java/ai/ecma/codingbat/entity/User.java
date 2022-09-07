@@ -38,11 +38,14 @@ public class User extends AbsIntegerEntity implements UserDetails {
     @Enumerated(value = EnumType.STRING)
     private RoleEnum role = RoleEnum.ROLE_USER;
 
+    @OneToOne(fetch = FetchType.LAZY)
+    private Attachment avatar;
+
     public User(String email, String password) {
         this.email = email;
         this.password = password;
         accountNonExpired = accountNonLocked = credentialsNonExpired = true;
-                enabled = true;
+        enabled = true;
     }
 
     @Override
