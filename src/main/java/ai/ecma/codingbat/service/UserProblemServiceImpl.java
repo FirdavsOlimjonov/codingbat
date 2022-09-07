@@ -19,6 +19,7 @@ import org.springframework.stereotype.Service;
 
 import java.util.ArrayList;
 import java.util.List;
+import java.util.Objects;
 import java.util.Optional;
 
 import static ai.ecma.codingbat.compile.Compiler.staticCompiler;
@@ -34,7 +35,6 @@ public class UserProblemServiceImpl implements UserProblemService {
     private final UserRepository userRepository;
 
     private final CaseRepository caseRepository;
-
 
 
     @Override
@@ -110,12 +110,15 @@ public class UserProblemServiceImpl implements UserProblemService {
 
         List<UserProblem> userProblemList = userProblemRepository.findAll();
 
-        List<UserProblemDTO> userProblemDTOList = mapUserProblemsToUserProblemDTO(userProblemList);
+        List<UserProblemDTO> userProblemDTOList = mapUserProblemsToUserProblemDTOList(userProblemList);
 
         return ApiResult.successResponse(userProblemDTOList);
     }
 
-    private List<UserProblemDTO> mapUserProblemsToUserProblemDTO(List<UserProblem> userProblemList) {
+    private List<UserProblemDTO> mapUserProblemsToUserProblemDTOList(List<UserProblem> userProblemList) {
+
+        if (Objects.isNull(userProblemList))
+            throw new IllegalArgumentException("parameter must not be null");
 
         List<UserProblemDTO> userProblemDTOList = new ArrayList<>();
 
@@ -127,6 +130,9 @@ public class UserProblemServiceImpl implements UserProblemService {
     }
 
     private UserProblemDTO mapUserProblemToUserProblemDTO(UserProblem userProblem) {
+
+        if (userProblem == null)
+            throw new IllegalArgumentException("parameter must not be null");
 
         return new UserProblemDTO(
                 userProblem.getUser().getId(),
@@ -163,7 +169,6 @@ public class UserProblemServiceImpl implements UserProblemService {
         userProblem.setSolved(isSuccess);
         userProblemRepository.save(userProblem);
     }
-
 
 
 }
