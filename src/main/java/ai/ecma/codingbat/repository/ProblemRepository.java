@@ -17,5 +17,5 @@ public interface ProblemRepository extends JpaRepository<Problem,Integer> {
 
     int countAllBySectionId(Integer id);
 
-    Object countAllBySection_Section_Id(Integer id);
+//    Object countAllBySection_Section_Id(Integer id);
 }

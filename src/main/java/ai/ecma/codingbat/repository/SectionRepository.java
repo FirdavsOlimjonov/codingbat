@@ -25,7 +25,5 @@ public interface SectionRepository extends JpaRepository<Section, Integer> {
     @Query(value = "SELECT * FROM get_result_of_query_section(:query)", nativeQuery = true)
     List<SectionDTOProjection> getSectionsByStringQuery(String query);
 
-    Object existsByTitleIgnoreCase(String any);
-
-    Object countAllBySectionId(Integer id);
+//    Object existsByTitleIgnoreCase(String any);
 }

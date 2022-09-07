@@ -36,12 +36,29 @@ public class Section extends AbsTitleIntegerEntity {
         this.url = url;
         super.setTitle(title);
     }
+
+
     public Section(String title, String url, Integer id) {
         this.url = url;
         super.setTitle(title);
         this.setId(id);
     }
 
+    public Section(String title, String url, Language language) {
+        this.url = url;
+        super.setTitle(title);
+        this.language = language;
+    }
+
+    public Section(String title, String description, Byte maxRate, Integer id, Language language) {
+        setTitle(title);
+        setUrl(title);
+        this.description = description;
+        this.maxRate = maxRate;
+        this.setId(id);
+        this.language = language;
+
+    }
 
     public void setUrl(String title) {
         this.url = CommonUtils.makeUrl(title);
