@@ -1,13 +1,8 @@
 package ai.ecma.codingbat.controller;
 
-
-import ai.ecma.codingbat.controller.cotract.LanguageController;
 import ai.ecma.codingbat.controller.cotract.SectionController;
-import ai.ecma.codingbat.entity.Language;
-import ai.ecma.codingbat.entity.Section;
 import ai.ecma.codingbat.exceptions.RestException;
 import ai.ecma.codingbat.payload.*;
-import ai.ecma.codingbat.util.CommonUtils;
 import org.junit.Test;
 import org.junit.jupiter.api.DisplayName;
 import org.junit.jupiter.api.Order;
@@ -18,15 +13,9 @@ import org.springframework.security.authentication.UsernamePasswordAuthenticatio
 import org.springframework.security.core.authority.SimpleGrantedAuthority;
 import org.springframework.security.core.context.SecurityContextHolder;
 import org.springframework.test.context.junit4.SpringRunner;
-
-import java.lang.module.ResolutionException;
 import java.util.List;
-import java.util.Optional;
-
 import static org.assertj.core.api.Assertions.assertThatThrownBy;
 import static org.junit.jupiter.api.Assertions.*;
-import static org.mockito.ArgumentMatchers.any;
-import static org.mockito.Mockito.when;
 
 @RunWith(SpringRunner.class)
 @SpringBootTest(webEnvironment = SpringBootTest.WebEnvironment.NONE)

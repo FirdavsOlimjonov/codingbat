@@ -161,7 +161,7 @@ public class SectionServiceImp implements SectionService {
     @Override
     public ApiResult<SectionDTO> getSection(Integer id) {
         Section section = sectionRepository.findById(id).orElseThrow(() ->
-                RestException.restThrow(messageSource.getMessage("SECTION_NOT_FOUND", null, LocaleContextHolder.getLocale()), HttpStatus.BAD_REQUEST));
+                RestException.restThrow(messageSource.getMessage("SECTION_NOT_FOUND", null, LocaleContextHolder.getLocale()), HttpStatus.NOT_FOUND));
 
         int countProblem = problemRepository.countAllBySectionId(section.getId());
         long tryCount = userProblemRepository.countAllByProblem_SectionId(section.getId());
@@ -172,10 +172,10 @@ public class SectionServiceImp implements SectionService {
 
     @Override
     public ApiResult<?> delete(Integer id) {
-        languageRepository.findById(id).orElseThrow(() ->
+        Section section = sectionRepository.findById(id).orElseThrow(() ->
                 RestException.restThrow("SECTION_NOT_FOUND", HttpStatus.NOT_FOUND));
 
-        sectionRepository.deleteById(id);
+        sectionRepository.deleteById(section.getId());
         return ApiResult.successResponse(messageSource.getMessage("SUCCESSFULLY_DELETED", null, LocaleContextHolder.getLocale()));
     }
 
