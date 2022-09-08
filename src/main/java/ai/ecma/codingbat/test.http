@@ -11,8 +11,8 @@ POST localhost:8090/api/auth/sign-in
 Content-Type: application/json
 
 {
-  "email": "yy040904b@gmail.com",
-  "password": "yusufbek200"
+  "email": "admin@codingbat.com",
+  "password": "root123"
 }
 
 
