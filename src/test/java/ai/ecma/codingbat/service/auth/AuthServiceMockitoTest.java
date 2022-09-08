@@ -41,7 +41,7 @@ public class AuthServiceMockitoTest {
     private UserRepository userRepository;
     private UserRepository userRepositoryBean;
     @Autowired
-    public void setProductRepository(UserRepository userRepository) {
+    public void setUserRepositoryBean(UserRepository userRepository) {
         this.userRepositoryBean = userRepositoryBean;
     }
     @Mock
