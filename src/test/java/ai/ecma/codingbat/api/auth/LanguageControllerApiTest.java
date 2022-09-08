@@ -63,6 +63,7 @@ class LanguageControllerApiTest {
         adminAccessToken = tokenDTOApiResult.getData().getAccessToken();
         tokenType = tokenDTOApiResult.getData().getTokenType();
 
+
     }
 
     @Test

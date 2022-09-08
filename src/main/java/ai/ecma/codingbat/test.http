@@ -1,9 +1,18 @@
 POST localhost:8090/api/language/add
 Content-Type: application/json
-Authorization: Bearer eyJhbGciOiJIUzUxMiJ9.eyJzdWIiOiJ5eTA0MDkwNGJAZ21haWwuY29tIiwiaWF0IjoxNjYxNTk1MDYyLCJleHAiOjE2NjE2MDIyNjJ9.AXgkby79_K-c-qBuoOzLLXyi4VnsNxO83LlTB_mtg5yh6ClKgWLjiUhhHXOpWnoap5woVsRacGwo1AOCmbvS5g
+Authorization: Bearer eyJhbGciOiJIUzUxMiJ9.eyJzdWIiOiJhZG1pbkBjb2RpbmdiYXQuY29tIiwiaWF0IjoxNjYyNjIxODg5LCJleHAiOjE2NjI2MjE5NjF9.4IXjZRBY5edkwOhXlDJD4fgl0QeLgrb_omtBv__P4jsow67wrWgMnj7W-R1joueDBkvLrbjrcs5G7a-roaYxNg
 
 {
-  "title": "RUBY"
+  "title": "JAVA"
+}
+
+###
+POST localhost:8090/api/language/list
+Content-Type: application/json
+Authorization: Bearer eyJhbGciOiJIUzUxMiJ9.eyJzdWIiOiJhZG1pbkBjb2RpbmdiYXQuY29tIiwiaWF0IjoxNjYyNjE3NDU0LCJleHAiOjE2NjI2MjQ2NTR9.PILkhHqVYn0KJaVQ9nhWWxbf3-OiAupXj-uew9rOFtKWg0DeztvCA-9yPefUDJh0T7bnkpJ81NaYwej8KxffkQ
+
+{
+  "title": "JAVA"
 }
 
 ###
@@ -15,7 +24,12 @@ Content-Type: application/json
   "password": "root123"
 }
 
-
+###
+GET localhost:8090/api/auth/refresh-token
+Authorization: Bearer eyJhbGciOiJIUzUxMiJ9.eyJzdWIiOiJhZG1pbkBjb2RpbmdiYXQuY29tIiwiaWF0IjoxNjYyNjIxNTI0LCJleHAiOjE2NjI2MjE1OTZ9.WFblFWPN3ZE-nP4rGxKFq6VxiYWUQlKDVVZRKfxNTZffPuWvcs6iP01VpnqUsTQ2ji-GL38now1llbtw8V1sBQ
+RefreshToken: eyJhbGciOiJIUzUxMiJ9.eyJzdWIiOiJhZG1pbkBjb2RpbmdiYXQuY29tIiwiaWF0IjoxNjYyNjIxNTI0LCJleHAiOjE2NjMyMjYzMjR9.vYzjOO-vRRKdPeuXpaGfVm6KsYFkHY_B4Bsh-6s_ka55AeIWBABytxgzH1Obfp8l3-5SFs-mucGL5httLqXisg
 
 ###
 GET http://localhost:8090/api/language/list
+###"accessToken": "eyJhbGciOiJIUzUxMiJ9.eyJzdWIiOiJhZG1pbkBjb2RpbmdiYXQuY29tIiwiaWF0IjoxNjYyNjIxNTI0LCJleHAiOjE2NjI2MjE1OTZ9.WFblFWPN3ZE-nP4rGxKFq6VxiYWUQlKDVVZRKfxNTZffPuWvcs6iP01VpnqUsTQ2ji-GL38now1llbtw8V1sBQ",
+   ### "refreshToken": "eyJhbGciOiJIUzUxMiJ9.eyJzdWIiOiJhZG1pbkBjb2RpbmdiYXQuY29tIiwiaWF0IjoxNjYyNjIxNTI0LCJleHAiOjE2NjMyMjYzMjR9.vYzjOO-vRRKdPeuXpaGfVm6KsYFkHY_B4Bsh-6s_ka55AeIWBABytxgzH1Obfp8l3-5SFs-mucGL5httLqXisg",

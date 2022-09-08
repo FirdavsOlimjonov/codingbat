@@ -11,7 +11,7 @@ spring:
 
   jpa:
     hibernate:
-      ddl-auto: update
+      ddl-auto: create
     show-sql: true
 
   mail:
@@ -36,7 +36,7 @@ spring:
 jwt:
   access:
     key: tHaX54Hwk^YMzKd@e@p7#70OZn0#D98BK8C1%T&hBnrzgqK28o
-    expiration-time: 7200000
+    expiration-time: 72000
   refresh:
     key: tHaX54Hwk^YdfdsMzK-d@e@&p7#%70OZ()BK8C1%T&hBnrzgqK287
     expiration-time: 604800000

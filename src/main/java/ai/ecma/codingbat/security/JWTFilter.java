@@ -1,7 +1,7 @@
 package ai.ecma.codingbat.security;
 
 import ai.ecma.codingbat.util.RestConstants;
-import io.jsonwebtoken.Jwts;
+import io.jsonwebtoken.*;
 import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
 import ai.ecma.codingbat.entity.User;
@@ -73,9 +73,16 @@ public class JWTFilter extends OncePerRequestFilter {
                     .parseClaimsJws(authorization)
                     .getBody()
                     .getSubject();
-        } catch (Exception e) {
-        } finally {
-            System.out.println("final");
+        } catch (SignatureException ex) {
+            logger.error("Invalid JWT signature");
+        } catch (MalformedJwtException ex) {
+            logger.error("Invalid JWT token");
+        } catch (ExpiredJwtException ex) {
+            logger.error("Expired JWT token");
+        } catch (UnsupportedJwtException ex) {
+            logger.error("Unsupported JWT token");
+        } catch (IllegalArgumentException ex) {
+            logger.error("JWT claims string is empty.");
         }
         return email;
     }

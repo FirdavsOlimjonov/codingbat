@@ -2,40 +2,24 @@
 ### Problem qo`shish
 POST http://localhost:8090/api/problem
 Content-Type: application/json
-
-
+Authorization: Bearer eyJhbGciOiJIUzUxMiJ9.eyJzdWIiOiJhZG1pbkBjb2RpbmdiYXQuY29tIiwiaWF0IjoxNjYyNjE3NDU0LCJleHAiOjE2NjI2MjQ2NTR9.PILkhHqVYn0KJaVQ9nhWWxbf3-OiAupXj-uew9rOFtKWg0DeztvCA-9yPefUDJh0T7bnkpJ81NaYwej8KxffkQ
 
 
 {
-  "title": "problem1",
+  "title": "concat",
   "description": "middle range",
-  "methodSignature": "asfdad(ASFDAS){}",
+  "methodSignature": "public String concat(String a, String b){}",
   "section": 1,
   "cases": [
     {
-      "args": "a, b, d, c",
-      "expected": "askdksad",
+      "args": "\"a\", \"b\"",
+      "expected": "\"ab\"",
       "visible": true
     },
     {
-      "args": "tfsfkj dscs cdsc",
-      "expected": " idc c  icd   sad",
-      "visible": false
-    },
-    {
-      "args": "JAHKANJ JDA",
-      "expected": "DKSJAKHKCNSKN<W",
+      "args": "\"ketmon\", \"bolta\"",
+      "expected": "\"ketmonbolta\"",
       "visible": true
-    },
-    {
-      "args": "!#@!#(*!@)#",
-      "expected": "hjdsjkcw  4i ci",
-      "visible": true
-    },
-    {
-      "args": "1229739  139229 131",
-      "expected": "=-==0=-=0-",
-      "visible": false
     }
   ]
 }
