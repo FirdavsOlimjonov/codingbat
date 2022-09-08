@@ -1,9 +1,6 @@
 package ai.ecma.codingbat.payload;
 
-import lombok.AllArgsConstructor;
-import lombok.Getter;
-import lombok.NoArgsConstructor;
-import lombok.Setter;
+import lombok.*;
 import ai.ecma.codingbat.entity.Problem;
 import ai.ecma.codingbat.entity.Section;
 
@@ -14,6 +11,7 @@ import java.util.List;
 @Setter
 @AllArgsConstructor
 @NoArgsConstructor
+@ToString
 public class ProblemDTO {
 
     private Integer id;

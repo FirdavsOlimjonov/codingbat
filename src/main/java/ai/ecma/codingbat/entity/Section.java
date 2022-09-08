@@ -1,10 +1,7 @@
 package ai.ecma.codingbat.entity;
 
 import ai.ecma.codingbat.util.CommonUtils;
-import lombok.AllArgsConstructor;
-import lombok.Getter;
-import lombok.NoArgsConstructor;
-import lombok.Setter;
+import lombok.*;
 import ai.ecma.codingbat.entity.template.AbsTitleIntegerEntity;
 import org.springframework.boot.CommandLineRunner;
 
@@ -13,6 +10,7 @@ import javax.persistence.*;
 @Entity
 @Setter
 @Getter
+@ToString
 @Table(uniqueConstraints = {
         @UniqueConstraint(columnNames = {"title", "language_id"}),
         @UniqueConstraint(columnNames = {"url", "language_id"}),

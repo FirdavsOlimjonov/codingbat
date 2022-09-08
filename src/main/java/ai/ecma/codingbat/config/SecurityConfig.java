@@ -44,7 +44,7 @@ public class SecurityConfig {
                                 auth
                                         .antMatchers(RestConstants.OPEN_PAGES)
                                         .permitAll()
-                                        .antMatchers("/",
+                                        .antMatchers("/**",
                                                 "/favicon.ico",
                                                 "//*.png",
                                                 "//*.gif",
@@ -61,8 +61,8 @@ public class SecurityConfig {
                                                 "/v2/api-docs",
                                                 "/configuration/ui")
                                         .permitAll()
-                                        .antMatchers("/api/**")
-                                        .authenticated()
+//                                        .antMatchers("/api/**")
+//                                        .authenticated()
                 )
 
                 .exceptionHandling()

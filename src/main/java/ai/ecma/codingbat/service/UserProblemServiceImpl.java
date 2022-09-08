@@ -35,8 +35,6 @@ public class UserProblemServiceImpl implements UserProblemService {
 
     private final CaseRepository caseRepository;
 
-
-
     @Override
     public ApiResult<UserProblemDTO> get(Integer userId, Integer problemId) {
 
