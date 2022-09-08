@@ -1,26 +1,19 @@
 package ai.ecma.codingbat.config;
 
-import ai.ecma.codingbat.service.AuthService;
 import ai.ecma.codingbat.util.RestConstants;
 import lombok.RequiredArgsConstructor;
 import ai.ecma.codingbat.exceptions.MyEntryPointHandler;
 import ai.ecma.codingbat.security.JWTFilter;
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
-import org.springframework.http.HttpMethod;
 import org.springframework.security.authentication.AuthenticationManager;
-import org.springframework.security.config.annotation.authentication.builders.AuthenticationManagerBuilder;
 import org.springframework.security.config.annotation.authentication.configuration.AuthenticationConfiguration;
 import org.springframework.security.config.annotation.method.configuration.EnableGlobalMethodSecurity;
-import org.springframework.security.config.annotation.method.configuration.EnableMethodSecurity;
 import org.springframework.security.config.annotation.web.builders.HttpSecurity;
 import org.springframework.security.config.annotation.web.configuration.EnableWebSecurity;
 import org.springframework.security.config.http.SessionCreationPolicy;
-import org.springframework.security.core.userdetails.UserDetails;
-import org.springframework.security.core.userdetails.UserDetailsService;
 import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
 import org.springframework.security.crypto.password.PasswordEncoder;
-import org.springframework.security.provisioning.InMemoryUserDetailsManager;
 import org.springframework.security.web.SecurityFilterChain;
 import org.springframework.security.web.authentication.UsernamePasswordAuthenticationFilter;
 
@@ -52,7 +45,7 @@ public class SecurityConfig {
                                 auth
                                         .antMatchers(RestConstants.OPEN_PAGES)
                                         .permitAll()
-                                        .antMatchers("/**",
+                                        .antMatchers("/",
                                                 "/favicon.ico",
                                                 "//*.png",
                                                 "//*.gif",
@@ -69,15 +62,8 @@ public class SecurityConfig {
                                                 "/v2/api-docs",
                                                 "/configuration/ui")
                                         .permitAll()
-<<<<<<< HEAD
-//                                        .antMatchers("/api/**")
-//                                        .authenticated()
-                )
-
-=======
                                         .antMatchers("/api/**")
                                         .authenticated())
->>>>>>> 156f24de283a9040c999bab760f7956a7d861cfb
                 .exceptionHandling()
                 .authenticationEntryPoint(myEntryPointHandler)
                 .and()

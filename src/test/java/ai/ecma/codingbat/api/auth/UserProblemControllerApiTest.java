@@ -73,11 +73,7 @@ public class UserProblemControllerApiTest {
         Language language = new Language("Java");
         language.setId(1);
 
-        AddSectionDTO section = new AddSectionDTO();
-        section.setTitle("String-1");
-        section.setDescription("String all problems");
-        section.setMaxRate((byte) 10);
-        section.setId(1);
+        AddSectionDTO section = new AddSectionDTO("String-1","String all problems",(byte) 10,1);
 
 
         ProblemDTO problem = new ProblemDTO();

@@ -36,10 +36,6 @@ public class UserProblemServiceImpl implements UserProblemService {
 
     private final CaseRepository caseRepository;
 
-<<<<<<< HEAD
-=======
-
->>>>>>> 6686b4c0f4a113a65dd48d5025431fd61221829a
     @Override
     public ApiResult<UserProblemDTO> get(Integer userId, Integer problemId) {
 
@@ -108,7 +104,9 @@ public class UserProblemServiceImpl implements UserProblemService {
     @Override
     public ApiResult<List<UserProblemDTO>> getAllProblems() {
 
+        System.out.println("ssss");
         List<UserProblem> userProblemList = userProblemRepository.findAll();
+        System.out.println(userProblemList);
 
         List<UserProblemDTO> userProblemDTOList = mapUserProblemsToUserProblemDTOList(userProblemList);
 
@@ -116,6 +114,8 @@ public class UserProblemServiceImpl implements UserProblemService {
     }
 
     private List<UserProblemDTO> mapUserProblemsToUserProblemDTOList(List<UserProblem> userProblemList) {
+
+        System.out.println(userProblemList);
 
         if (Objects.isNull(userProblemList))
             throw new IllegalArgumentException("parameter must not be null");
