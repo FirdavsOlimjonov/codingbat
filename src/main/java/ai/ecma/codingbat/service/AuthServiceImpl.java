@@ -59,21 +59,12 @@ public class AuthServiceImpl implements AuthService {
                 signDTO.getEmail(),
                 passwordEncoder.encode(signDTO.getPassword()));
 
-        SimpleMailMessage mailMessage
-                = new SimpleMailMessage();
-
-        // Setting up necessary details
-        mailMessage.setFrom(sender);
-        mailMessage.setTo(user.getEmail());
-        mailMessage.setSubject("");
-        mailMessage.setText(MessageLang.getMessageSource("CLICK_LINK") + " http://localhost/api/auth/verification-email?email=" + user.getEmail());
-
-        // Sending the mail
-        javaMailSender.send(mailMessage);
+        sendVerificationCodeToEmail(user);
 
         userRepository.save(user);
         return ApiResult.successResponse();
     }
+
 
     @Override
     public ApiResult<?> verificationEmail(String email) {
@@ -92,6 +83,7 @@ public class AuthServiceImpl implements AuthService {
 
     @Override
     public ApiResult<TokenDTO> signIn(SignDTO signDTO) {
+
         //1. check User
         User user = userRepository
                 .findByEmailEqualsIgnoreCase(signDTO.getEmail())
@@ -104,13 +96,14 @@ public class AuthServiceImpl implements AuthService {
                             MessageLang.getMessageSource("PASSWORD_NOT_MATCHES"),
                             HttpStatus.UNAUTHORIZED);
 
-        //4. 4 ta boolean check
+        //3. 4 ta boolean check
         if (!user.isEnabled()
                 || !user.isAccountNonExpired()
                 || !user.isAccountNonLocked()
                 || !user.isCredentialsNonExpired())
             throw RestException.restThrow(MessageLang.getMessageSource("USER_PERMISSION_RESTRICTION"), HttpStatus.UNAUTHORIZED);
 
+        //4 CONTEXTGA QO'SHISH
         SecurityContextHolder.getContext().setAuthentication(new UsernamePasswordAuthenticationToken(
                 user,
                 null,
@@ -150,4 +143,19 @@ public class AuthServiceImpl implements AuthService {
                 ))
                 .compact();
     }
+
+    private void sendVerificationCodeToEmail(User user) {
+        SimpleMailMessage mailMessage
+                = new SimpleMailMessage();
+
+        // Setting up necessary details
+        mailMessage.setFrom(sender);
+        mailMessage.setTo(user.getEmail());
+        mailMessage.setSubject("");
+        mailMessage.setText(MessageLang.getMessageSource("CLICK_LINK") + " http://localhost/api/auth/verification-email?email=" + user.getEmail());
+
+        // Sending the mail
+        javaMailSender.send(mailMessage);
+    }
+
 }
