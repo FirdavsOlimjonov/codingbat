@@ -7,11 +7,15 @@ spring:
   datasource:
     url: jdbc:postgresql://localhost:5432/web_user_data
     username: postgres
+<<<<<<< HEAD
     password: yusufbek205
+=======
+    password: 2002
+>>>>>>> 156f24de283a9040c999bab760f7956a7d861cfb
 
   jpa:
     hibernate:
-      ddl-auto: create
+      ddl-auto: update
     show-sql: true
 
   mail:

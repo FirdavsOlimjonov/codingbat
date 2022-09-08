@@ -22,9 +22,17 @@ public class UserProblemDTO {
 
     private Boolean solved;
 
+    private Integer problemId;
 
     public UserProblemDTO(Integer userId, String solution) {
         this.userId = userId;
         this.solution = solution;
+    }
+
+    public UserProblemDTO(Integer userId, Problem problem, String solution, Boolean solved) {
+        this.userId = userId;
+        this.problem = problem;
+        this.solution = solution;
+        this.solved = solved;
     }
 }
