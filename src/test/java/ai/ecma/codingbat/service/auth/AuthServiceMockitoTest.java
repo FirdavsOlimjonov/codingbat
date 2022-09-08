@@ -32,7 +32,6 @@ import static org.junit.jupiter.api.Assertions.*;
 import static org.mockito.BDDMockito.given;
 
 @RunWith(SpringJUnit4ClassRunner.class)
-//@Execution(value = ExecutionMode.CONCURRENT)
 @SpringBootTest(webEnvironment = SpringBootTest.WebEnvironment.NONE)
 @TestMethodOrder(MethodOrderer.OrderAnnotation.class)
 public class AuthServiceMockitoTest {
@@ -40,9 +39,7 @@ public class AuthServiceMockitoTest {
     AuthServiceImpl underTest;
     @Mock
     private UserRepository userRepository;
-
     private UserRepository userRepositoryBean;
-
     @Autowired
     public void setProductRepository(UserRepository userRepository) {
         this.userRepositoryBean = userRepositoryBean;
@@ -60,7 +57,6 @@ public class AuthServiceMockitoTest {
     @Order(10)
     public void signUpHappyTest() {
         SignDTO signDTO = new SignDTO("firdavsolimjonov25@gmail.com", "root123");
-        User user = new User(signDTO.getEmail(), signDTO.getPassword());
 
         ApiResult<Boolean> apiResult = underTest.signUp(signDTO);
 
