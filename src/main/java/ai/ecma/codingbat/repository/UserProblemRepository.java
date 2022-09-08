@@ -19,4 +19,5 @@ public interface UserProblemRepository
     long countAllByProblem_SectionId(Integer id);
 
     long countAllBySolvedIsTrueAndProblem_SectionId(Integer id);
+
 }
