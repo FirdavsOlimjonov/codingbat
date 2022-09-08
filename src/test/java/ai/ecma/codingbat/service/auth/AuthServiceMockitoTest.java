@@ -4,7 +4,6 @@ import ai.ecma.codingbat.entity.User;
 import ai.ecma.codingbat.exceptions.RestException;
 import ai.ecma.codingbat.payload.ApiResult;
 import ai.ecma.codingbat.payload.SignDTO;
-import ai.ecma.codingbat.payload.TokenDTO;
 import ai.ecma.codingbat.repository.UserRepository;
 import ai.ecma.codingbat.service.AuthServiceImpl;
 import org.junit.Test;
@@ -38,6 +37,7 @@ import static org.mockito.BDDMockito.given;
 public class AuthServiceMockitoTest {
     @InjectMocks
     AuthServiceImpl underTest;
+
     @Mock
     private UserRepository userRepository;
 
