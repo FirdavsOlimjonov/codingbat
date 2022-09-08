@@ -58,6 +58,7 @@ public class AuthServiceImpl implements AuthService {
     }
 
 
+
     @Override
     public UserDetails loadUserByUsername(String username) throws UsernameNotFoundException {
         return userRepository
@@ -146,13 +147,14 @@ public class AuthServiceImpl implements AuthService {
                         .parseClaimsJws(refreshToken)
                         .getBody()
                         .getSubject();
-                User user = userRepository.findByEmail(email).orElseThrow(() -> RestException.restThrow("Bnday email mavjud emas", HttpStatus.NOT_FOUND));
+                User user = userRepository.findByEmail(email).orElseThrow(() ->
+                        RestException.restThrow(MessageLang.getMessageSource("EMAIL_NOT_EXIST"), HttpStatus.NOT_FOUND));
 
                 if (!user.isEnabled()
                         || !user.isAccountNonExpired()
                         || !user.isAccountNonLocked()
                         || !user.isCredentialsNonExpired())
-                    throw RestException.restThrow("Oka bla", HttpStatus.UNAUTHORIZED);
+                    throw RestException.restThrow(MessageLang.getMessageSource("USER_PERMISSION_RESTRICTION"), HttpStatus.UNAUTHORIZED);
 
                 String newAccessToken = generateToken(email, true);
                 String newRefreshToken = generateToken(email, false);
@@ -162,13 +164,13 @@ public class AuthServiceImpl implements AuthService {
                         .build();
                 return ApiResult.successResponse(tokenDTO);
             } catch (Exception e) {
-                throw RestException.restThrow("Oka refresh token muddati tugagan ekanku", HttpStatus.UNAUTHORIZED);
+                throw RestException.restThrow(MessageLang.getMessageSource("REFRESH_TOKEN_EXPIRED"), HttpStatus.UNAUTHORIZED);
             }
         } catch (Exception ex) {
-            throw RestException.restThrow("Oka access token muddati tugamagan ekanku", HttpStatus.UNAUTHORIZED);
+            throw RestException.restThrow(MessageLang.getMessageSource("WRONG_ACCESS_TOKEN"), HttpStatus.UNAUTHORIZED);
         }
 
-        throw RestException.restThrow("Bla", HttpStatus.UNAUTHORIZED);
+        throw RestException.restThrow(MessageLang.getMessageSource("ACCESS_TOKEN_NOT_EXPIRED"), HttpStatus.UNAUTHORIZED);
     }
 
     public String generateToken(String email, boolean accessToken) {
