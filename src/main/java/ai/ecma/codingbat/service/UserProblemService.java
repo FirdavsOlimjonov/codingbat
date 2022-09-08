@@ -10,7 +10,7 @@ public interface UserProblemService {
 
     ApiResult<UserProblemDTO> get(Integer userId, Integer problemId);
 
-    ApiResult<CompileDTO> solveProblemByUser(Integer problemId, UserProblemDTO userProblemDTO);
+    ApiResult<CompileDTO> solveProblemByUser(UserProblemDTO userProblemDTO);
 
     ApiResult<List<UserProblemDTO>> getAllProblems();
 }

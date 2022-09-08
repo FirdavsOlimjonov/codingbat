@@ -5,6 +5,7 @@ import ai.ecma.codingbat.controller.cotract.ProblemController;
 import ai.ecma.codingbat.payload.ApiResult;
 import ai.ecma.codingbat.payload.ProblemDTO;
 import ai.ecma.codingbat.service.ProblemService;
+import org.springframework.security.access.prepost.PreAuthorize;
 import org.springframework.web.bind.annotation.RestController;
 
 import java.util.List;
@@ -24,6 +25,7 @@ public class ProblemControllerImp implements ProblemController {
         return service.getProblemById(id);
     }
 
+    @PreAuthorize(value = "hasAnyAuthority('ROLE_ADMIN')")
     public ApiResult<ProblemDTO> add(ProblemDTO problemDTO) {
         return service.addProblem(problemDTO);
     }

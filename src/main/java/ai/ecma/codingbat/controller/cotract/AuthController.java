@@ -14,6 +14,7 @@ public interface AuthController {
 
     String AUTH_CONTROLLER_BASE_PATH = "/api/auth";
     String SIGN_IN_PATH = "/sign-in";
+    String REFRESH_TOKEN_PATH = "/refresh-token";
 
     @ApiOperation(value = "Sign up path")
     @PostMapping(value = "/sign-up")
@@ -27,4 +28,9 @@ public interface AuthController {
     @PostMapping(value = SIGN_IN_PATH)
     ApiResult<TokenDTO> signIn(@Valid @RequestBody SignDTO signDTO);
 
+
+    @ApiOperation(value = "Refrsh token")
+    @GetMapping(value = REFRESH_TOKEN_PATH)
+    ApiResult<TokenDTO> refreshToken(@RequestHeader(value = "Authorization") String accessToken,
+                                     @RequestHeader(value = "RefreshToken") String refreshToken);
 }

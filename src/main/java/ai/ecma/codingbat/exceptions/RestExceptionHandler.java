@@ -7,6 +7,8 @@ import org.springframework.dao.EmptyResultDataAccessException;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.security.access.AccessDeniedException;
+import org.springframework.security.authentication.AccountStatusException;
+import org.springframework.security.authentication.DisabledException;
 import org.springframework.security.authentication.InsufficientAuthenticationException;
 import org.springframework.validation.FieldError;
 import org.springframework.web.bind.MethodArgumentNotValidException;
@@ -79,6 +81,14 @@ public class RestExceptionHandler {
                 ex.getMessage(),
                 HttpStatus.CONFLICT.value());
         return new ResponseEntity<>(apiResult, HttpStatus.CONFLICT);
+    }
+    @ExceptionHandler(value = AccountStatusException.class)
+    public ResponseEntity<ApiResult<List<ErrorData>>> exceptionHandle(AccountStatusException ex) {
+        log.error("Exception: ",ex);
+        ApiResult<List<ErrorData>> apiResult = ApiResult.failResponse(
+                ex.getMessage(),
+                HttpStatus.UNAUTHORIZED.value());
+        return new ResponseEntity<>(apiResult, HttpStatus.UNAUTHORIZED);
     }
 
 

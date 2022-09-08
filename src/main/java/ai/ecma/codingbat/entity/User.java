@@ -57,5 +57,4 @@ public class User extends AbsIntegerEntity implements UserDetails {
     public String getUsername() {
         return this.email;
     }
-
 }

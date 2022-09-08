@@ -1,12 +1,25 @@
 package ai.ecma.codingbat.payload;
 
 
+import lombok.AllArgsConstructor;
 import lombok.Getter;
+import lombok.NoArgsConstructor;
 import lombok.Setter;
 
 @Getter
 @Setter
+@NoArgsConstructor
+@AllArgsConstructor
 public class AddSectionDTO {
+
+    private String title;
+
+    private String description;
+
+    private Byte maxRate;
+
+    private Integer languageId;
+
     public AddSectionDTO(String title) {
         this.title = title;
     }
@@ -16,18 +29,4 @@ public class AddSectionDTO {
         this.languageId = languageId;
     }
 
-    public AddSectionDTO( String title,String description, Byte maxRate, Integer languageId) {
-        this.title=title;
-        this.description = description;
-        this.maxRate = maxRate;
-        this.languageId = languageId;
-    }
-
-    private String title;
-
-    private String description;
-
-    private Byte maxRate;
-
-    private Integer languageId;
 }
