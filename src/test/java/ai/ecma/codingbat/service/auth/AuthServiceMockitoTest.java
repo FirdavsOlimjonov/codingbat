@@ -20,6 +20,7 @@ import org.mockito.Mock;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.test.context.SpringBootTest;
 import org.springframework.mail.javamail.JavaMailSender;
+import org.springframework.security.authentication.AuthenticationManager;
 import org.springframework.security.core.userdetails.UsernameNotFoundException;
 import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.test.context.junit4.SpringJUnit4ClassRunner;
@@ -48,9 +49,12 @@ public class AuthServiceMockitoTest {
     private PasswordEncoder passwordEncoder;
     @Mock
     private JavaMailSender javaMailSender;
+
+    @Mock
+    private AuthenticationManager authenticationManager;
     @BeforeEach
     void setUnderTest() {
-        underTest = new AuthServiceImpl(userRepository, passwordEncoder, javaMailSender);
+        underTest = new AuthServiceImpl(userRepository, passwordEncoder, javaMailSender,authenticationManager);
     }
 
     @Test
