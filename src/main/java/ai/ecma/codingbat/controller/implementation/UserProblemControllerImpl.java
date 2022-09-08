@@ -24,8 +24,8 @@ public class UserProblemControllerImpl implements UserProblemController {
     }
 
     @Override
-    public ApiResult<CompileDTO> solveProblem(Integer problemId, UserProblemDTO userProblemDTO) {
-        return userProblemService.solveProblemByUser(problemId, userProblemDTO);
+    public ApiResult<CompileDTO> solveProblem(UserProblemDTO userProblemDTO) {
+        return userProblemService.solveProblemByUser(userProblemDTO);
     }
 
     @Override
