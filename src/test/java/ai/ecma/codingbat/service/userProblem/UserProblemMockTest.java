@@ -8,7 +8,8 @@ import ai.ecma.codingbat.payload.UserProblemDTO;
 import ai.ecma.codingbat.repository.ProblemRepository;
 import ai.ecma.codingbat.repository.UserProblemRepository;
 import ai.ecma.codingbat.repository.UserRepository;
-import ai.ecma.codingbat.service.UserProblemServiceImpl;
+import ai.ecma.codingbat.service.implemention.LanguageServiceImpl;
+import ai.ecma.codingbat.service.implemention.UserProblemServiceImpl;
 import org.junit.Test;
 import org.junit.jupiter.api.RepeatedTest;
 import org.junit.runner.RunWith;
@@ -97,7 +98,7 @@ public class UserProblemMockTest {
 
 
     /**
-     * Also consider checking {@link ai.ecma.codingbat.service.LanguageServiceImpl LanguageServiceImpl}
+     * Also consider checking {@link LanguageServiceImpl LanguageServiceImpl}
      * constructor to initialize vehicle object.
      */
     public void goToWork() {

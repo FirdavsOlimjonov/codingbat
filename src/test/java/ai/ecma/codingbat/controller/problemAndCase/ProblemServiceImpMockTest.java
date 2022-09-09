@@ -4,8 +4,8 @@
 //import ai.ecma.codingbat.payload.ApiResult;
 //import ai.ecma.codingbat.payload.ProblemDTO;
 //import ai.ecma.codingbat.repository.ProblemRepository;
-//import ai.ecma.codingbat.service.ProblemService;
-//import ai.ecma.codingbat.service.ProblemServiceImp;
+//import ai.ecma.codingbat.service.contract.ProblemService;
+//import ai.ecma.codingbat.service.implemention.ProblemServiceImp;
 //import org.junit.Test;
 //import org.junit.jupiter.api.DisplayName;
 //import org.junit.runner.RunWith;

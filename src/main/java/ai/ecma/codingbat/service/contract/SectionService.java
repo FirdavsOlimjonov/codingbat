@@ -1,4 +1,4 @@
-package ai.ecma.codingbat.service;
+package ai.ecma.codingbat.service.contract;
 
 import ai.ecma.codingbat.payload.AddSectionDTO;
 import ai.ecma.codingbat.payload.ApiResult;

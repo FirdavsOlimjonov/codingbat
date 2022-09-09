@@ -4,9 +4,9 @@
 //import ai.ecma.codingbat.payload.AddSectionDTO;
 //import ai.ecma.codingbat.payload.CaseDTO;
 //import ai.ecma.codingbat.payload.ProblemDTO;
-//import ai.ecma.codingbat.service.LanguageServiceImpl;
-//import ai.ecma.codingbat.service.ProblemServiceImp;
-//import ai.ecma.codingbat.service.SectionService;
+//import ai.ecma.codingbat.service.implemention.LanguageServiceImpl;
+//import ai.ecma.codingbat.service.implemention.ProblemServiceImp;
+//import ai.ecma.codingbat.service.contract.SectionService;
 //import org.junit.Test;
 //import org.junit.jupiter.api.DisplayName;
 //import org.junit.runner.RunWith;

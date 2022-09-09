@@ -4,7 +4,7 @@ import lombok.RequiredArgsConstructor;
 import ai.ecma.codingbat.controller.cotract.ProblemController;
 import ai.ecma.codingbat.payload.ApiResult;
 import ai.ecma.codingbat.payload.ProblemDTO;
-import ai.ecma.codingbat.service.ProblemService;
+import ai.ecma.codingbat.service.contract.ProblemService;
 import org.springframework.security.access.prepost.PreAuthorize;
 import org.springframework.web.bind.annotation.RestController;
 

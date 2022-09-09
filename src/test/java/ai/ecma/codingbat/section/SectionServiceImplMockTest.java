@@ -2,7 +2,7 @@ package ai.ecma.codingbat.section;
 
 import ai.ecma.codingbat.exceptions.RestException;
 import ai.ecma.codingbat.payload.*;
-import ai.ecma.codingbat.service.SectionServiceImp;
+import ai.ecma.codingbat.service.implemention.SectionServiceImp;
 import ai.ecma.codingbat.util.CommonUtils;
 import org.junit.Test;
 import org.junit.jupiter.api.DisplayName;

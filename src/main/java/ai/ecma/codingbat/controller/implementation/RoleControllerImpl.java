@@ -1,28 +1,27 @@
 package ai.ecma.codingbat.controller.implementation;
 
+import ai.ecma.codingbat.controller.cotract.RoleController;
 import ai.ecma.codingbat.payload.ApiResult;
 import ai.ecma.codingbat.payload.RoleDTO;
-import ai.ecma.codingbat.service.RoleService;
-import io.swagger.annotations.Api;
+import ai.ecma.codingbat.service.implemention.RoleServiceImpl;
 import lombok.RequiredArgsConstructor;
 import org.springframework.web.bind.annotation.*;
 
 import javax.validation.Valid;
 
 @RestController
-@RequestMapping("/api/role")
 @RequiredArgsConstructor
-public class RoleController {
+public class RoleControllerImpl implements RoleController {
 
-    private final RoleService roleService;
+    private final RoleServiceImpl roleService;
 
-    @PostMapping
+    @Override
     public ApiResult<RoleDTO> add(@Valid @RequestBody RoleDTO roleDTO) {
         return roleService.add(roleDTO);
     }
 
-    @DeleteMapping("/{id}")
-    public ApiResult<Boolean> delete(@PathVariable Integer id){
+    @Override
+    public ApiResult<Boolean> delete(@PathVariable Integer id) {
         return roleService.delete(id);
     }
 }

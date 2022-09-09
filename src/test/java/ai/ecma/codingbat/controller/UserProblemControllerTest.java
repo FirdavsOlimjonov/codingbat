@@ -5,7 +5,7 @@ import ai.ecma.codingbat.controller.cotract.LanguageController;
 import ai.ecma.codingbat.entity.*;
 import ai.ecma.codingbat.payload.*;
 import ai.ecma.codingbat.repository.LanguageRepository;
-import ai.ecma.codingbat.service.UserProblemService;
+import ai.ecma.codingbat.service.contract.UserProblemService;
 import ai.ecma.codingbat.utils.TestUtils;
 import ai.ecma.codingbat.utils.UserProblemUtils;
 import io.restassured.module.mockmvc.RestAssuredMockMvc;
@@ -18,7 +18,6 @@ import org.springframework.beans.factory.annotation.Value;
 import org.springframework.boot.test.autoconfigure.web.servlet.AutoConfigureMockMvc;
 import org.springframework.boot.test.context.SpringBootTest;
 import org.springframework.http.HttpStatus;
-import org.springframework.test.context.event.annotation.BeforeTestClass;
 import org.springframework.test.web.servlet.setup.MockMvcBuilders;
 import org.springframework.web.context.WebApplicationContext;
 
