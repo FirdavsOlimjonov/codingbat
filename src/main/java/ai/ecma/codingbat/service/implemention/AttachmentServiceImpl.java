@@ -1,4 +1,4 @@
-package ai.ecma.codingbat.service;
+package ai.ecma.codingbat.service.implemention;
 
 import ai.ecma.codingbat.entity.Attachment;
 import ai.ecma.codingbat.entity.AttachmentContent;
@@ -7,12 +7,12 @@ import ai.ecma.codingbat.payload.ApiResult;
 import ai.ecma.codingbat.payload.AttachmentDTO;
 import ai.ecma.codingbat.repository.AttachmentContentRepository;
 import ai.ecma.codingbat.repository.AttachmentRepository;
+import ai.ecma.codingbat.service.contract.AttachmentService;
 import lombok.NonNull;
 import lombok.RequiredArgsConstructor;
 import lombok.SneakyThrows;
 import org.springframework.beans.factory.annotation.Value;
 import org.springframework.http.HttpStatus;
-import org.springframework.http.MediaType;
 import org.springframework.stereotype.Service;
 import org.springframework.util.FileCopyUtils;
 import org.springframework.web.multipart.MultipartFile;
@@ -49,6 +49,8 @@ public class AttachmentServiceImpl implements AttachmentService {
                 attachment.setContentType(file.getContentType());
                 attachment = attachmentRepository.save(attachment);
                 attachmentDTOList.add(AttachmentDTO.mapAttachmentToAttachmentDTO(attachment));
+
+
 
                 AttachmentContent attachmentContent = new AttachmentContent();
                 attachmentContent.setContent(file.getBytes());

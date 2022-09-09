@@ -1,7 +1,7 @@
 package ai.ecma.codingbat.controller.implementation;
 
 import ai.ecma.codingbat.payload.ApiResult;
-import ai.ecma.codingbat.service.UserService;
+import ai.ecma.codingbat.service.implemention.UserService;
 import lombok.RequiredArgsConstructor;
 import org.springframework.web.bind.annotation.DeleteMapping;
 import org.springframework.web.bind.annotation.PathVariable;

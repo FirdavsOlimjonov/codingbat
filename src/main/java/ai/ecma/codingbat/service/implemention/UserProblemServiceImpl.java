@@ -1,5 +1,6 @@
-package ai.ecma.codingbat.service;
+package ai.ecma.codingbat.service.implemention;
 
+import ai.ecma.codingbat.service.contract.UserProblemService;
 import lombok.RequiredArgsConstructor;
 import ai.ecma.codingbat.compile.CompileResult;
 import ai.ecma.codingbat.entity.Case;

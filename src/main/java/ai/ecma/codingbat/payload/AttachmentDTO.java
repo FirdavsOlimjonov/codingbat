@@ -1,6 +1,7 @@
 package ai.ecma.codingbat.payload;
 
 import ai.ecma.codingbat.entity.Attachment;
+import ai.ecma.codingbat.entity.AttachmentContent;
 import lombok.AllArgsConstructor;
 import lombok.Builder;
 import lombok.Getter;

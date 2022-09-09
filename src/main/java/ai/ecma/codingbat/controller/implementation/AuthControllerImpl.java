@@ -7,7 +7,7 @@ import ai.ecma.codingbat.payload.ApiResult;
 import ai.ecma.codingbat.payload.SignDTO;
 import ai.ecma.codingbat.payload.TokenDTO;
 import ai.ecma.codingbat.repository.UserDetailsRepository;
-import ai.ecma.codingbat.service.AuthService;
+import ai.ecma.codingbat.service.contract.AuthService;
 import org.springframework.web.bind.annotation.*;
 
 import javax.validation.Valid;
