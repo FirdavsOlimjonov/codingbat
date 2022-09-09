@@ -58,7 +58,7 @@ class AuthControllerApiTest {
 
     @Test
     public void signUpSuccessfully() throws Exception {
-        signDTO = new SignDTO("firdavsolimjonov25@gmail.com", "root123");
+        signDTO = new SignDTO("firdavsolimov@gmail.com", "root123");
         user = new User(signDTO.getEmail(), signDTO.getPassword());
         // Register
         ResultActions userRegistrationActions = mockMvc.perform(post("/api/auth/sign-up")
@@ -122,6 +122,7 @@ class AuthControllerApiTest {
     public void signInEmailNotFoundTest() throws Exception {
         SignDTO signDTO = new SignDTO("firdavsolimjonov@gmail.com", "root123");
         User user = new User(signDTO.getEmail(), signDTO.getPassword());
+        user.setEnabled(true);
 
         if (!userRepository.existsByEmail(user.getEmail()))
             userRepository.save(user);
@@ -132,14 +133,14 @@ class AuthControllerApiTest {
                 .contentType(MediaType.APPLICATION_JSON)
                 .content(Objects.requireNonNull(CommonUtils.objectToJson(signDTO))));
 
-        signInActions.andExpect(status().is(401));
+        signInActions.andExpect(status().is(409));
 
         String resultString = signInActions.andReturn().getResponse().getContentAsString();
         ApiResult<TokenDTO> apiResult = CommonUtils.jsonToObject(resultString, TokenDTO.class);
 
         ErrorData errorData = apiResult.getErrors().get(0);
         String msg = errorData.getMsg();
-        assertEquals("Password togri kelmadi", msg);
+        assertEquals("Bad credentials", msg);
     }
 
 

@@ -5,9 +5,9 @@ server:
       timeout: 10m
 spring:
   datasource:
-    url: jdbc:postgresql://localhost:5432/web_user_data
+    url: jdbc:postgresql://localhost:5432/postgres
     username: postgres
-    password: yusufbek205
+    password: cyberhack25
 
   jpa:
     hibernate:
