@@ -27,6 +27,7 @@ public class Problem extends AbsTitleIntegerEntity {
     private Section section;
 
     @JsonIgnore
-    @OneToMany(mappedBy = "problem")
-    private List<Case> cases;
+    @OrderBy(value = "ordIndex ASC")
+    @OneToMany(mappedBy = "problem", cascade = {CascadeType.PERSIST})
+    private List<Case> cases;//slect from where problem_di=5 order
 }
