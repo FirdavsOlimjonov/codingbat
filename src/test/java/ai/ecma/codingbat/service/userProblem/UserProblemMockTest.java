@@ -89,7 +89,7 @@ public class UserProblemMockTest {
 
         UserProblemDTO userProblemDTO = new UserProblemDTO(userId, problem1, solution, null);
 
-        ApiResult<CompileDTO> result = userProblemServiceImpl.solveProblemByUser(problem1.getId(), userProblemDTO);
+        ApiResult<CompileDTO> result = userProblemServiceImpl.solveProblemByUser(userProblemDTO);
 
         assertTrue(result.getData().getCompileResultList().contains(problem));
 

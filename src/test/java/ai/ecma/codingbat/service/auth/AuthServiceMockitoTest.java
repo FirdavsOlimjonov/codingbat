@@ -4,6 +4,7 @@ import ai.ecma.codingbat.entity.User;
 import ai.ecma.codingbat.exceptions.RestException;
 import ai.ecma.codingbat.payload.ApiResult;
 import ai.ecma.codingbat.payload.SignDTO;
+import ai.ecma.codingbat.payload.TokenDTO;
 import ai.ecma.codingbat.repository.UserRepository;
 import ai.ecma.codingbat.service.AuthServiceImpl;
 import org.junit.Test;
@@ -19,6 +20,7 @@ import org.mockito.Mock;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.test.context.SpringBootTest;
 import org.springframework.mail.javamail.JavaMailSender;
+import org.springframework.security.authentication.AuthenticationManager;
 import org.springframework.security.core.userdetails.UsernameNotFoundException;
 import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.test.context.junit4.SpringJUnit4ClassRunner;
@@ -31,36 +33,34 @@ import static org.junit.jupiter.api.Assertions.*;
 import static org.mockito.BDDMockito.given;
 
 @RunWith(SpringJUnit4ClassRunner.class)
-//@Execution(value = ExecutionMode.CONCURRENT)
 @SpringBootTest(webEnvironment = SpringBootTest.WebEnvironment.NONE)
 @TestMethodOrder(MethodOrderer.OrderAnnotation.class)
 public class AuthServiceMockitoTest {
     @InjectMocks
     AuthServiceImpl underTest;
-
     @Mock
     private UserRepository userRepository;
-
     private UserRepository userRepositoryBean;
-
     @Autowired
-    public void setProductRepository(UserRepository userRepository) {
+    public void setUserRepositoryBean(UserRepository userRepository) {
         this.userRepositoryBean = userRepositoryBean;
     }
     @Mock
     private PasswordEncoder passwordEncoder;
     @Mock
     private JavaMailSender javaMailSender;
+
+    @Mock
+    private AuthenticationManager authenticationManager;
     @BeforeEach
     void setUnderTest() {
-        underTest = new AuthServiceImpl(userRepository, passwordEncoder, javaMailSender);
+        underTest = new AuthServiceImpl(userRepository, passwordEncoder, javaMailSender,authenticationManager);
     }
 
     @Test
     @Order(10)
     public void signUpHappyTest() {
         SignDTO signDTO = new SignDTO("firdavsolimjonov25@gmail.com", "root123");
-        User user = new User(signDTO.getEmail(), signDTO.getPassword());
 
         ApiResult<Boolean> apiResult = underTest.signUp(signDTO);
 

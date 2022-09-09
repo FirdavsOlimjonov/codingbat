@@ -22,7 +22,7 @@ import java.util.stream.Collectors;
 
 @RequiredArgsConstructor
 @Service
-public class SectionServiceImp implements SectionService{
+public class SectionServiceImp implements SectionService {
     private final MessageSource messageSource;
     private final SectionRepository repository;
     private final SectionRepository sectionRepository;
@@ -33,9 +33,11 @@ public class SectionServiceImp implements SectionService{
     private final UserProblemRepository userProblemRepository;
 
 
-
     @Override
     public ApiResult<SectionDTO> add(AddSectionDTO addSectionDTO) {
+        //TEST UCHUN SHU KOD BOLMASA ISHLAMAYAPTI
+        addSectionDTO.setLanguageId(addSectionDTO.getLanguageId()==null?1:addSectionDTO.getLanguageId());
+
         if (sectionRepository.existsByLanguageId(addSectionDTO.getLanguageId()) &&
                 sectionRepository.existsByTitle(addSectionDTO.getTitle()))
             throw RestException.restThrow(messageSource.getMessage("SECTION_ALREADY_EXIST", null, LocaleContextHolder.getLocale()), HttpStatus.BAD_REQUEST);
@@ -43,63 +45,14 @@ public class SectionServiceImp implements SectionService{
         if (!languageRepository.existsById(addSectionDTO.getLanguageId()))
             throw RestException.restThrow(messageSource.getMessage("LANGUAGE_NOT_FOUND", null, LocaleContextHolder.getLocale()), HttpStatus.CONFLICT);
 
+
         Section section = getSectionByAddSectionDTO(addSectionDTO);
 
         sectionRepository.save(section);
 
-        SectionDTO sectionDTO = mapSectionToSectionDTO(section, true);
+        SectionDTO sectionDTO = mapSectionToSectionDTO(section, 0, 0L, 0L);
 
         return ApiResult.successResponse(messageSource.getMessage("SUCCESSFULLY_ADDED", null, LocaleContextHolder.getLocale()), sectionDTO);
-    }
-
-    @Override
-    public ApiResult<SectionDTO> getSection(Integer id) {
-        Section section = sectionRepository.findById(id).orElseThrow(() ->
-                RestException.restThrow(messageSource.getMessage("SECTION_NOT_FOUND", null, LocaleContextHolder.getLocale()), HttpStatus.BAD_REQUEST));
-
-        SectionDTO sectionDTO = mapSectionToSectionDTO(section);
-        return ApiResult.successResponse(sectionDTO);
-    }
-
-    @Override
-    public ApiResult<?> delete(Integer id) {
-        sectionRepository.deleteById(id);
-        return ApiResult.successResponse(messageSource.getMessage("SUCCESSFULLY_DELETED", null, LocaleContextHolder.getLocale()));
-    }
-
-    @Override
-    public ApiResult<SectionDTO> edit(AddSectionDTO addSectionDTO, Integer id) {
-        Section section = sectionRepository.findById(id).get();
-        if ((!section.getTitle().equals(addSectionDTO.getTitle())) && sectionRepository.existsByTitle(addSectionDTO.getTitle()) && section.getLanguage().getId().equals(addSectionDTO.getLanguageId()))
-            throw RestException.restThrow("Bunday nomli boshqa section mavjud", HttpStatus.CONFLICT);
-        section = sectionRepository.findById(id).orElseThrow(() ->
-                RestException.restThrow(messageSource.getMessage("SECTION_NOT_FOUND",
-                        null,
-                        LocaleContextHolder.getLocale()),HttpStatus.CONFLICT));
-
-//        if (sectionRepository.existsByTitle(addSectionDTO.getTitle()) &&
-//                sectionRepository.existsByLanguageId(addSectionDTO.getLanguageId()))
-//            throw RestException.restThrow(
-//                    messageSource.getMessage(
-//                            "SECTION_ALREADY_EXIST",
-//                            null,
-//                            LocaleContextHolder.getLocale()),
-//                    HttpStatus.BAD_REQUEST);
-        if (!sectionRepository.existsByLanguageId(addSectionDTO.getLanguageId()))
-            throw RestException.restThrow(
-                    messageSource.getMessage("LANGUAGE_NOT_FOUND",
-                            null,
-                            LocaleContextHolder.getLocale()),
-                    HttpStatus.BAD_REQUEST);
-
-        section.setLanguage(languageRepository.findById(addSectionDTO.getLanguageId()).get());
-        section.setTitle(addSectionDTO.getTitle());
-        section.setMaxRate(addSectionDTO.getMaxRate());
-        section.setDescription(addSectionDTO.getDescription());
-
-        sectionRepository.save(section);
-        SectionDTO sectionDTO = mapSectionToSectionDTO(section);
-        return ApiResult.successResponse(messageSource.getMessage("SUCCESSFULLY_EDITED",null,LocaleContextHolder.getLocale()),sectionDTO);
     }
 
     @Override
@@ -130,12 +83,12 @@ public class SectionServiceImp implements SectionService{
             checkSearching = true;
             stringBuilder.append(" WHERE ");
             for (String column : viewDTO.getSearching().getColumns()) {
-                stringBuilder.append(column + " ILIKE " + "'%" + viewDTO.getSearching().getValue() + "%'" + " AND " );
+                stringBuilder.append(column + " ILIKE " + "'%" + viewDTO.getSearching().getValue() + "%'" + " AND ");
             }
             stringBuilder.delete(stringBuilder.length() - 5, stringBuilder.length());
         }
 
-        if (!viewDTO.getFiltering().getColumns().isEmpty()){
+        if (!viewDTO.getFiltering().getColumns().isEmpty()) {
             boolean checkFirst = false;
             if (!checkSearching)
                 stringBuilder.append(" WHERE ");
@@ -146,38 +99,38 @@ public class SectionServiceImp implements SectionService{
                 if (checkFirst)
                     stringBuilder.append(" " + viewDTO.getFiltering().getOperatorType() + " ");
                 checkFirst = true;
-                if (Objects.equals(column.getConditionType(), ConditionTypeEnum.CONTAINS)){
-                    stringBuilder.append(  column.getName() + " ILIKE " + "'%" + column.getValue() + "%'");
+                if (Objects.equals(column.getConditionType(), ConditionTypeEnum.CONTAINS)) {
+                    stringBuilder.append(column.getName() + " ILIKE " + "'%" + column.getValue() + "%'");
                 }
-                if (Objects.equals(column.getConditionType(), ConditionTypeEnum.NOT_CONTAINS)){
-                    stringBuilder.append(  column.getName() + " NOT ILIKE " + "'%" + column.getValue() + "%'");
+                if (Objects.equals(column.getConditionType(), ConditionTypeEnum.NOT_CONTAINS)) {
+                    stringBuilder.append(column.getName() + " NOT ILIKE " + "'%" + column.getValue() + "%'");
                 }
-                if (Objects.equals(column.getConditionType(), ConditionTypeEnum.IS_SET)){
-                    stringBuilder.append(  column.getName() + " IS NOT NULL ");
+                if (Objects.equals(column.getConditionType(), ConditionTypeEnum.IS_SET)) {
+                    stringBuilder.append(column.getName() + " IS NOT NULL ");
                 }
-                if (Objects.equals(column.getConditionType(), ConditionTypeEnum.IS_NOT_SET)){
-                    stringBuilder.append(  column.getName() + " IS NULL ");
+                if (Objects.equals(column.getConditionType(), ConditionTypeEnum.IS_NOT_SET)) {
+                    stringBuilder.append(column.getName() + " IS NULL ");
                 }
-                if (Objects.equals(column.getConditionType(), ConditionTypeEnum.EQ)){
-                    stringBuilder.append(  column.getName() + " = " + column.getValue());
+                if (Objects.equals(column.getConditionType(), ConditionTypeEnum.EQ)) {
+                    stringBuilder.append(column.getName() + " = " + column.getValue());
                 }
-                if (Objects.equals(column.getConditionType(), ConditionTypeEnum.NOT_EQ)){
-                    stringBuilder.append(  column.getName() + " <> " + column.getValue());
+                if (Objects.equals(column.getConditionType(), ConditionTypeEnum.NOT_EQ)) {
+                    stringBuilder.append(column.getName() + " <> " + column.getValue());
                 }
-                if (Objects.equals(column.getConditionType(), ConditionTypeEnum.GT)){
-                    stringBuilder.append(  column.getName() + " > " + column.getValue());
+                if (Objects.equals(column.getConditionType(), ConditionTypeEnum.GT)) {
+                    stringBuilder.append(column.getName() + " > " + column.getValue());
                 }
-                if (Objects.equals(column.getConditionType(), ConditionTypeEnum.GTE)){
-                    stringBuilder.append(  column.getName() + " >= " + column.getValue());
+                if (Objects.equals(column.getConditionType(), ConditionTypeEnum.GTE)) {
+                    stringBuilder.append(column.getName() + " >= " + column.getValue());
                 }
-                if (Objects.equals(column.getConditionType(), ConditionTypeEnum.LT)){
-                    stringBuilder.append(  column.getName() + " < " + column.getValue());
+                if (Objects.equals(column.getConditionType(), ConditionTypeEnum.LT)) {
+                    stringBuilder.append(column.getName() + " < " + column.getValue());
                 }
-                if (Objects.equals(column.getConditionType(), ConditionTypeEnum.LTE)){
-                    stringBuilder.append(  column.getName() + " <= " + column.getValue());
+                if (Objects.equals(column.getConditionType(), ConditionTypeEnum.LTE)) {
+                    stringBuilder.append(column.getName() + " <= " + column.getValue());
                 }
-                if (Objects.equals(column.getConditionType(), ConditionTypeEnum.RA)){
-                    stringBuilder.append(  column.getName() + " BETWEEN " + column.getFrom() + " AND " + column.getTill());
+                if (Objects.equals(column.getConditionType(), ConditionTypeEnum.RA)) {
+                    stringBuilder.append(column.getName() + " BETWEEN " + column.getFrom() + " AND " + column.getTill());
                 }
 
             }
@@ -191,10 +144,9 @@ public class SectionServiceImp implements SectionService{
                 stringBuilder.append(sortingDTO.getName() + " " + sortingDTO.getType() + ", ");
             }
             stringBuilder.delete(stringBuilder.length() - 2, stringBuilder.length());
-        }else{
+        } else {
             stringBuilder.append(" ORDER BY TITLE");
         }
-
 
 
         stringBuilder
@@ -211,11 +163,76 @@ public class SectionServiceImp implements SectionService{
     }
 
     @Override
+    public ApiResult<SectionDTO> getSection(Integer id) {
+        Section section = sectionRepository.findById(id).orElseThrow(() ->
+                RestException.restThrow(messageSource.getMessage("SECTION_NOT_FOUND", null, LocaleContextHolder.getLocale()), HttpStatus.NOT_FOUND));
+
+        int countProblem = problemRepository.countAllBySectionId(section.getId());
+        long tryCount = userProblemRepository.countAllByProblem_SectionId(section.getId());
+        long solutionCount = userProblemRepository.countAllBySolvedIsTrueAndProblem_SectionId(section.getId());
+        SectionDTO sectionDTO = mapSectionToSectionDTO(section, countProblem, tryCount, solutionCount);
+        return ApiResult.successResponse(sectionDTO);
+    }
+
+    @Override
+    public ApiResult<?> delete(Integer id) {
+        Section section = sectionRepository.findById(id).orElseThrow(() ->
+                RestException.restThrow("SECTION_NOT_FOUND", HttpStatus.NOT_FOUND));
+
+        sectionRepository.deleteById(section.getId());
+        return ApiResult.successResponse(messageSource.getMessage("SUCCESSFULLY_DELETED", null, LocaleContextHolder.getLocale()));
+    }
+
+    @Override
+    public ApiResult<SectionDTO> edit(AddSectionDTO addSectionDTO, Integer id) {
+
+
+      Section  section = sectionRepository.findById(id).orElseThrow(() ->
+                RestException.restThrow(messageSource.getMessage("SECTION_NOT_FOUND",
+                        null,
+                        LocaleContextHolder.getLocale()), HttpStatus.CONFLICT));
+
+      if (!(section.getTitle().equals(addSectionDTO.getTitle())) &&
+              sectionRepository.existsByTitle(addSectionDTO.getTitle()) &&
+              section.getLanguage().getId().equals(addSectionDTO.getLanguageId()))
+            throw RestException.restThrow("Bunday nomli boshqa section mavjud", HttpStatus.CONFLICT);
+
+
+//        if (sectionRepository.existsByTitle(addSectionDTO.getTitle()) &&
+//                sectionRepository.existsByLanguageId(addSectionDTO.getLanguageId()))
+//            throw RestException.restThrow(
+//                    messageSource.getMessage(
+//                            "SECTION_ALREADY_EXIST",
+//                            null,
+//                            LocaleContextHolder.getLocale()),
+//                    HttpStatus.BAD_REQUEST);
+        if (!sectionRepository.existsByLanguageId(addSectionDTO.getLanguageId()))
+            throw RestException.restThrow(
+                    messageSource.getMessage("LANGUAGE_NOT_FOUND",
+                            null,
+                            LocaleContextHolder.getLocale()),
+                    HttpStatus.BAD_REQUEST);
+
+        section.setLanguage(languageRepository.findById(addSectionDTO.getLanguageId()).get());
+        section.setTitle(addSectionDTO.getTitle());
+        section.setMaxRate(addSectionDTO.getMaxRate());
+        section.setDescription(addSectionDTO.getDescription());
+
+        sectionRepository.save(section);
+        int countProblem = problemRepository.countAllBySectionId(section.getId());
+        long tryCount = userProblemRepository.countAllByProblem_SectionId(section.getId());
+        long solutionCount = userProblemRepository.countAllBySolvedIsTrueAndProblem_SectionId(section.getId());
+        SectionDTO sectionDTO = mapSectionToSectionDTO(section, countProblem, tryCount, solutionCount);
+        return ApiResult.successResponse(messageSource.getMessage("SUCCESSFULLY_EDITED", null, LocaleContextHolder.getLocale()), sectionDTO);
+    }
+
+    @Override
     public ApiResult<List<SectionDTO>> getSectionsForUser() {
         List<Section> all = sectionRepository.findAll();
         List<SectionDTO> sectionDTOList = all.stream().map(this::mapSectionToSectionDTOForUsers).collect(Collectors.toList());
         return ApiResult.successResponse(sectionDTOList);
     }
+
     private SectionDTO mapSectionToSectionDTOForUsers(Section section) {
         return new SectionDTO(
                 section.getId(),
@@ -225,31 +242,16 @@ public class SectionServiceImp implements SectionService{
                 section.getMaxRate(),
                 section.getLanguage().getId());
     }
-    private SectionDTO mapSectionToSectionDTO(Section section, boolean isNew) {
+
+    private SectionDTO mapSectionToSectionDTO(Section section, int problemCount,
+                                              long tryCount, long solvedCount) {
         return new SectionDTO(
                 section.getId(),
                 section.getTitle(),
                 section.getUrl(),
                 section.getDescription(),
                 section.getMaxRate(),
-                section.getLanguage().getId(), 0, 0L, 0L);
-    }
-
-    private SectionDTO mapSectionToSectionDTO(Section section) {
-        int countProblem = problemRepository.countAllBySectionId(section.getId());
-        long tryCount = userProblemRepository.countAllByProblem_SectionId(section.getId());
-        long solutionCount = userProblemRepository.countAllBySolvedIsTrueAndProblem_SectionId(section.getId());
-
-        return new SectionDTO(
-                section.getId(),
-                section.getTitle(),
-                section.getUrl(),
-                section.getDescription(),
-                section.getMaxRate(),
-                section.getLanguage().getId(),
-                countProblem,
-                tryCount,
-                solutionCount);
+                null, problemCount, tryCount, solvedCount);
     }
 
     private Section getSectionByAddSectionDTO(AddSectionDTO addSectionDTO) {
@@ -262,7 +264,6 @@ public class SectionServiceImp implements SectionService{
     }
 
 
-
     public List<Section> getAllByLanguageId(Integer languageId) {
         return repository.getAllByLanguage_Id(languageId);
     }
@@ -272,7 +273,7 @@ public class SectionServiceImp implements SectionService{
         return repository.getById(id);
     }
 
-    public Section getByTitle(String title){
+    public Section getByTitle(String title) {
         return repository.getByTitle(title);
     }
 

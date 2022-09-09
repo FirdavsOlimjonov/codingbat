@@ -39,4 +39,9 @@ public class AuthControllerImpl implements AuthController {
         log.info("SIgn in method exited: {}", apiResult);
         return apiResult;
     }
+
+    @Override
+    public ApiResult<TokenDTO> refreshToken(String accessToken, String refreshToken) {
+        return authService.refreshToken(accessToken,refreshToken);
+    }
 }

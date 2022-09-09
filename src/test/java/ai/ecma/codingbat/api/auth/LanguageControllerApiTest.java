@@ -63,6 +63,7 @@ class LanguageControllerApiTest {
         adminAccessToken = tokenDTOApiResult.getData().getAccessToken();
         tokenType = tokenDTOApiResult.getData().getTokenType();
 
+
     }
 
     @Test
@@ -100,7 +101,6 @@ class LanguageControllerApiTest {
 
         assertThat(apiResult.getErrors().get(0).getCode())
                 .isEqualTo(HttpStatus.CONFLICT.value());
-
     }
 
 }

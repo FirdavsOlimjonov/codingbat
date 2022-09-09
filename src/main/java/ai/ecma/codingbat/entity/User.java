@@ -34,9 +34,8 @@ public class User extends AbsIntegerEntity implements UserDetails {
 
     private boolean enabled;
 
-    @Column(nullable = false)
-    @Enumerated(value = EnumType.STRING)
-    private RoleEnum role = RoleEnum.ROLE_USER;
+    @ManyToOne
+    private Role role;
 
     @OneToOne(fetch = FetchType.LAZY)
     private Attachment avatar;
@@ -50,12 +49,11 @@ public class User extends AbsIntegerEntity implements UserDetails {
 
     @Override
     public Collection<? extends GrantedAuthority> getAuthorities() {
-        return List.of(new SimpleGrantedAuthority(role.name()));
+        return role.getPermissions();
     }
 
     @Override
     public String getUsername() {
         return this.email;
     }
-
 }

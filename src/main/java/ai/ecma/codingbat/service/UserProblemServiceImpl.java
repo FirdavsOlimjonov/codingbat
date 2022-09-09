@@ -36,7 +36,6 @@ public class UserProblemServiceImpl implements UserProblemService {
 
     private final CaseRepository caseRepository;
 
-
     @Override
     public ApiResult<UserProblemDTO> get(Integer userId, Integer problemId) {
 
@@ -66,21 +65,18 @@ public class UserProblemServiceImpl implements UserProblemService {
 
 
     @Override
-    public ApiResult<CompileDTO> solveProblemByUser(Integer problemId, UserProblemDTO userProblemDTO) {
+    public ApiResult<CompileDTO> solveProblemByUser(UserProblemDTO userProblemDTO) {
 
-        Optional<Problem> problemOp = problemRepository.findById(problemId);
-        if (problemOp.isEmpty())
-            throw RestException.restThrow("Problem Not Found", HttpStatus.NOT_FOUND);
+        Problem problem = problemRepository.findById(userProblemDTO.getProblemId()).orElseThrow(() -> RestException.restThrow("Problem Not Found", HttpStatus.NOT_FOUND));
 
 
         Optional<User> user = userRepository.findById(userProblemDTO.getUserId());
         if (user.isEmpty())
             throw RestException.restThrow("User Not Found!!!!!", HttpStatus.NOT_FOUND);
 
+        List<Case> allByProblemId = caseRepository.getAllByProblemId(problem.getId());
 
-        List<Case> allByProblemId = caseRepository.getAllByProblemId(problemId);
-
-        userProblemDTO.setProblem(problemOp.get());
+        userProblemDTO.setProblem(problem);
         boolean isPrime = true;
         String errorMessage = null;
         List<CompileResult> compileResults = new ArrayList<>();
@@ -108,7 +104,9 @@ public class UserProblemServiceImpl implements UserProblemService {
     @Override
     public ApiResult<List<UserProblemDTO>> getAllProblems() {
 
+        System.out.println("ssss");
         List<UserProblem> userProblemList = userProblemRepository.findAll();
+        System.out.println(userProblemList);
 
         List<UserProblemDTO> userProblemDTOList = mapUserProblemsToUserProblemDTOList(userProblemList);
 
@@ -116,6 +114,8 @@ public class UserProblemServiceImpl implements UserProblemService {
     }
 
     private List<UserProblemDTO> mapUserProblemsToUserProblemDTOList(List<UserProblem> userProblemList) {
+
+        System.out.println(userProblemList);
 
         if (Objects.isNull(userProblemList))
             throw new IllegalArgumentException("parameter must not be null");

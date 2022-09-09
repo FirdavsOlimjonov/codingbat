@@ -11,6 +11,7 @@ import java.lang.reflect.InvocationTargetException;
 import java.lang.reflect.Method;
 import java.util.ArrayList;
 import java.util.List;
+import java.util.Objects;
 
 import static org.junit.jupiter.api.Assertions.*;
 
@@ -23,11 +24,13 @@ public class UserProblemUnitTest {
         Language language = new Language("Java");
         UserProblemService userProblemService = new UserProblemServiceImpl(null, null, null, null);
 
-        Section section = new Section();
-        section.setLanguage(language);
-        section.setTitle("String-1");
-        section.setDescription("Basic string problems -- no loops. Use + to combine Strings, str.length() is the number of chars in a String, str.substring(i, j) extracts the substring starting at index i and running up to but not including index j. New videos: String Introduction, String Substring");
-        section.setMaxRate((byte) 8);
+        Section section = new Section(
+                "String-1",
+                "Basic string problems -- no loops. Use + to combine Strings, str.length() is the number of chars in a String, str.substring(i, j) extracts the substring starting at index i and running up to but not including index j. New videos: String Introduction, String Substring",
+                (byte) 8,
+                1,
+                language
+        );
 
         Problem problem = new Problem();
         problem.setTitle("helloName");
@@ -37,23 +40,16 @@ public class UserProblemUnitTest {
                 "  \n" +
                 "}");
 
-        User user = new User("ketmonov@codingbat.com", "arnold123");
+        User user = new User("admin@codingbat.com", "root123");
 
         UserProblem userProblem = new UserProblem();
         userProblem.setUser(user);
         userProblem.setProblem(problem);
-        userProblem.setSolution("public String helloName(String name) {\n" +
+        userProblem.setSolution("public String hello(String name) {\n" +
                 "  return \"Hello \" + name+\"!\";\n" +
                 "}");
 
         userProblemList.add(userProblem);
-
-        UserProblem userProblem2 = new UserProblem();
-        userProblem2.setUser(user);
-        userProblem2.setProblem(problem);
-        userProblem2.setSolution("public in isHoliday(boolean a, boolean b) { return true;}");
-
-        userProblemList.add(userProblem2);
 
         Method method = null;
         try {
@@ -63,7 +59,7 @@ public class UserProblemUnitTest {
         }
         method.setAccessible(true);
 
-        List<UserProblemDTO> returnValue = null;
+        List<UserProblemDTO> returnValue ;
         try {
             returnValue = (List<UserProblemDTO>) method.invoke(userProblemService, userProblemList);
         } catch (Exception e) {
@@ -76,8 +72,6 @@ public class UserProblemUnitTest {
 
         assertEquals(returnValue.get(0).getSolution(), userProblem.getSolution());
         assertEquals(returnValue.get(0).getSolved(), userProblem.getSolved());
-
-
     }
 
     @Test
@@ -85,7 +79,6 @@ public class UserProblemUnitTest {
 
         List<UserProblem> userProblemList = null;
         UserProblemService userProblemService = new UserProblemServiceImpl(null, null, null, null);
-
 
         Method method = null;
         try {
@@ -97,11 +90,12 @@ public class UserProblemUnitTest {
 
         List<UserProblemDTO> returnValue = null;
         try {
-            returnValue = (List<UserProblemDTO>) method.invoke(userProblemService, userProblemList);
+            returnValue = (List<UserProblemDTO>)
+                    method.
+                            invoke(userProblemService, userProblemList);
         } catch (Exception e) {
-//            throw new RuntimeException(e);
+            assertEquals(IllegalArgumentException.class, e.getCause().getClass());
         }
-
         assertNull(returnValue);
 
     }
@@ -112,11 +106,13 @@ public class UserProblemUnitTest {
         Language language = new Language("Java");
         UserProblemService userProblemService = new UserProblemServiceImpl(null, null, null, null);
 
-        Section section = new Section();
-        section.setLanguage(language);
-        section.setTitle("String-1");
-        section.setDescription("Basic string problems -- no loops. Use + to combine Strings, str.length() is the number of chars in a String, str.substring(i, j) extracts the substring starting at index i and running up to but not including index j. New videos: String Introduction, String Substring");
-        section.setMaxRate((byte) 8);
+        Section section = new Section(
+                "String-1",
+                "Basic string problems -- no loops. Use + to combine Strings, str.length() is the number of chars in a String, str.substring(i, j) extracts the substring starting at index i and running up to but not including index j. New videos: String Introduction, String Substring",
+                (byte) 8,
+                1,
+                language
+        );
 
         Problem problem = new Problem();
         problem.setTitle("helloName");
@@ -144,7 +140,7 @@ public class UserProblemUnitTest {
         }
         method.setAccessible(true);
 
-        UserProblemDTO returnValue = null;
+        UserProblemDTO returnValue;
         try {
             returnValue = (UserProblemDTO) method.invoke(userProblemService, userProblem);
         } catch (Exception e) {
@@ -190,11 +186,13 @@ public class UserProblemUnitTest {
         Language language = new Language("Java");
         UserProblemService userProblemService = new UserProblemServiceImpl(null, null, null, null);
 
-        Section section = new Section();
-        section.setLanguage(language);
-        section.setTitle("String-1");
-        section.setDescription("Basic string problems -- no loops. Use + to combine Strings, str.length() is the number of chars in a String, str.substring(i, j) extracts the substring starting at index i and running up to but not including index j. New videos: String Introduction, String Substring");
-        section.setMaxRate((byte) 8);
+        Section section = new Section(
+                "String-1",
+                "Basic string problems -- no loops. Use + to combine Strings, str.length() is the number of chars in a String, str.substring(i, j) extracts the substring starting at index i and running up to but not including index j. New videos: String Introduction, String Substring",
+                (byte) 8,
+                1,
+                language
+        );
 
         Problem problem = new Problem();
         problem.setTitle("helloName");
@@ -234,11 +232,13 @@ public class UserProblemUnitTest {
         Language language = new Language("Java");
         UserProblemService userProblemService = new UserProblemServiceImpl(null, null, null, null);
 
-        Section section = new Section();
-        section.setLanguage(language);
-        section.setTitle("String-1");
-        section.setDescription("Basic string problems -- no loops. Use + to combine Strings, str.length() is the number of chars in a String, str.substring(i, j) extracts the substring starting at index i and running up to but not including index j. New videos: String Introduction, String Substring");
-        section.setMaxRate((byte) 8);
+        Section section = new Section(
+                "String-1",
+                "Basic string problems -- no loops. Use + to combine Strings, str.length() is the number of chars in a String, str.substring(i, j) extracts the substring starting at index i and running up to but not including index j. New videos: String Introduction, String Substring",
+                (byte) 8,
+                1,
+                language
+        );
 
         Problem problem = new Problem();
         problem.setTitle("helloName");

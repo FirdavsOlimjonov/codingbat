@@ -16,7 +16,6 @@ import java.util.*;
 public class Compiler {
 
     public static List<CompileResult> staticCompiler(UserProblemDTO userProblemDTO, List<Case> caseList) {
-
         String classNameA = "Test";
 
         String solution = userProblemDTO.getSolution();
@@ -26,14 +25,11 @@ public class Compiler {
                         +
                         "}" + "\n";
 
-
         List<CompileResult> compileResults = new ArrayList<>();
         String methodName = userProblemDTO.getProblem().getTitle();
         String type = getType(userProblemDTO.getSolution());
 
-
         for (Case aCase : caseList) {
-
             String classNameB = "Testing";
             String codeB =
                     "public class Testing {" + "\n" +
@@ -43,16 +39,17 @@ public class Compiler {
                             "    }" + "\n" +
                             "}" + "\n";
 
-
             RuntimeCompiler r = new RuntimeCompiler();
             r.addClass(classNameA, codeA);
             r.addClass(classNameB, codeB);
             String compile = r.compile();
+
             if (!compile.equals("true"))
                 throw new IllegalArgumentException(compile);
 
             Object o = null;
             String message = "ishlamadi ablax";
+
             try {
                 o = MethodInvocationUtils.invokeStaticMethod(
                         r.getCompiledClass(classNameB),
@@ -62,6 +59,7 @@ public class Compiler {
             }
 
             CompileResult compileResult;
+
             if (Objects.isNull(o)) {
                 compileResult = new CompileResult(aCase, message, false);
                 compileResults.add(compileResult);
@@ -72,16 +70,12 @@ public class Compiler {
                 compileResult = new CompileResult(aCase, o.toString(), false);
                 compileResults.add(compileResult);
             }
-
         }
-
         return compileResults;
-
     }
 
     public static String getType(String methodSignature) {
         int index = methodSignature.indexOf("public");
-
         return methodSignature.substring(index + 7, methodSignature.indexOf(' ', index + 8)).trim();
     }
 
