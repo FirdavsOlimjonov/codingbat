@@ -25,7 +25,7 @@ public class ProblemControllerImp implements ProblemController {
         return service.getProblemById(id);
     }
 
-    @PreAuthorize(value = "hasAnyAuthority('ROLE_ADMIN')")
+    @PreAuthorize(value = "hasAnyAuthority('ADD_LANGUAGE')")
     public ApiResult<ProblemDTO> add(ProblemDTO problemDTO) {
         return service.addProblem(problemDTO);
     }

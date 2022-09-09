@@ -16,6 +16,7 @@ import org.springframework.stereotype.Service;
 import javax.transaction.Transactional;
 import java.util.List;
 import java.util.Objects;
+import java.util.concurrent.atomic.AtomicReference;
 import java.util.stream.Collectors;
 
 @Transactional
@@ -72,19 +73,22 @@ public class ProblemServiceImp implements ProblemService {
                                 HttpStatus.NOT_FOUND));
 
 
-        Problem problem = problemRepository.save(
-                ProblemDTO.DTO(problemDTO, section));
+        Problem problem = ProblemDTO.DTO(problemDTO, section);
 
-
+        AtomicReference<Double> ordIndex = new AtomicReference<>(1D);
         if (Objects.nonNull(problemDTO.getCases())) {
-            problem
-                    .setCases(
-                            problemDTO
-                                    .getCases()
-                                    .stream()
-                                    .map(caseDTO -> caseRepository.save(CaseDTO.DTO(caseDTO, problem)))
-                                    .collect(Collectors.toList()));
+            problem.setCases(problemDTO
+                    .getCases()
+                    .stream()
+                    .map(caseDTO -> CaseDTO.DTO(
+                            caseDTO,
+                            problem,
+                            ordIndex.getAndSet(ordIndex.get() + 1)))
+                    .collect(Collectors.toList())
+            );
         }
+
+        problemRepository.save(problem);
 
         return ApiResult.successResponse(
                 ProblemDTO.OTD(problem));
@@ -126,10 +130,10 @@ public class ProblemServiceImp implements ProblemService {
 
         Problem problem1 = problemRepository.save(ProblemDTO.DTO(problemDTO, section));
 
-        problem1.setCases(caseDTOS
-                .stream()
-                .map(caseDTO -> caseRepository.save(CaseDTO.DTO(caseDTO, problem1)))
-                .collect(Collectors.toList()));
+//        problem1.setCases(caseDTOS
+//                .stream()
+//                .map(caseDTO -> caseRepository.save(CaseDTO.DTO(caseDTO, problem1, ordIndex)))
+//                .collect(Collectors.toList()));
 
         return ApiResult.successResponse(ProblemDTO.OTD(problem1));
     }
