@@ -22,6 +22,9 @@ import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.stereotype.Service;
 
 import java.util.Date;
+import java.util.concurrent.CompletableFuture;
+import java.util.concurrent.ExecutorService;
+import java.util.concurrent.Executors;
 
 @Service
 public class AuthServiceImpl implements AuthService {
@@ -80,7 +83,7 @@ public class AuthServiceImpl implements AuthService {
                 signDTO.getEmail(),
                 passwordEncoder.encode(signDTO.getPassword()));
 
-        sendVerificationCodeToEmail(user);
+        CompletableFuture.runAsync(()->sendVerificationCodeToEmail(user));
 
         userRepository.save(user);
         return ApiResult.successResponse();

@@ -5,13 +5,9 @@ server:
       timeout: 10m
 spring:
   datasource:
-    url: jdbc:postgresql://localhost:5432/web_user_data
+    url: jdbc:postgresql://localhost:5432/postgres
     username: postgres
-<<<<<<< HEAD
-    password: yusufbek205
-=======
-    password: 2002
->>>>>>> 156f24de283a9040c999bab760f7956a7d861cfb
+    password: root123
 
   jpa:
     hibernate:
@@ -58,3 +54,5 @@ app:
   admin:
     username: admin@codingbat.com
     password: root123
+  upload:
+    folder: D:\TestB20\
