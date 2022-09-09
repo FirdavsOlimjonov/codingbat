@@ -101,7 +101,6 @@ class LanguageControllerApiTest {
 
         assertThat(apiResult.getErrors().get(0).getCode())
                 .isEqualTo(HttpStatus.CONFLICT.value());
-
     }
 
 }
