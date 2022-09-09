@@ -14,14 +14,16 @@ public interface AuthController {
 
     String AUTH_CONTROLLER_BASE_PATH = "/api/auth";
     String SIGN_IN_PATH = "/sign-in";
+    String SIGN_UP_PATH = "/sign-up";
+    String VERIFICATION_PATH = "/verification-email";
     String REFRESH_TOKEN_PATH = "/refresh-token";
 
     @ApiOperation(value = "Sign up path")
-    @PostMapping(value = "/sign-up")
+    @PostMapping(value = SIGN_UP_PATH)
     ApiResult<Boolean> signUp(@RequestBody @Valid SignDTO signDTO);
 
     @ApiOperation(value = "Verification path")
-    @GetMapping(value = "/verification-email")
+    @GetMapping(value = VERIFICATION_PATH)
     ApiResult<?> verificationEmail(@RequestParam String email);
 
     @ApiOperation(value = "Sign in path")

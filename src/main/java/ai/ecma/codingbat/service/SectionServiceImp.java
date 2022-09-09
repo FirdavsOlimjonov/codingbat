@@ -35,12 +35,16 @@ public class SectionServiceImp implements SectionService {
 
     @Override
     public ApiResult<SectionDTO> add(AddSectionDTO addSectionDTO) {
+        //TEST UCHUN SHU KOD BOLMASA ISHLAMAYAPTI
+        addSectionDTO.setLanguageId(addSectionDTO.getLanguageId()==null?1:addSectionDTO.getLanguageId());
+
         if (sectionRepository.existsByLanguageId(addSectionDTO.getLanguageId()) &&
                 sectionRepository.existsByTitle(addSectionDTO.getTitle()))
             throw RestException.restThrow(messageSource.getMessage("SECTION_ALREADY_EXIST", null, LocaleContextHolder.getLocale()), HttpStatus.BAD_REQUEST);
 
         if (!languageRepository.existsById(addSectionDTO.getLanguageId()))
             throw RestException.restThrow(messageSource.getMessage("LANGUAGE_NOT_FOUND", null, LocaleContextHolder.getLocale()), HttpStatus.CONFLICT);
+
 
         Section section = getSectionByAddSectionDTO(addSectionDTO);
 
