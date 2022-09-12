@@ -56,9 +56,9 @@ public class DataLoader implements CommandLineRunner {
     }
 
     //    @Scheduled(fixedDelay = 60_000L)
-    @Scheduled(fixedDelay = 6_000L)
-    public void sayHello() {
-        System.out.println("Say hello");
-    }
+//    @Scheduled(fixedDelay = 6_000L)
+//    public void sayHello() {
+//        System.out.println("Say hello");
+//    }
 
 }
