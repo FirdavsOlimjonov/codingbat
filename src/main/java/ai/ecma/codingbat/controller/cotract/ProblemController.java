@@ -8,24 +8,31 @@ import javax.validation.Valid;
 import javax.validation.constraints.NotNull;
 import java.util.List;
 
-@RequestMapping(path = "/api/problem")
+@RequestMapping(path = ProblemController.BASE_PATH)
 public interface ProblemController {
-    @GetMapping("/by-section/{sectionId}")
+    String BASE_PATH = "/api/problem";
+    String GET_BY_SECTION_ID = "/by-section/{sectionId}";
+    String GET_BY_ID = "/{id}";
+    String PUT_BY_ID = "/{id}";
+    String DELETE_BY_ID = "/{id}";
+    String DELETE_BY_SECTION_ID = "/all-by-section/{sectionId}";
+
+    @GetMapping(GET_BY_SECTION_ID)
     ApiResult<List<ProblemDTO>> getAllBySectionId(@Valid @NotNull @PathVariable Integer sectionId);
 
-    @GetMapping("/{id}")
+    @GetMapping(GET_BY_ID)
     ApiResult<ProblemDTO> getById(@Valid @NotNull @PathVariable Integer id);
 
     @PostMapping
     ApiResult<ProblemDTO> add(@Valid @NotNull @RequestBody ProblemDTO problemDTO);
 
-    @PutMapping("/{id}")
+    @PutMapping(PUT_BY_ID)
     ApiResult<ProblemDTO> update(@Valid @NotNull @PathVariable Integer id,@Valid @NotNull  @RequestBody ProblemDTO problemDTO);
 
-    @DeleteMapping("/{id}")
+    @DeleteMapping(DELETE_BY_ID)
     void deleteById(@Valid @NotNull @PathVariable Integer id);
 
-    @DeleteMapping("/{sectionId}")
+    @DeleteMapping(DELETE_BY_SECTION_ID)
     void deleteAllBySectionId(@Valid @NotNull @PathVariable Integer sectionId);
 
 

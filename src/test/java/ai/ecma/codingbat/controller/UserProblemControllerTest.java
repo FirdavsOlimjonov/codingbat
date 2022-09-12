@@ -85,7 +85,7 @@ public class UserProblemControllerTest {
         problem.setSection(section);
         problem.setMethodSignature("public int a(int a)");
         problem.setCases(
-            List.of(new Case("4", "2", true, problem))
+            List.of(new Case("4", "2", true, problem,1d))
         );
 
         UserProblemUtils.saveEntity(

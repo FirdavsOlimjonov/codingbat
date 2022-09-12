@@ -203,7 +203,7 @@ public class UserProblemUnitTest {
 
 
         List<CompileResult> compileResultList = new ArrayList<>();
-        CompileResult compileResult = new CompileResult(new Case("Bob", "Hello Bob", true, problem), "Bello, Bob!", true);
+        CompileResult compileResult = new CompileResult(new Case("Bob", "Hello Bob", true, problem,1d), "Bello, Bob!", true);
 
         compileResultList.add(compileResult);
 
@@ -249,7 +249,7 @@ public class UserProblemUnitTest {
 
 
         List<CompileResult> compileResultList = new ArrayList<>();
-        CompileResult compileResult = new CompileResult(new Case("Bob", "Hello Bob", true, problem), "Bello, Bob!", false);
+        CompileResult compileResult = new CompileResult(new Case("Bob", "Hello Bob", true, problem,1d), "Bello, Bob!", false);
 
         compileResultList.add(compileResult);
 

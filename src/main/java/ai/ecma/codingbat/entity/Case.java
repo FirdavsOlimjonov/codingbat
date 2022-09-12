@@ -33,12 +33,12 @@ public class Case extends AbsLongEntity {
     @Column(nullable = false)
     private Double ordIndex;
 
-    public Case(String args, String expected, Boolean visible, Problem problem) {
+    public Case(String args, String expected, Boolean visible, Problem problem,Double ordIndex) {
         this.args = args;
         this.expected = expected;
         this.visible = visible;
         this.problem = problem;
+        this.ordIndex = ordIndex;
     }
 
-    // 1, 2, 3, 4, 5, 6, 7
 }

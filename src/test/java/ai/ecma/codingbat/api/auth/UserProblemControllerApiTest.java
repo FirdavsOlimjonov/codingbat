@@ -82,7 +82,7 @@ public class UserProblemControllerApiTest {
         problem.setSection(section.getId());
         problem.setMethodSignature("public int a(int a)");
         problem.setId(1);
-        CaseDTO caseDTO = new CaseDTO(1L,"4","2",true,1);
+        CaseDTO caseDTO = new CaseDTO(1L,"4","2",true,1,1d);
         problem.setCases(
             List.of(caseDTO)
         );
