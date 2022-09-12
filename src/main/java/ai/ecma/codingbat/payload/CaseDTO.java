@@ -23,8 +23,9 @@ public class CaseDTO {
 
     private Integer problem;
 
-    public static Case DTO(CaseDTO caseDTO, Problem problem){
-        Case case1 =  new Case(caseDTO.getArgs(), caseDTO.getExpected(), caseDTO.getVisible(), problem);
+    public static Case DTO(CaseDTO caseDTO, Problem problem, double ordIndex){
+//        Case case1 =  new Case(caseDTO.getArgs(), caseDTO.getExpected(), caseDTO.getVisible(), problem);
+        Case case1 =  new Case();
         case1.setId(caseDTO.getId());
         return case1;
     }
@@ -36,8 +37,8 @@ public class CaseDTO {
 
     public static List<Case> ListDTOs(List<CaseDTO> caseDTOS, Problem problem){
         List<Case> cases = new ArrayList<>();
-        for (CaseDTO caseDTO : caseDTOS)
-            cases.add(DTO(caseDTO,problem));
+//        for (CaseDTO caseDTO : caseDTOS)
+//            cases.add(DTO(caseDTO,problem, ordIndex));
         return cases;
     }
 

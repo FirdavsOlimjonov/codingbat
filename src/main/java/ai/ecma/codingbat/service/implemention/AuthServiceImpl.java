@@ -1,5 +1,6 @@
-package ai.ecma.codingbat.service;
+package ai.ecma.codingbat.service.implemention;
 
+import ai.ecma.codingbat.service.contract.AuthService;
 import io.jsonwebtoken.*;
 import ai.ecma.codingbat.entity.User;
 import ai.ecma.codingbat.exceptions.RestException;
@@ -22,6 +23,7 @@ import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.stereotype.Service;
 
 import java.util.Date;
+import java.util.concurrent.CompletableFuture;
 
 @Service
 public class AuthServiceImpl implements AuthService {
@@ -80,7 +82,7 @@ public class AuthServiceImpl implements AuthService {
                 signDTO.getEmail(),
                 passwordEncoder.encode(signDTO.getPassword()));
 
-        sendVerificationCodeToEmail(user);
+        CompletableFuture.runAsync(()->sendVerificationCodeToEmail(user));
 
         userRepository.save(user);
         return ApiResult.successResponse();

@@ -7,7 +7,7 @@ import ai.ecma.codingbat.payload.ApiResult;
 import ai.ecma.codingbat.payload.SectionDTO;
 import ai.ecma.codingbat.payload.ViewDTO;
 import ai.ecma.codingbat.projection.SectionDTOProjection;
-import ai.ecma.codingbat.service.SectionService;
+import ai.ecma.codingbat.service.contract.SectionService;
 import org.springframework.web.bind.annotation.RestController;
 
 import java.util.List;

@@ -8,7 +8,7 @@ import ai.ecma.codingbat.payload.ApiResult;
 import ai.ecma.codingbat.payload.LanguageDTO;
 import ai.ecma.codingbat.payload.ViewDTO;
 import ai.ecma.codingbat.projection.LanguageDTOProjection;
-import ai.ecma.codingbat.service.LanguageService;
+import ai.ecma.codingbat.service.contract.LanguageService;
 import org.springframework.security.access.prepost.PreAuthorize;
 import org.springframework.web.bind.annotation.RestController;
 
