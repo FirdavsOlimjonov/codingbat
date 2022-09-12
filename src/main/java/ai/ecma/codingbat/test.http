@@ -3,13 +3,13 @@ Content-Type: application/json
 Authorization: Bearer eyJhbGciOiJIUzUxMiJ9.eyJzdWIiOiJhZG1pbkBjb2RpbmdiYXQuY29tIiwiaWF0IjoxNjYyNjIxODg5LCJleHAiOjE2NjI2MjE5NjF9.4IXjZRBY5edkwOhXlDJD4fgl0QeLgrb_omtBv__P4jsow67wrWgMnj7W-R1joueDBkvLrbjrcs5G7a-roaYxNg
 
 {
-  "title": "JAVA"
+  "title": "Java"
 }
 
 ###
 POST localhost:8090/api/language/list
 Content-Type: application/json
-Authorization: Bearer eyJhbGciOiJIUzUxMiJ9.eyJzdWIiOiJhZG1pbkBjb2RpbmdiYXQuY29tIiwiaWF0IjoxNjYyNjE3NDU0LCJleHAiOjE2NjI2MjQ2NTR9.PILkhHqVYn0KJaVQ9nhWWxbf3-OiAupXj-uew9rOFtKWg0DeztvCA-9yPefUDJh0T7bnkpJ81NaYwej8KxffkQ
+Authorization: Bearer eyJhbGciOiJIUzUxMiJ9.eyJzdWIiOiJhZG1pbkBjb2RpbmdiYXQuY29tIiwiaWF0IjoxNjYyOTU3MDgwLCJleHAiOjE2NjI5NTcxNTJ9.41P1HtR75FnZHkG_8VIRMVufuX4wdW7Mxozmd7uW4zx7uhqhVYRL1PhuWOiu1_hjo0k1FDHSF1L2JOblRHANOQ
 
 {
   "title": "JAVA"
