@@ -3,7 +3,7 @@ POST http://localhost:8090/api/auth/sign-up
 Content-Type: application/json
 
 {
-  "email": "yorqinjonmahmudov93@gmail.com",
+  "email": "firdavsolimjonov@gmail.com",
   "password": "ymam1223"
 }
 
