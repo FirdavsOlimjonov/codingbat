@@ -3,6 +3,7 @@ package ai.ecma.codingbat.repository;
 import ai.ecma.codingbat.entity.UserProblem;
 import org.springframework.data.jpa.repository.JpaRepository;
 import org.springframework.data.jpa.repository.Query;
+import org.springframework.transaction.annotation.Transactional;
 
 import java.util.Optional;
 
@@ -20,4 +21,6 @@ public interface UserProblemRepository
 
     long countAllBySolvedIsTrueAndProblem_SectionId(Integer id);
 
+    @Transactional
+    void deleteAllByUserId(Integer id);
 }

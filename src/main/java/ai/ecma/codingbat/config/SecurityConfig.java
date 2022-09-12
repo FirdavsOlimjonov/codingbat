@@ -6,6 +6,7 @@ import ai.ecma.codingbat.exceptions.MyEntryPointHandler;
 import ai.ecma.codingbat.security.JWTFilter;
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
+import org.springframework.http.HttpMethod;
 import org.springframework.security.authentication.AuthenticationManager;
 import org.springframework.security.config.annotation.authentication.configuration.AuthenticationConfiguration;
 import org.springframework.security.config.annotation.method.configuration.EnableGlobalMethodSecurity;
@@ -44,6 +45,8 @@ public class SecurityConfig {
                         auth ->
                                 auth
                                         .antMatchers(RestConstants.OPEN_PAGES)
+                                        .permitAll()
+                                        .antMatchers(HttpMethod.OPTIONS)
                                         .permitAll()
                                         .antMatchers("/",
                                                 "/favicon.ico",

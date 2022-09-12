@@ -5,7 +5,7 @@ import ai.ecma.codingbat.controller.cotract.UserProblemController;
 import ai.ecma.codingbat.payload.ApiResult;
 import ai.ecma.codingbat.payload.CompileDTO;
 import ai.ecma.codingbat.payload.UserProblemDTO;
-import ai.ecma.codingbat.service.UserProblemService;
+import ai.ecma.codingbat.service.contract.UserProblemService;
 import org.springframework.web.bind.annotation.RestController;
 
 import javax.validation.constraints.NotNull;

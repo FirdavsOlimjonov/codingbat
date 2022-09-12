@@ -3,6 +3,9 @@ package ai.ecma.codingbat.entity;
 import lombok.Getter;
 import lombok.Setter;
 import ai.ecma.codingbat.entity.template.AbsLongEntity;
+import org.hibernate.annotations.Cascade;
+import org.hibernate.annotations.OnDelete;
+import org.hibernate.annotations.OnDeleteAction;
 
 import javax.persistence.*;
 
@@ -13,10 +16,13 @@ import javax.persistence.*;
 @Table(uniqueConstraints = @UniqueConstraint(
         columnNames = {"user_id", "problem_id"}))
 public class UserProblem extends AbsLongEntity {
-    @ManyToOne(optional = false)
+
+    @OnDelete(action = OnDeleteAction.CASCADE)
+//    @Cascade(value = org.hibernate.annotations.CascadeType.REMOVE)
+    @ManyToOne(optional = false,fetch = FetchType.LAZY)
     private User user;
 
-    @ManyToOne(optional = false)
+    @ManyToOne(optional = false,fetch = FetchType.LAZY)
     private Problem problem;
 
     @Column(columnDefinition = "text")

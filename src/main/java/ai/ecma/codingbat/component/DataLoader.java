@@ -10,6 +10,7 @@ import ai.ecma.codingbat.repository.UserRepository;
 import net.bytebuddy.asm.Advice;
 import org.springframework.beans.factory.annotation.Value;
 import org.springframework.boot.CommandLineRunner;
+import org.springframework.scheduling.annotation.Scheduled;
 import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.stereotype.Component;
 
@@ -40,6 +41,7 @@ public class DataLoader implements CommandLineRunner {
 
             Role role = new Role();
             role.setName("Admin");
+            role.setDescription("Project egasi");
             role.setPermissions(Set.of(PermissionEnum.values()));
             roleRepository.save(role);
 
@@ -52,5 +54,11 @@ public class DataLoader implements CommandLineRunner {
             userRepository.save(admin);
         }
     }
+
+    //    @Scheduled(fixedDelay = 60_000L)
+//    @Scheduled(fixedDelay = 6_000L)
+//    public void sayHello() {
+//        System.out.println("Say hello");
+//    }
 
 }

@@ -29,4 +29,9 @@ public class Case extends AbsLongEntity {
 
     @ManyToOne(optional = false)
     private Problem problem;
+
+    @Column(nullable = false)
+    private Double ordIndex;
+
+    // 1, 2, 3, 4, 5, 6, 7
 }

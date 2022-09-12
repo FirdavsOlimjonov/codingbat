@@ -16,5 +16,6 @@ public interface RestConstants {
             LanguageController.BASE_PATH+LanguageController.LIST_FOR_USERS_PATH,
             AttachmentController.BASE_PATH+"/load-db/*",
             AttachmentController.BASE_PATH+"/load-fs/*",
+            "/api/user/test",
     };
 }

@@ -1,0 +1,18 @@
+POST localhost:8090/api/role
+Content-Type: application/json
+Authorization: Bearer eyJhbGciOiJIUzUxMiJ9.eyJzdWIiOiJhZG1pbkBjb2RpbmdiYXQuY29tIiwiaWF0IjoxNjYyNzAwMDI1LCJleHAiOjE2NjI3NzIwMjV9.6V7Ii_YquDdfSf6wY0Jpb7Edw08vjycikwYAHxtwUJYvjqq0WPwE6CJNlAo96deuk9aKPmJgNN7p7jS0DI7noA
+
+{
+  "name": "Moderator",
+  "description": "Bla",
+  "permissions": ["ADD_LANGUAGE","EDIT_LANGUAGE"]
+}
+
+###
+DELETE localhost:8090/api/role/2
+Authorization: Bearer eyJhbGciOiJIUzUxMiJ9.eyJzdWIiOiJhZG1pbkBjb2RpbmdiYXQuY29tIiwiaWF0IjoxNjYyNzAwMDI1LCJleHAiOjE2NjI3NzIwMjV9.6V7Ii_YquDdfSf6wY0Jpb7Edw08vjycikwYAHxtwUJYvjqq0WPwE6CJNlAo96deuk9aKPmJgNN7p7jS0DI7noA
+
+
+###
+DELETE localhost:8090/api/user/1
+Authorization: Bearer eyJhbGciOiJIUzUxMiJ9.eyJzdWIiOiJhZG1pbkBjb2RpbmdiYXQuY29tIiwiaWF0IjoxNjYyNzAwMDI1LCJleHAiOjE2NjI3NzIwMjV9.6V7Ii_YquDdfSf6wY0Jpb7Edw08vjycikwYAHxtwUJYvjqq0WPwE6CJNlAo96deuk9aKPmJgNN7p7jS0DI7noA

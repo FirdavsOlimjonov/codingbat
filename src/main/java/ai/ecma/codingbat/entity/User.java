@@ -25,7 +25,6 @@ public class User extends AbsIntegerEntity implements UserDetails {
     private String email;
     @Column(nullable = false)
     private String password;
-
     private boolean accountNonExpired;
 
     private boolean accountNonLocked;
