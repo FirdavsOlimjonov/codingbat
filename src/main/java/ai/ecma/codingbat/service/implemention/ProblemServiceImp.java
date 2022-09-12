@@ -1,5 +1,6 @@
-package ai.ecma.codingbat.service;
+package ai.ecma.codingbat.service.implemention;
 
+import ai.ecma.codingbat.service.contract.ProblemService;
 import lombok.RequiredArgsConstructor;
 import ai.ecma.codingbat.entity.Problem;
 import ai.ecma.codingbat.entity.Section;

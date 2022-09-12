@@ -1,10 +1,8 @@
 package ai.ecma.codingbat.section;
 
-import ai.ecma.codingbat.entity.Language;
 import ai.ecma.codingbat.entity.Section;
 import ai.ecma.codingbat.payload.LanguageDTO;
-import ai.ecma.codingbat.service.LanguageServiceImpl;
-import ai.ecma.codingbat.service.SectionServiceImp;
+import ai.ecma.codingbat.service.implemention.SectionServiceImp;
 import org.junit.Test;
 
 import java.lang.reflect.InvocationTargetException;

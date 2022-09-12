@@ -9,7 +9,7 @@ import ai.ecma.codingbat.repository.LanguageRepository;
 import ai.ecma.codingbat.repository.ProblemRepository;
 import ai.ecma.codingbat.repository.SectionRepository;
 import ai.ecma.codingbat.repository.UserProblemRepository;
-import ai.ecma.codingbat.service.LanguageServiceImpl;
+import ai.ecma.codingbat.service.implemention.LanguageServiceImpl;
 import ai.ecma.codingbat.util.CommonUtils;
 import org.junit.Test;
 import org.junit.jupiter.api.DisplayName;

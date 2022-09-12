@@ -1,5 +1,6 @@
-package ai.ecma.codingbat.service;
+package ai.ecma.codingbat.service.implemention;
 
+import ai.ecma.codingbat.service.contract.AuthService;
 import io.jsonwebtoken.*;
 import ai.ecma.codingbat.entity.User;
 import ai.ecma.codingbat.exceptions.RestException;
@@ -23,8 +24,6 @@ import org.springframework.stereotype.Service;
 
 import java.util.Date;
 import java.util.concurrent.CompletableFuture;
-import java.util.concurrent.ExecutorService;
-import java.util.concurrent.Executors;
 
 @Service
 public class AuthServiceImpl implements AuthService {

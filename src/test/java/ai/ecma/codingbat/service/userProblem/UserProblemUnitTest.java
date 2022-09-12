@@ -3,15 +3,14 @@ package ai.ecma.codingbat.service.userProblem;
 import ai.ecma.codingbat.compile.CompileResult;
 import ai.ecma.codingbat.entity.*;
 import ai.ecma.codingbat.payload.UserProblemDTO;
-import ai.ecma.codingbat.service.UserProblemService;
-import ai.ecma.codingbat.service.UserProblemServiceImpl;
+import ai.ecma.codingbat.service.contract.UserProblemService;
+import ai.ecma.codingbat.service.implemention.UserProblemServiceImpl;
 import org.junit.Test;
 
 import java.lang.reflect.InvocationTargetException;
 import java.lang.reflect.Method;
 import java.util.ArrayList;
 import java.util.List;
-import java.util.Objects;
 
 import static org.junit.jupiter.api.Assertions.*;
 
