@@ -2,7 +2,7 @@ package ai.ecma.codingbat.controller.implementation;
 
 import ai.ecma.codingbat.payload.ApiResult;
 import ai.ecma.codingbat.payload.CurrencyDTO;
-import ai.ecma.codingbat.service.UserService;
+import ai.ecma.codingbat.service.implemention.UserService;
 import lombok.RequiredArgsConstructor;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
