@@ -38,6 +38,8 @@ public class AuthServiceImpl implements AuthService {
     @Value("${server.port}")
     private String API_PORT;
 
+    private final String API = "http://54.209.172.146:";
+
     @Value("${jwt.refresh.key}")
     private String REFRESH_TOKEN_KEY;
 
@@ -212,7 +214,7 @@ public class AuthServiceImpl implements AuthService {
         mailMessage.setFrom(sender);
         mailMessage.setTo(user.getEmail());
         mailMessage.setSubject("");
-        mailMessage.setText(MessageLang.getMessageSource("CLICK_LINK") + " http://localhost:"+API_PORT+"/api/auth/verification-email/" + user.getEmail());
+        mailMessage.setText(MessageLang.getMessageSource("CLICK_LINK") + API +API_PORT+"/api/auth/verification-email/" + user.getEmail());
 
         // Sending the mail
         javaMailSender.send(mailMessage);
