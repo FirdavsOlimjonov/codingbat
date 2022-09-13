@@ -1,5 +1,5 @@
 #add user
-POST http://54.209.172.146:8165/api/auth/sign-up
+POST http://localhost:8090/api/auth/sign-up
 Content-Type: application/json
 
 {
