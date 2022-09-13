@@ -40,7 +40,7 @@ public class User extends AbsIntegerEntity implements UserDetails {
         this.email = email;
         this.password = password;
         accountNonExpired = accountNonLocked = credentialsNonExpired = true;
-        enabled = true;
+        enabled = false;
     }
 
     @Override
