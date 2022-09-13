@@ -45,6 +45,13 @@ public class DataLoader implements CommandLineRunner {
             role.setPermissions(Set.of(PermissionEnum.values()));
             roleRepository.save(role);
 
+
+            Role roleUser = new Role();
+            roleUser.setName(RoleEnum.ROLE_USER.name());
+            roleUser.setDescription("Foydalanuvchui");
+            roleUser.setPermissions(Set.of(PermissionEnum.SOLVE_PROBLEM));
+            roleRepository.save(roleUser);
+
             User admin = new User(
                     adminUsername,
                     passwordEncoder.encode(adminPassword));
@@ -55,7 +62,6 @@ public class DataLoader implements CommandLineRunner {
         }
     }
 
-    //    @Scheduled(fixedDelay = 60_000L)
 //    @Scheduled(fixedDelay = 6_000L)
 //    public void sayHello() {
 //        System.out.println("Say hello");
