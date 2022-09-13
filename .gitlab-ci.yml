@@ -1,6 +1,6 @@
 stages:
-    -test  
-    -build
+    - test  
+    - build
 
 
 #
@@ -9,8 +9,8 @@ stages:
 test_process:
     stage: test
     script:
-        -mvn clean
-        -mvn install
+        - mvn clean
+        - mvn install
 
 
 #
