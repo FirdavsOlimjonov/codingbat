@@ -10,6 +10,8 @@ test_process:
     stage: test
     script:
         - mvn test
+    only:
+        - master
 
 
 #
