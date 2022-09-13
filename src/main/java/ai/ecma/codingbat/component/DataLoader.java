@@ -40,7 +40,7 @@ public class DataLoader implements CommandLineRunner {
         if (Objects.equals(ddlMode, "create")) {
 
             Role role = new Role();
-            role.setName("Admin");
+            role.setName(RoleEnum.ROLE_ADMIN.name());
             role.setDescription("Project egasi");
             role.setPermissions(Set.of(PermissionEnum.values()));
             roleRepository.save(role);

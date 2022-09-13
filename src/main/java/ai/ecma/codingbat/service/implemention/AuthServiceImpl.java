@@ -1,5 +1,7 @@
 package ai.ecma.codingbat.service.implemention;
 
+import ai.ecma.codingbat.entity.Role;
+import ai.ecma.codingbat.entity.enums.RoleEnum;
 import ai.ecma.codingbat.service.contract.AuthService;
 import io.jsonwebtoken.*;
 import ai.ecma.codingbat.entity.User;
@@ -82,6 +84,7 @@ public class AuthServiceImpl implements AuthService {
                 signDTO.getEmail(),
                 passwordEncoder.encode(signDTO.getPassword()));
 
+        user.setRole(new Role(RoleEnum.ROLE_USER.name()));
         CompletableFuture.runAsync(()->sendVerificationCodeToEmail(user));
 
         userRepository.save(user);
