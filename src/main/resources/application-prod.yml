@@ -2,12 +2,12 @@ server:
   port: 8165
 spring:
   datasource:
-    url: jdbc:postgresql://185.74.5.104:5482/codingbat
+    url: jdbc:postgresql://localhost:5432/codingbat
     username: codingbat
     password: ketmon123
   jpa:
     hibernate:
-      ddl-auto: update
+      ddl-auto: create
     show-sql: true
 
   mail:
