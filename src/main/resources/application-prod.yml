@@ -7,7 +7,7 @@ spring:
     password: ketmon123
   jpa:
     hibernate:
-      ddl-auto: update
+      ddl-auto: create
     show-sql: true
 
   mail:
