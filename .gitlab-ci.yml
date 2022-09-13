@@ -9,8 +9,7 @@ stages:
 test_process:
     stage: test
     script:
-        - mvn clean
-        - mvn install
+        - mvn test
 
 
 #
