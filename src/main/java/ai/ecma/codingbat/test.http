@@ -1,9 +1,9 @@
-POST localhost:8090/api/language/add
+POST 54.209.172.146:8165/api/language/add
 Content-Type: application/json
-Authorization: Bearer eyJhbGciOiJIUzUxMiJ9.eyJzdWIiOiJhZG1pbkBjb2RpbmdiYXQuY29tIiwiaWF0IjoxNjYyNjIxODg5LCJleHAiOjE2NjI2MjE5NjF9.4IXjZRBY5edkwOhXlDJD4fgl0QeLgrb_omtBv__P4jsow67wrWgMnj7W-R1joueDBkvLrbjrcs5G7a-roaYxNg
+Authorization: Bearer eyJhbGciOiJIUzUxMiJ9.eyJzdWIiOiJhZG1pbkBjb2RpbmdiYXQuY29tIiwiaWF0IjoxNjYzMTM1ODEwLCJleHAiOjE2NjMxNDMwMTB9.MSWxZBMDo4yTOEhwQlwcctx4qQng3ABp5xfBg8jz9r5_bvGj5KL5zzb2jEvIKBGjpWJx6N5FLuShTbAIlzPDlg
 
 {
-  "title": "JAVA"
+  "title": "dddd"
 }
 
 ###
