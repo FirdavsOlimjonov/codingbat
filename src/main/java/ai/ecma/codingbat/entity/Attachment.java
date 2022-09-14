@@ -1,5 +1,6 @@
 package ai.ecma.codingbat.entity;
 
+import ai.ecma.codingbat.entity.template.AbsUUIDEntity;
 import lombok.AllArgsConstructor;
 import lombok.Getter;
 import lombok.NoArgsConstructor;
@@ -16,13 +17,7 @@ import java.util.UUID;
 @Getter
 @Setter
 @NoArgsConstructor
-public class Attachment {
-
-    @Id
-    @GeneratedValue(generator = "UUID")
-    @GenericGenerator(name = "UUID",
-            strategy = "org.hibernate.id.UUIDGenerator")
-    private UUID id;
+public class Attachment extends AbsUUIDEntity {
 
     @Column(nullable = false)
     private String name;

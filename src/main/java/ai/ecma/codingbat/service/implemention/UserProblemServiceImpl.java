@@ -1,7 +1,5 @@
 package ai.ecma.codingbat.service.implemention;
 
-import ai.ecma.codingbat.service.contract.UserProblemService;
-import lombok.RequiredArgsConstructor;
 import ai.ecma.codingbat.compile.CompileResult;
 import ai.ecma.codingbat.entity.Case;
 import ai.ecma.codingbat.entity.Problem;
@@ -15,13 +13,12 @@ import ai.ecma.codingbat.repository.CaseRepository;
 import ai.ecma.codingbat.repository.ProblemRepository;
 import ai.ecma.codingbat.repository.UserProblemRepository;
 import ai.ecma.codingbat.repository.UserRepository;
+import ai.ecma.codingbat.service.contract.UserProblemService;
+import lombok.RequiredArgsConstructor;
 import org.springframework.http.HttpStatus;
 import org.springframework.stereotype.Service;
 
-import java.util.ArrayList;
-import java.util.List;
-import java.util.Objects;
-import java.util.Optional;
+import java.util.*;
 
 import static ai.ecma.codingbat.compile.Compiler.staticCompiler;
 
@@ -38,7 +35,7 @@ public class UserProblemServiceImpl implements UserProblemService {
     private final CaseRepository caseRepository;
 
     @Override
-    public ApiResult<UserProblemDTO> get(Integer userId, Integer problemId) {
+    public ApiResult<UserProblemDTO> get(UUID userId, Integer problemId) {
 
         Optional<User> user = userRepository.findById(userId);
         if (user.isEmpty())
@@ -51,7 +48,7 @@ public class UserProblemServiceImpl implements UserProblemService {
 
 
         Optional<UserProblem> userProblemOp =
-                userProblemRepository.getUserProblemByProblemIdAndUserId(userId, problemId);
+                userProblemRepository.getUserProblemByProblemIdAndUserId(problemId, userId);
 
         UserProblemDTO userProblemDTO;
         if (userProblemOp.isEmpty()) {

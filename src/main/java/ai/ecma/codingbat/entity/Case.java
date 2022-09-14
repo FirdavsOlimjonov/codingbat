@@ -1,5 +1,6 @@
 package ai.ecma.codingbat.entity;
 
+import ai.ecma.codingbat.entity.template.AbsLongWithAuditEntity;
 import lombok.AllArgsConstructor;
 import lombok.Getter;
 import lombok.NoArgsConstructor;
@@ -16,7 +17,7 @@ import javax.persistence.*;
 @Table(name = "cases",
         uniqueConstraints = @UniqueConstraint(
                 columnNames = {"args", "problem_id"}))
-public class Case extends AbsLongEntity {
+public class Case extends AbsLongWithAuditEntity {
 
     @Column(nullable = false, columnDefinition = "text")
     private String args;

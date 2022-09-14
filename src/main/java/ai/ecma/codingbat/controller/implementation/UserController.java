@@ -12,6 +12,8 @@ import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 import org.springframework.web.client.RestTemplate;
 
+import java.util.UUID;
+
 @RestController
 @RequestMapping("/api/user")
 @RequiredArgsConstructor
@@ -22,7 +24,7 @@ public class UserController {
 
 
     @DeleteMapping("/{id}")
-    public ApiResult<Boolean> delete(@PathVariable Integer id) {
+    public ApiResult<Boolean> delete(@PathVariable UUID id) {
         return userService.delete(id);
     }
 

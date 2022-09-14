@@ -78,7 +78,7 @@
 //    public void addLanguageErrorTest() {
 //        AddLanguageDTO addLanguageDTO = new AddLanguageDTO("Java");
 //
-//        when(languageRepository.existsByTitleIgnoreCase((any(String.class))))
+//        when(languageRepository.existsByTitleIgnoreCaseAndIdNot((any(String.class))))
 //                .thenReturn(Boolean.TRUE);
 //
 //        when(languageRepository.save(any(Language.class)))
@@ -231,7 +231,7 @@
 //        AddLanguageDTO addLanguageDTO = new AddLanguageDTO(title);
 //        when(languageRepository.existsById(any(Integer.class)))
 //                .thenReturn(Boolean.TRUE);
-//        when(languageRepository.existsByTitleIgnoreCase(any(String.class)))
+//        when(languageRepository.existsByTitleIgnoreCaseAndIdNot(any(String.class)))
 //                .thenReturn(Boolean.FALSE);
 //
 //        getOneLanguageDTO(id, title);
@@ -254,7 +254,7 @@
 //        AddLanguageDTO addLanguageDTO = new AddLanguageDTO(title);
 //        when(languageRepository.existsById(any(Integer.class)))
 //                .thenReturn(Boolean.FALSE);
-//        when(languageRepository.existsByTitleIgnoreCase(any(String.class)))
+//        when(languageRepository.existsByTitleIgnoreCaseAndIdNot(any(String.class)))
 //                .thenReturn(Boolean.FALSE);
 //
 //        getOneLanguageDTO(id, title);
@@ -272,7 +272,7 @@
 //        AddLanguageDTO addLanguageDTO = new AddLanguageDTO(title);
 //        when(languageRepository.existsById(any(Integer.class)))
 //                .thenReturn(Boolean.TRUE);
-//        when(languageRepository.existsByTitleIgnoreCase(any(String.class)))
+//        when(languageRepository.existsByTitleIgnoreCaseAndIdNot(any(String.class)))
 //                .thenReturn(Boolean.TRUE);
 //
 //        getOneLanguageDTO(id, title);

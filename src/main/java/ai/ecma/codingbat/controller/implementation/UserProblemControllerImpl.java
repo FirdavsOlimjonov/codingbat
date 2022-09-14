@@ -10,6 +10,7 @@ import org.springframework.web.bind.annotation.RestController;
 
 import javax.validation.constraints.NotNull;
 import java.util.List;
+import java.util.UUID;
 
 @RestController
 @RequiredArgsConstructor
@@ -18,7 +19,7 @@ public class UserProblemControllerImpl implements UserProblemController {
     private final UserProblemService userProblemService;
 
     @Override
-    public ApiResult<UserProblemDTO> getUserProblem(@NotNull(message = "user id must be not null") Integer userId,
+    public ApiResult<UserProblemDTO> getUserProblem(@NotNull(message = "user id must be not null") UUID userId,
                                                     @NotNull(message = "problem id must be not null") Integer problemId) {
         return userProblemService.get(userId, problemId);
     }
