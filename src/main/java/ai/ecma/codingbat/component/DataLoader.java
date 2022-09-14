@@ -40,10 +40,17 @@ public class DataLoader implements CommandLineRunner {
         if (Objects.equals(ddlMode, "create")) {
 
             Role role = new Role();
-            role.setName("Admin");
+            role.setName(RoleEnum.ROLE_ADMIN.name());
             role.setDescription("Project egasi");
             role.setPermissions(Set.of(PermissionEnum.values()));
             roleRepository.save(role);
+
+
+            Role roleUser = new Role();
+            roleUser.setName(RoleEnum.ROLE_USER.name());
+            roleUser.setDescription("Foydalanuvchui");
+            roleUser.setPermissions(Set.of(PermissionEnum.SOLVE_PROBLEM));
+            roleRepository.save(roleUser);
 
             User admin = new User(
                     adminUsername,
@@ -55,10 +62,9 @@ public class DataLoader implements CommandLineRunner {
         }
     }
 
-    //    @Scheduled(fixedDelay = 60_000L)
-    @Scheduled(fixedDelay = 6_000L)
-    public void sayHello() {
-        System.out.println("Say hello");
-    }
+//    @Scheduled(fixedDelay = 6_000L)
+//    public void sayHello() {
+//        System.out.println("Say hello");
+//    }
 
 }

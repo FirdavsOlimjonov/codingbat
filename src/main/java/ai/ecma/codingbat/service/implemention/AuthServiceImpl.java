@@ -1,5 +1,8 @@
 package ai.ecma.codingbat.service.implemention;
 
+import ai.ecma.codingbat.entity.Role;
+import ai.ecma.codingbat.entity.enums.RoleEnum;
+import ai.ecma.codingbat.repository.RoleRepository;
 import ai.ecma.codingbat.service.contract.AuthService;
 import io.jsonwebtoken.*;
 import ai.ecma.codingbat.entity.User;
@@ -21,6 +24,7 @@ import org.springframework.security.core.userdetails.UserDetails;
 import org.springframework.security.core.userdetails.UsernameNotFoundException;
 import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.stereotype.Service;
+import org.springframework.transaction.annotation.Transactional;
 
 import java.util.Date;
 import java.util.concurrent.CompletableFuture;
@@ -30,6 +34,11 @@ public class AuthServiceImpl implements AuthService {
 
     @Value("${jwt.access.key}")
     private String ACCESS_TOKEN_KEY;
+
+    @Value("${server.port}")
+    private String API_PORT;
+
+    private final String API = " http://54.209.172.146:";
 
     @Value("${jwt.refresh.key}")
     private String REFRESH_TOKEN_KEY;
@@ -41,6 +50,8 @@ public class AuthServiceImpl implements AuthService {
     private long REFRESH_TOKEN_EXPIRATION_TIME;
 
     private final UserRepository userRepository;
+
+    private final RoleRepository roleRepository;
     private final PasswordEncoder passwordEncoder;
     private final JavaMailSender javaMailSender;
     private final AuthenticationManager authenticationManager;
@@ -51,12 +62,14 @@ public class AuthServiceImpl implements AuthService {
     public AuthServiceImpl(UserRepository userRepository,
                            @Lazy PasswordEncoder passwordEncoder,
                            JavaMailSender javaMailSender,
-                           @Lazy AuthenticationManager authenticationManager
+                           @Lazy AuthenticationManager authenticationManager,
+                           RoleRepository roleRepository
     ) {
         this.userRepository = userRepository;
         this.passwordEncoder = passwordEncoder;
         this.javaMailSender = javaMailSender;
         this.authenticationManager = authenticationManager;
+        this.roleRepository = roleRepository;
     }
 
 
@@ -70,6 +83,7 @@ public class AuthServiceImpl implements AuthService {
     }
 
     @Override
+    @Transactional
     public ApiResult<Boolean> signUp(SignDTO signDTO) {
 
         if (userRepository.existsByEmail(signDTO.getEmail()))
@@ -82,6 +96,7 @@ public class AuthServiceImpl implements AuthService {
                 signDTO.getEmail(),
                 passwordEncoder.encode(signDTO.getPassword()));
 
+        user.setRole(roleRepository.findByName(RoleEnum.ROLE_USER.name()).get());
         CompletableFuture.runAsync(()->sendVerificationCodeToEmail(user));
 
         userRepository.save(user);
@@ -199,7 +214,7 @@ public class AuthServiceImpl implements AuthService {
         mailMessage.setFrom(sender);
         mailMessage.setTo(user.getEmail());
         mailMessage.setSubject("");
-        mailMessage.setText(MessageLang.getMessageSource("CLICK_LINK") + " http://localhost/api/auth/verification-email?email=" + user.getEmail());
+        mailMessage.setText(MessageLang.getMessageSource("CLICK_LINK") + API +API_PORT+"/api/auth/verification-email/" + user.getEmail());
 
         // Sending the mail
         javaMailSender.send(mailMessage);

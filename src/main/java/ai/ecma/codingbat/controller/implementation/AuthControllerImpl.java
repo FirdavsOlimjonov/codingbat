@@ -27,7 +27,7 @@ public class AuthControllerImpl implements AuthController {
         return apiResult;
     }
 
-    public ApiResult<?> verificationEmail(@RequestParam String email) {
+    public ApiResult<?> verificationEmail(@PathVariable String email) {
         log.info("SIgn in method entered: {}", email);
         return authService.verificationEmail(email);
     }

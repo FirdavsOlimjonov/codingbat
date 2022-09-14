@@ -1,0 +1,27 @@
+stages:
+    - test  
+    - build
+
+
+#
+
+
+test_process:
+    stage: test
+    script:
+        - mvn test
+    only:
+        - master
+
+
+#
+
+
+build_process:
+    stage: build
+    script:
+        - mvn clean install
+        - cp target/app-codingbat-0.0.1-SNAPSHOT.jar /home/ubuntu/app-codingbat-0.0.1-SNAPSHOT.jar
+        - systemctl restart codingbat
+    only:
+        - master
