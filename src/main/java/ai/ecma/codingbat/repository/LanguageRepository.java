@@ -44,5 +44,6 @@ public interface LanguageRepository extends JpaRepository<Language, Integer> {
             "LIMIT 10 OFFSET 0",nativeQuery = true)
     List<LanguageDTOProjection> getTest();
 
+    boolean existsByTitleIgnoreCaseAndIdNot(String title, Integer id);
     boolean existsByTitleIgnoreCase(String title);
 }

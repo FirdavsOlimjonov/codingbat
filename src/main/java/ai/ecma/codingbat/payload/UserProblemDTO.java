@@ -7,6 +7,8 @@ import lombok.NoArgsConstructor;
 import lombok.Setter;
 import ai.ecma.codingbat.entity.Problem;
 
+import java.util.UUID;
+
 @Getter
 @Setter
 @NoArgsConstructor
@@ -14,7 +16,7 @@ import ai.ecma.codingbat.entity.Problem;
 @JsonInclude(JsonInclude.Include.NON_NULL)
 public class UserProblemDTO {
 
-    private Integer userId;
+    private UUID userId;
 
     private Problem problem;
 
@@ -24,12 +26,12 @@ public class UserProblemDTO {
 
     private Integer problemId;
 
-    public UserProblemDTO(Integer userId, String solution) {
+    public UserProblemDTO(UUID userId, String solution) {
         this.userId = userId;
         this.solution = solution;
     }
 
-    public UserProblemDTO(Integer userId, Problem problem, String solution, Boolean solved) {
+    public UserProblemDTO(UUID userId, Problem problem, String solution, Boolean solved) {
         this.userId = userId;
         this.problem = problem;
         this.solution = solution;
