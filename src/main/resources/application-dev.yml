@@ -5,10 +5,9 @@ server:
       timeout: 10m
 spring:
   datasource:
-    url: jdbc:postgresql://localhost:5432/postgres
+    url: jdbc:postgresql://54.91.200.15:5432/web_user_data
     username: postgres
-    password: yusufbek200
-
+    password: yusufbek205
   jpa:
     hibernate:
       ddl-auto: update
