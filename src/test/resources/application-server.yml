@@ -5,21 +5,14 @@ server:
       timeout: 10m
 spring:
   datasource:
-    url: jdbc:postgresql://54.91.200.15:5432/web_user_data
-    username: postgres
-<<<<<<< HEAD
-    password: yusufbek205
-=======
-    password: cyberhack25
+    url: jdbc:postgresql://185.74.5.104:5482/codingbat_test
+    username: codingbat
+    password: ketmon123
 
->>>>>>> a9cf65f9ebb8a38d77b4be5714563083a247a9e7
   jpa:
     hibernate:
       ddl-auto: create
     show-sql: true
-    properties:
-      hibernate:
-        enable_lazy_load_no_trans: true
 
   mail:
     host: smtp.gmail.com
@@ -32,18 +25,13 @@ spring:
           auth: true
           starttls:
             enable: true
-  servlet:
-    multipart:
-      max-request-size: 100MB
-      max-file-size: 100MB
   mvc:
     pathmatch:
       matching-strategy: ant_path_matcher
-
 jwt:
   access:
     key: tHaX54Hwk^YMzKd@e@p7#70OZn0#D98BK8C1%T&hBnrzgqK28o
-    expiration-time: 72000000
+    expiration-time: 7200000
   refresh:
     key: tHaX54Hwk^YdfdsMzK-d@e@&p7#%70OZ()BK8C1%T&hBnrzgqK287
     expiration-time: 604800000
@@ -59,5 +47,3 @@ app:
   admin:
     username: admin@codingbat.com
     password: root123
-  upload:
-    folder: D:\TestB20\

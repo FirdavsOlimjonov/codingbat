@@ -15,7 +15,7 @@ public interface AuthController {
     String AUTH_CONTROLLER_BASE_PATH = "/api/auth";
     String SIGN_IN_PATH = "/sign-in";
     String SIGN_UP_PATH = "/sign-up";
-    String VERIFICATION_PATH = "/verification-email";
+    String VERIFICATION_PATH = "/verification-email/{email}";
     String REFRESH_TOKEN_PATH = "/refresh-token";
 
     @ApiOperation(value = "Sign up path")
@@ -24,7 +24,7 @@ public interface AuthController {
 
     @ApiOperation(value = "Verification path")
     @GetMapping(value = VERIFICATION_PATH)
-    ApiResult<?> verificationEmail(@RequestParam String email);
+    ApiResult<?> verificationEmail(@PathVariable String email);
 
     @ApiOperation(value = "Sign in path")
     @PostMapping(value = SIGN_IN_PATH)

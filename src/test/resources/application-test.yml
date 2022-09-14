@@ -5,21 +5,14 @@ server:
       timeout: 10m
 spring:
   datasource:
-    url: jdbc:postgresql://54.91.200.15:5432/web_user_data
+    url: jdbc:postgresql://localhost:5432/postgres
     username: postgres
-<<<<<<< HEAD
-    password: yusufbek205
-=======
     password: cyberhack25
 
->>>>>>> a9cf65f9ebb8a38d77b4be5714563083a247a9e7
   jpa:
     hibernate:
       ddl-auto: create
     show-sql: true
-    properties:
-      hibernate:
-        enable_lazy_load_no_trans: true
 
   mail:
     host: smtp.gmail.com
@@ -32,18 +25,13 @@ spring:
           auth: true
           starttls:
             enable: true
-  servlet:
-    multipart:
-      max-request-size: 100MB
-      max-file-size: 100MB
   mvc:
     pathmatch:
       matching-strategy: ant_path_matcher
-
 jwt:
   access:
     key: tHaX54Hwk^YMzKd@e@p7#70OZn0#D98BK8C1%T&hBnrzgqK28o
-    expiration-time: 72000000
+    expiration-time: 7200000
   refresh:
     key: tHaX54Hwk^YdfdsMzK-d@e@&p7#%70OZ()BK8C1%T&hBnrzgqK287
     expiration-time: 604800000
@@ -54,6 +42,13 @@ logging:
 #    org.springframework.web: ERROR
 #    org.example: ERROR
 #    org.hibernate: ERROR
+
+junit:
+    jupiter:
+      testclass:
+        order:
+          default: org.junit.jupiter.api.ClassOrderer$OrderAnnotation
+
 
 app:
   admin:
