@@ -9,6 +9,6 @@ Content-Type: application/json
 
 ###
 
-GET http://localhost:80/api/auth/verification-email?email=firdavsolimjonov25@gmail.com
+GET http://localhost:8090/api/auth/verification-email?email=firdavsolimjonov25@gmail.com
 #Content-Type: application/json
 

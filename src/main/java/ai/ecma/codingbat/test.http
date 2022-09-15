@@ -1,6 +1,6 @@
 POST localhost:8090/api/language/add
 Content-Type: application/json
-Authorization: Bearer eyJhbGciOiJIUzUxMiJ9.eyJzdWIiOiJhZG1pbkBjb2RpbmdiYXQuY29tIiwiaWF0IjoxNjYyNjIxODg5LCJleHAiOjE2NjI2MjE5NjF9.4IXjZRBY5edkwOhXlDJD4fgl0QeLgrb_omtBv__P4jsow67wrWgMnj7W-R1joueDBkvLrbjrcs5G7a-roaYxNg
+Authorization: Bearer eyJhbGciOiJIUzUxMiJ9.eyJzdWIiOiJhZG1pbkBjb2RpbmdiYXQuY29tIiwiaWF0IjoxNjYzMjE0NTY3LCJleHAiOjE2NjMyODY1Njd9.ji1vdBey7-AvSb7rpS7P70Zn8PlCJeC1zNC-2TKIm_yguvP6x2E9zbWAWkTinZ-Bu-VhOMt49al0eRrbaOZJ0A
 
 {
   "title": "Java"
@@ -9,7 +9,7 @@ Authorization: Bearer eyJhbGciOiJIUzUxMiJ9.eyJzdWIiOiJhZG1pbkBjb2RpbmdiYXQuY29tI
 ###
 POST localhost:8090/api/language/list
 Content-Type: application/json
-Authorization: Bearer eyJhbGciOiJIUzUxMiJ9.eyJzdWIiOiJhZG1pbkBjb2RpbmdiYXQuY29tIiwiaWF0IjoxNjYyOTU3MDgwLCJleHAiOjE2NjI5NTcxNTJ9.41P1HtR75FnZHkG_8VIRMVufuX4wdW7Mxozmd7uW4zx7uhqhVYRL1PhuWOiu1_hjo0k1FDHSF1L2JOblRHANOQ
+Authorization: Bearer eyJhbGciOiJIUzUxMiJ9.eyJzdWIiOiJhZG1pbkBjb2RpbmdiYXQuY29tIiwiaWF0IjoxNjYzMjEzODQ5LCJleHAiOjE2NjMyODU4NDl9.sKNB2v0TF4fsJQT-B1nDSATo97uUxyfShYWprRixgXQEsQxR3jjXYYeO65T-E-65V0iPBA0PGDYH8v9eqrA_MQ
 
 {
   "title": "JAVA"

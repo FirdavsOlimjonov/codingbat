@@ -1,6 +1,6 @@
 POST localhost:8090/api/user-problem/solve-user-problem
 Content-Type: application/json
-Authorization: Bearer eyJhbGciOiJIUzUxMiJ9.eyJzdWIiOiJhZG1pbkBjb2RpbmdiYXQuY29tIiwiaWF0IjoxNjYyNzA2NTQxLCJleHAiOjE2NjI3Nzg1NDF9.7Rw4an4AJLibYrqT09RL807cGE-pM_TgKQse_TZRN8K7y24hYCuWc8-fGFq3p0TWSyw9a3gP-2aeEZcDqptUHQ
+Authorization: Bearer eyJhbGciOiJIUzUxMiJ9.eyJzdWIiOiJhZG1pbkBjb2RpbmdiYXQuY29tIiwiaWF0IjoxNjYzMjE0NTY3LCJleHAiOjE2NjMyODY1Njd9.ji1vdBey7-AvSb7rpS7P70Zn8PlCJeC1zNC-2TKIm_yguvP6x2E9zbWAWkTinZ-Bu-VhOMt49al0eRrbaOZJ0A
 
 {
   "problemId": 1,
@@ -9,12 +9,12 @@ Authorization: Bearer eyJhbGciOiJIUzUxMiJ9.eyJzdWIiOiJhZG1pbkBjb2RpbmdiYXQuY29tI
 }
 
 ###
-GET localhost:8090/user-problem/api/list
+GET localhost:8090/api/user-problem/list
 Content-Type: application/json
 
 
 ###
-GET localhost:8090/user-problem/api/get-user-problem?userId=1&problemId=2
+GET localhost:8090/api/user-problem/get-user-problem?userId=1&problemId=2
 Content-Type: application/json
 
 
