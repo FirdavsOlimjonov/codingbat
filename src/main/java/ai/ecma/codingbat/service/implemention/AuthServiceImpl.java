@@ -80,6 +80,7 @@ public class AuthServiceImpl implements AuthService {
                 .findByEmail(username)
                 .orElseThrow(
                         () -> RestException.restThrow(String.format("%s email not found", username), HttpStatus.UNAUTHORIZED));
+                        
     }
 
     @Override

@@ -6,6 +6,8 @@ import ai.ecma.codingbat.repository.UserRepository;
 import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Service;
 
+import java.util.UUID;
+
 @Service
 @RequiredArgsConstructor
 public class UserService {
@@ -14,7 +16,7 @@ public class UserService {
     private final UserProblemRepository userProblemRepository;
 
 
-    public ApiResult<Boolean> delete(Integer id) {
+    public ApiResult<Boolean> delete(UUID id) {
 
         userRepository.deleteById(id);
 

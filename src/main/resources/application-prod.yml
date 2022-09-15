@@ -2,25 +2,32 @@ server:
   port: 8165
 spring:
   datasource:
-    url: jdbc:postgresql://localhost:5432/codingbat
-    username: codingbat
-    password: ketmon123
+    url: jdbc:postgresql://localhost:5432/web_user_data
+    username: postgres
+    password: yusufbek205
   jpa:
     hibernate:
       ddl-auto: create
     show-sql: true
+    properties:
+      hibernate:
+        enable_lazy_load_no_trans: true
 
   mail:
     host: smtp.gmail.com
     port: 587
     username: sirojiddinit@gmail.com
-    password: cqcgezivhrsvqlor
+    password: cqcgezivhvqlor
     properties:
       mail:
         smtp:
           auth: true
           starttls:
             enable: true
+  servlet:
+    multipart:
+      max-request-size: 100MB
+      max-file-size: 100MB
   mvc:
     pathmatch:
       matching-strategy: ant_path_matcher
@@ -40,4 +47,5 @@ app:
     username: admin@codingbat.com
     password: root123
   upload:
-    folder: /home/ubuntu/codingbat/uploads
+    folder: /home/ubuntu/app-codingbat/
+#    folder:

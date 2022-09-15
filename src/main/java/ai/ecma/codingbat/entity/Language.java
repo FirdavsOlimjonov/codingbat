@@ -6,15 +6,21 @@ import lombok.Getter;
 import lombok.NoArgsConstructor;
 import ai.ecma.codingbat.entity.template.AbsTitleIntegerEntity;
 import ai.ecma.codingbat.util.CommonUtils;
+import lombok.Setter;
 import org.hibernate.annotations.Cascade;
+import org.hibernate.annotations.DynamicInsert;
+import org.hibernate.annotations.DynamicUpdate;
 
 import javax.persistence.*;
 import java.util.List;
 
 @Entity
 @Getter
+@Setter
 @Table(uniqueConstraints = @UniqueConstraint(columnNames = {"title"}))
 @NoArgsConstructor
+@DynamicInsert
+@DynamicUpdate
 public final class Language extends AbsTitleIntegerEntity {
     @Column(unique = true, nullable = false)
     private String url;
@@ -34,10 +40,9 @@ public final class Language extends AbsTitleIntegerEntity {
     }
 
     public Language(String title, String url, Integer id) {
-        this(title,url);
+        this(title, url);
         setId(id);
     }
-
 
 
     private void setUrl() {

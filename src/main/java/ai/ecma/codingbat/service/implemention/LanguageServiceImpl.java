@@ -1,5 +1,6 @@
 package ai.ecma.codingbat.service.implemention;
 
+import ai.ecma.codingbat.entity.User;
 import ai.ecma.codingbat.service.contract.LanguageService;
 import lombok.NonNull;
 import lombok.RequiredArgsConstructor;
@@ -13,6 +14,7 @@ import ai.ecma.codingbat.repository.ProblemRepository;
 import ai.ecma.codingbat.repository.SectionRepository;
 import ai.ecma.codingbat.repository.UserProblemRepository;
 import org.springframework.http.HttpStatus;
+import org.springframework.security.core.context.SecurityContextHolder;
 import org.springframework.stereotype.Service;
 
 import java.util.ArrayList;
@@ -101,6 +103,7 @@ public class LanguageServiceImpl implements LanguageService {
             throw RestException.restThrow("This language already exists", HttpStatus.CONFLICT);
 
         Language language = new Language();
+
         language.setTitle(addLanguageDTO.getTitle());
 
         languageRepository.save(language);
@@ -141,11 +144,19 @@ public class LanguageServiceImpl implements LanguageService {
 
     @Override
     public ApiResult<LanguageDTO> edit(AddLanguageDTO addLanguageDTO, Integer id) {
-        if (languageRepository.existsByTitleIgnoreCase(addLanguageDTO.getTitle()))
+
+        //Java - 1 DB
+        //Java - 1 DTO
+        //Python - 2 DB
+        if (languageRepository.existsByTitleIgnoreCaseAndIdNot(addLanguageDTO.getTitle(), id))
             throw RestException.restThrow("ALREADY_EXISTS", HttpStatus.ALREADY_REPORTED);
-        if (!languageRepository.existsById(id))
-            throw RestException.restThrow("Language not founded in this id", HttpStatus.NOT_FOUND);
-        languageRepository.save(addLanguageDTO.get(id));
+
+        Language language = languageRepository.findById(id).orElseThrow(() -> RestException.restThrow("Language not founded in this id", HttpStatus.NOT_FOUND));
+
+        language.setTitle(addLanguageDTO.getTitle());
+
+        languageRepository.save(language);
+
         return getLanguage(id);
     }
 
@@ -197,7 +208,6 @@ public class LanguageServiceImpl implements LanguageService {
                 solvedCount
         );
     }
-
 
 
     private void orderBy(StringBuilder sb, List<SortingDTO> list) {

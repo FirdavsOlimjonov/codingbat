@@ -1,6 +1,7 @@
 package ai.ecma.codingbat.entity;
 
 import ai.ecma.codingbat.entity.template.AbsIntegerEntity;
+import ai.ecma.codingbat.entity.template.AbsUUIDEntity;
 import lombok.Getter;
 import lombok.NoArgsConstructor;
 import lombok.Setter;
@@ -17,9 +18,11 @@ import java.util.Collection;
 @Setter
 @NoArgsConstructor
 @DynamicUpdate
-public class User extends AbsIntegerEntity implements UserDetails {
+public class User extends AbsUUIDEntity implements UserDetails {
+
     @Column(nullable = false, unique = true)
     private String email;
+
     @Column(nullable = false)
     private String password;
     private boolean accountNonExpired;
