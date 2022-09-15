@@ -7,7 +7,7 @@ spring:
   datasource:
     url: jdbc:postgresql://localhost:5432/postgres
     username: postgres
-    password: cyberhack25
+    password: yusufbek200
 
   jpa:
     hibernate:
@@ -56,4 +56,4 @@ app:
     username: admin@codingbat.com
     password: root123
   upload:
-    folder: D:\TestB20\
+    folder: /home/ubuntu/app-codingbat/
