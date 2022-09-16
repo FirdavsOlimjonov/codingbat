@@ -35,10 +35,10 @@ public class AuthServiceImpl implements AuthService {
     @Value("${jwt.access.key}")
     private String ACCESS_TOKEN_KEY;
 
-    @Value("${server.port}")
-    private String API_PORT;
+//    @Value("${server.port}")
+    private String API_PORT = "8090";
 
-    private final String API = " http://54.209.172.146:";
+    private final String API = " http://localhost:";
 
     @Value("${jwt.refresh.key}")
     private String REFRESH_TOKEN_KEY;

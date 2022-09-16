@@ -16,7 +16,7 @@ public class AuditAware implements AuditorAware<User> {
         Authentication authentication = SecurityContextHolder
                 .getContext()
                 .getAuthentication();
-        if (Objects.isNull(authentication))
+        if (Objects.isNull(authentication) || Objects.equals(authentication.getName(),"anonymousUser"))
             return Optional.empty();
 
         User principal = (User) authentication.getPrincipal();

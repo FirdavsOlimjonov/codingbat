@@ -26,7 +26,7 @@ public class Section extends AbsTitleIntegerEntity {
     private String description;
 
     @Column(nullable = false)
-    private Byte maxRate;
+    private Integer maxRate;
 
     @ManyToOne(optional = false)
     private Language language;
@@ -49,7 +49,7 @@ public class Section extends AbsTitleIntegerEntity {
         this.language = language;
     }
 
-    public Section(String title, String description, Byte maxRate, Integer id, Language language) {
+    public Section(String title, String description, Integer maxRate, Integer id, Language language) {
         setTitle(title);
         setUrl(title);
         this.description = description;

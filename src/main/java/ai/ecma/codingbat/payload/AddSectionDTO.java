@@ -1,25 +1,20 @@
 package ai.ecma.codingbat.payload;
 
 
-import lombok.AllArgsConstructor;
-import lombok.Getter;
-import lombok.Setter;
-import lombok.ToString;
+import io.swagger.models.auth.In;
+import lombok.*;
 
 @Getter
 @Setter
 @ToString
+@NoArgsConstructor
 public class AddSectionDTO{
-
-    //====for test=====//
-    private Integer id;
-    //====for test=====//
 
     private String title;
 
     private String description;
 
-    private Byte maxRate;
+    private Integer maxRate;
 
     private Integer languageId;
 
@@ -28,7 +23,7 @@ public class AddSectionDTO{
     }
 
 
-    public AddSectionDTO(String title, String description, Byte maxRate, Integer languageId) {
+    public AddSectionDTO(String title, String description, Integer maxRate, Integer languageId) {
         this.title = title;
         this.description = description;
         this.maxRate = maxRate;

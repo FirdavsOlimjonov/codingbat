@@ -1,6 +1,5 @@
 package ai.ecma.codingbat.controller.cotract;
 
-import ai.ecma.codingbat.entity.enums.PermissionEnum;
 import ai.ecma.codingbat.payload.AddLanguageDTO;
 import ai.ecma.codingbat.payload.ApiResult;
 import ai.ecma.codingbat.payload.LanguageDTO;
@@ -23,7 +22,7 @@ public interface LanguageController {
     String LIST_FOR_USERS_PATH = "/list-for-users";
 
     @PostMapping(path = ADD_PATH)
-    @PreAuthorize(value = "hasAnyRole('ADMIN')")
+    @PreAuthorize(value = "hasAnyAuthority('ADD_LANGUAGE')")
     ApiResult<LanguageDTO> add(@Valid @RequestBody AddLanguageDTO addLanguageDTO);
 
 

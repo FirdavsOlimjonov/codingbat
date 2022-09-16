@@ -1,6 +1,7 @@
 package ai.ecma.codingbat.payload;
 
 import com.fasterxml.jackson.annotation.JsonInclude;
+import io.swagger.models.auth.In;
 import lombok.*;
 
 @Setter
@@ -18,7 +19,7 @@ public class SectionDTO {
 
     private String description;
 
-    private Byte maxRate;
+    private Integer maxRate;
 
     private Integer languageId;
 
@@ -28,7 +29,7 @@ public class SectionDTO {
 
     private Long solutionCount;
 
-    public SectionDTO(Integer id, String title, String url, String description, Byte maxRate, Integer languageId) {
+    public SectionDTO(Integer id, String title, String url, String description, Integer maxRate, Integer languageId) {
         this.id = id;
         this.title = title;
         this.url = url;
