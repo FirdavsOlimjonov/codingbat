@@ -1,5 +1,6 @@
 package ai.ecma.codingbat.controller.cotract;
 
+import ai.ecma.codingbat.payload.AddProblemDTO;
 import ai.ecma.codingbat.payload.ApiResult;
 import ai.ecma.codingbat.payload.ProblemDTO;
 import org.springframework.web.bind.annotation.*;
@@ -24,7 +25,7 @@ public interface ProblemController {
     ApiResult<ProblemDTO> getById(@Valid @NotNull @PathVariable Integer id);
 
     @PostMapping
-    ApiResult<ProblemDTO> add(@Valid @NotNull @RequestBody ProblemDTO problemDTO);
+    ApiResult<ProblemDTO> add(@Valid @NotNull @RequestBody AddProblemDTO addProblemDTO);
 
     @PutMapping(PUT_BY_ID)
     ApiResult<ProblemDTO> update(@Valid @NotNull @PathVariable Integer id,@Valid @NotNull  @RequestBody ProblemDTO problemDTO);
