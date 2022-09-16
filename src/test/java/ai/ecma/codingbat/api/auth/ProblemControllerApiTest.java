@@ -1,4 +1,4 @@
-package ai.ecma.codingbat.api.auth;
-
-public class ProblemControllerApiTest {
-}
+//package ai.ecma.codingbat.api.auth;
+//
+//public class ProblemControllerApiTest {
+//}

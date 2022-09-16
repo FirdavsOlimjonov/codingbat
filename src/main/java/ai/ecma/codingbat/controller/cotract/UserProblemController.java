@@ -6,6 +6,7 @@ import ai.ecma.codingbat.payload.*;
 import org.springframework.web.bind.annotation.*;
 
 import java.util.List;
+import java.util.UUID;
 
 @RequestMapping(path = "/api/user-problem")
 public interface UserProblemController {
@@ -13,7 +14,7 @@ public interface UserProblemController {
 
     @ApiOperation(value = "Getting  user problem for user  path")
     @GetMapping("/get-user-problem")
-    ApiResult<UserProblemDTO> getUserProblem(@RequestParam Integer userId,
+    ApiResult<UserProblemDTO> getUserProblem(@RequestParam UUID userId,
                                              @RequestParam Integer problemId);
 
     @ApiOperation(value = "Getting all user problems for admin panel path")

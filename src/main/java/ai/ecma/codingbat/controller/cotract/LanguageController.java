@@ -6,6 +6,7 @@ import ai.ecma.codingbat.payload.LanguageDTO;
 import ai.ecma.codingbat.payload.ViewDTO;
 import ai.ecma.codingbat.projection.LanguageDTOProjection;
 import ai.ecma.codingbat.util.RestConstants;
+import org.springframework.security.access.prepost.PreAuthorize;
 import org.springframework.web.bind.annotation.*;
 
 import javax.validation.Valid;
@@ -21,6 +22,7 @@ public interface LanguageController {
     String LIST_FOR_USERS_PATH = "/list-for-users";
 
     @PostMapping(path = ADD_PATH)
+    @PreAuthorize(value = "hasAnyAuthority('ADD_LANGUAGE')")
     ApiResult<LanguageDTO> add(@Valid @RequestBody AddLanguageDTO addLanguageDTO);
 
 

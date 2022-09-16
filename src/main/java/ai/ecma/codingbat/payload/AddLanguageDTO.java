@@ -24,6 +24,7 @@ public class AddLanguageDTO {
     public Language get() {
         return new Language(title);
     }
+
     public Language get(Integer id) {
         return new Language(title, CommonUtils.makeUrl(title),id);
     }

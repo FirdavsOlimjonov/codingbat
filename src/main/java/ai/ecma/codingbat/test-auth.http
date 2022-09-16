@@ -1,10 +1,10 @@
 #add user
-POST http://localhost:8090/api/auth/sign-up
+POST http://localhost:8090/api/auth/sign-in
 Content-Type: application/json
 
 {
-  "email": "yorqinjonmahmudov93@gmail.com",
-  "password": "ymam1223"
+  "email": "admin@codingbat.com",
+  "password": "root123"
 }
 
 ###

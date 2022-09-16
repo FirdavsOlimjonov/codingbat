@@ -5,10 +5,11 @@ import ai.ecma.codingbat.payload.CompileDTO;
 import ai.ecma.codingbat.payload.UserProblemDTO;
 
 import java.util.List;
+import java.util.UUID;
 
 public interface UserProblemService {
 
-    ApiResult<UserProblemDTO> get(Integer userId, Integer problemId);
+    ApiResult<UserProblemDTO> get(UUID userId, Integer problemId);
 
     ApiResult<CompileDTO> solveProblemByUser(UserProblemDTO userProblemDTO);
 

@@ -1,9 +1,19 @@
 POST localhost:8090/api/language/add
 Content-Type: application/json
-Authorization: Bearer eyJhbGciOiJIUzUxMiJ9.eyJzdWIiOiJhZG1pbkBjb2RpbmdiYXQuY29tIiwiaWF0IjoxNjYyNjIxODg5LCJleHAiOjE2NjI2MjE5NjF9.4IXjZRBY5edkwOhXlDJD4fgl0QeLgrb_omtBv__P4jsow67wrWgMnj7W-R1joueDBkvLrbjrcs5G7a-roaYxNg
+Authorization: Bearer eyJhbGciOiJIUzUxMiJ9.eyJzdWIiOiJhZG1pbkBjb2RpbmdiYXQuY29tIiwiaWF0IjoxNjYzMTUzMjYzLCJleHAiOjE2NjMyMjUyNjN9.8rSQ-lGh0tmflZbxW-4wOhi28t1s6zFIRH6RGSbTfIwyJ7v3sowG0phFAazE2_HxK6IAw6ISpm5Vbjgt2VRk-w
+#Authorization: Bearer eyJhbGciOiJIUzUxMiJ9.eyJzdWIiOiJhZG1pbkBjb2RpbmdiYXQyLmNvbSIsImlhdCI6MTY2MzEzNzMwNCwiZXhwIjoxNjYzMjA5MzA0fQ.BCJrvM0DSbh5e-tZv7ES1gFowby4rE74PfUo6psDibMV_-AnHH4g9sfey3-7G00Lidi5RESzSEl04LBHkUP4vg
 
 {
-  "title": "JAVA"
+  "title": "sssss"
+}
+###
+PUT localhost:8090/api/language/1
+Content-Type: application/json
+#Authorization: Bearer eyJhbGciOiJIUzUxMiJ9.eyJzdWIiOiJhZG1pbkBjb2RpbmdiYXQuY29tIiwiaWF0IjoxNjYzMTM1NDAzLCJleHAiOjE2NjMyMDc0MDN9.OFQ3KYXmFVqJxEbpud8vKCpJKtPX7TO9zHi0lXubWj5NVeEU9XJ5WD-rFCWpi1KHuL9W-0BGis2YjLTFJEEkTg
+Authorization: Bearer eyJhbGciOiJIUzUxMiJ9.eyJzdWIiOiJhZG1pbkBjb2RpbmdiYXQyLmNvbSIsImlhdCI6MTY2MzEzNzMwNCwiZXhwIjoxNjYzMjA5MzA0fQ.BCJrvM0DSbh5e-tZv7ES1gFowby4rE74PfUo6psDibMV_-AnHH4g9sfey3-7G00Lidi5RESzSEl04LBHkUP4vg
+
+{
+  "title": "Java"
 }
 
 ###
@@ -20,7 +30,7 @@ POST localhost:8090/api/auth/sign-in
 Content-Type: application/json
 
 {
-  "email": "admin@codingbat.com",
+  "email": "admin@codingbat2.com",
   "password": "root123"
 }
 

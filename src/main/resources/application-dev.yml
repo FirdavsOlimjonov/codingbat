@@ -11,7 +11,7 @@ spring:
 
   jpa:
     hibernate:
-      ddl-auto: update
+      ddl-auto: create
     show-sql: true
     properties:
       hibernate:
@@ -56,4 +56,4 @@ app:
     username: admin@codingbat.com
     password: root123
   upload:
-    folder: D:\TestB20\
+    folder: /home/ubuntu/app-codingbat/

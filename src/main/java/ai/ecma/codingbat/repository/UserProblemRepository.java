@@ -6,6 +6,7 @@ import org.springframework.data.jpa.repository.Query;
 import org.springframework.transaction.annotation.Transactional;
 
 import java.util.Optional;
+import java.util.UUID;
 
 public interface UserProblemRepository
         extends JpaRepository<UserProblem, Long> {
@@ -15,12 +16,12 @@ public interface UserProblemRepository
 
     long countAllBySolvedIsTrueAndProblem_SectionLanguageId(Integer problem_section_language_id);
 
-    Optional<UserProblem> getUserProblemByProblemIdAndUserId(Integer userId, Integer problemId);
+    Optional<UserProblem> getUserProblemByProblemIdAndUserId(Integer problem_id, UUID user_id);
 
     long countAllByProblem_SectionId(Integer id);
 
     long countAllBySolvedIsTrueAndProblem_SectionId(Integer id);
 
     @Transactional
-    void deleteAllByUserId(Integer id);
+    void deleteAllByUserId(UUID user_id);
 }

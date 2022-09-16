@@ -13,5 +13,5 @@ public class TokenDTO {
 
     private String refreshToken;
 
-    private final String tokenType = "Bearer";
+    private final String tokenType = "Bearer ";
 }

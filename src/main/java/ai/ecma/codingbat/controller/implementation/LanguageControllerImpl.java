@@ -23,7 +23,6 @@ public class LanguageControllerImpl implements LanguageController {
 
 
     @Override
-    @PreAuthorize(value = "hasAnyAuthority('ROLE_ADMIN')")
     public ApiResult<LanguageDTO> add(AddLanguageDTO addLanguageDTO) {
         log.info("Add method entered: {}", addLanguageDTO);
 

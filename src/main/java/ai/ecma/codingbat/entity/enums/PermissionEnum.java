@@ -6,7 +6,8 @@ import org.springframework.security.core.GrantedAuthority;
 public enum PermissionEnum implements GrantedAuthority {
 
     ADD_LANGUAGE,
-    EDIT_LANGUAGE;
+    EDIT_LANGUAGE,
+    SOLVE_PROBLEM;
 
     @Override
     public String getAuthority() {

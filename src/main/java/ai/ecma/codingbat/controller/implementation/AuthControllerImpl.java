@@ -6,7 +6,6 @@ import ai.ecma.codingbat.controller.cotract.AuthController;
 import ai.ecma.codingbat.payload.ApiResult;
 import ai.ecma.codingbat.payload.SignDTO;
 import ai.ecma.codingbat.payload.TokenDTO;
-import ai.ecma.codingbat.repository.UserDetailsRepository;
 import ai.ecma.codingbat.service.contract.AuthService;
 import org.springframework.web.bind.annotation.*;
 
@@ -18,7 +17,6 @@ import javax.validation.Valid;
 @Slf4j
 public class AuthControllerImpl implements AuthController {
     private final AuthService authService;
-    private final UserDetailsRepository userDetailsRepository;
 
     public ApiResult<Boolean> signUp(@RequestBody @Valid SignDTO signDTO) {
         log.info("SIgn up method entered: {}", signDTO);
@@ -27,7 +25,7 @@ public class AuthControllerImpl implements AuthController {
         return apiResult;
     }
 
-    public ApiResult<?> verificationEmail(@RequestParam String email) {
+    public ApiResult<?> verificationEmail(@PathVariable String email) {
         log.info("SIgn in method entered: {}", email);
         return authService.verificationEmail(email);
     }
