@@ -7,7 +7,8 @@ public enum PermissionEnum implements GrantedAuthority {
 
     ADD_LANGUAGE,
     EDIT_LANGUAGE,
-    SOLVE_PROBLEM;
+    SOLVE_PROBLEM,
+    EDIT_ROLE;
 
     @Override
     public String getAuthority() {

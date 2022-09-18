@@ -1,6 +1,8 @@
 package ai.ecma.codingbat.payload;
 
 import ai.ecma.codingbat.entity.enums.PermissionEnum;
+import com.fasterxml.jackson.annotation.JsonInclude;
+import lombok.AllArgsConstructor;
 import lombok.Getter;
 import lombok.Setter;
 
@@ -12,6 +14,8 @@ import java.util.Set;
 
 @Getter
 @Setter
+@JsonInclude(JsonInclude.Include.NON_NULL)
+@AllArgsConstructor
 public class RoleDTO {
 
     private Integer id;

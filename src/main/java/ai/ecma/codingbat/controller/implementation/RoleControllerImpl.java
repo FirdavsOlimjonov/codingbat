@@ -8,6 +8,7 @@ import lombok.RequiredArgsConstructor;
 import org.springframework.web.bind.annotation.*;
 
 import javax.validation.Valid;
+import java.util.List;
 
 @RestController
 @RequiredArgsConstructor
@@ -23,5 +24,10 @@ public class RoleControllerImpl implements RoleController {
     @Override
     public ApiResult<Boolean> delete(@PathVariable Integer id) {
         return roleService.delete(id);
+    }
+
+    @Override
+    public ApiResult<List<RoleDTO>> getRoles() {
+        return roleService.getRoles();
     }
 }
