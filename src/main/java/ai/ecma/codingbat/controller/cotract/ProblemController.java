@@ -28,7 +28,7 @@ public interface ProblemController {
     ApiResult<ProblemDTO> add(@Valid @NotNull @RequestBody AddProblemDTO addProblemDTO);
 
     @PutMapping(PUT_BY_ID)
-    ApiResult<ProblemDTO> update(@Valid @NotNull @PathVariable Integer id,@Valid @NotNull  @RequestBody ProblemDTO problemDTO);
+    ApiResult<ProblemDTO> update(@Valid @NotNull @PathVariable Integer id,@Valid @NotNull  @RequestBody AddProblemDTO AddProblemDTO);
 
     @DeleteMapping(DELETE_BY_ID)
     void deleteById(@Valid @NotNull @PathVariable Integer id);
