@@ -32,8 +32,8 @@ public class ProblemControllerImp implements ProblemController {
         return service.addProblem(AddProblemDTO.convert(addProblemDTO));
     }
 
-    public ApiResult<ProblemDTO> update(Integer id, ProblemDTO problemDTO) {
-        return service.updateProblemById(id, problemDTO);
+    public ApiResult<ProblemDTO> update(Integer id, AddProblemDTO addProblemDTO) {
+        return service.updateProblemById(id, AddProblemDTO.convert(addProblemDTO));
     }
 
     public void deleteById(Integer id) {
