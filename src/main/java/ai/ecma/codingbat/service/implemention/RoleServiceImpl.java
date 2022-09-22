@@ -4,6 +4,7 @@ import ai.ecma.codingbat.entity.Language;
 import ai.ecma.codingbat.entity.Role;
 import ai.ecma.codingbat.exceptions.RestException;
 import ai.ecma.codingbat.mapper.RoleMapper;
+import ai.ecma.codingbat.payload.AddRoleDTO;
 import ai.ecma.codingbat.payload.ApiResult;
 import ai.ecma.codingbat.payload.LanguageDTO;
 import ai.ecma.codingbat.payload.RoleDTO;
@@ -22,18 +23,20 @@ import java.util.stream.Collectors;
 public class RoleServiceImpl implements RoleService {
 
     private final RoleRepository roleRepository;
-    private final RoleMapper roleMapper;
 
     @Override
-    public ApiResult<RoleDTO> add(RoleDTO roleDTO) {
-        if (roleRepository.exists(Example.of(new Role(roleDTO.getName()))))
+    public ApiResult<RoleDTO> add(AddRoleDTO addRoleDTO) {
+        if (roleRepository.exists(Example.of(new Role(addRoleDTO.getName()))))
             throw RestException.restThrow("Such role already exists", HttpStatus.CONFLICT);
 
-        Role role = roleMapper.roleDTOToRole(roleDTO);
+        Role role = new Role(
+                addRoleDTO.getName(),
+                addRoleDTO.getDescription(),
+                addRoleDTO.getPermissions());
 
         roleRepository.save(role);
 
-        return ApiResult.successResponse(roleMapper.roleToRoleDTO(role));
+        return ApiResult.successResponse(mapRoleToRoleDTO(role));
     }
 
     @Override

@@ -17,9 +17,9 @@ import java.util.Set;
 @Setter
 @JsonInclude(JsonInclude.Include.NON_NULL)
 @AllArgsConstructor
-public class RoleDTO {
+public class AddRoleDTO {
 
-    Integer id;
+
     @NotBlank
     private String name;
 

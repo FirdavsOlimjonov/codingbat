@@ -62,7 +62,7 @@ public class AuthServiceImpl implements AuthService {
 
     public AuthServiceImpl(UserRepository userRepository,
                            @Lazy PasswordEncoder passwordEncoder,
-                           JavaMailSender javaMailSender,
+                           @SuppressWarnings("SpringJavaInjectionPointsAutowiringInspection") JavaMailSender javaMailSender,
                            @Lazy AuthenticationManager authenticationManager,
                            RoleRepository roleRepository
     ) {

@@ -29,10 +29,16 @@ public class Role extends AbsIntegerEntity {
     @Enumerated(value = EnumType.STRING)
     private Set<PermissionEnum> permissions;
 
-    @OneToMany(mappedBy = "role")
+    @OneToMany(mappedBy = "role",fetch = FetchType.LAZY)
     private List<User> users;
 
     public Role(String name) {
         this.name = name;
+    }
+
+    public Role(String name, String description, Set<PermissionEnum> permissions) {
+        this.name = name;
+        this.description = description;
+        this.permissions = permissions;
     }
 }
