@@ -95,8 +95,12 @@ public class ProblemServiceImp implements ProblemService {
                 .findById(problemDTO.getSection())
                 .orElseThrow(() -> RestException.restThrow("Berilgan Id li Section topilmadi", HttpStatus.NOT_FOUND));
 
+        AtomicReference<Double> ordIndex = new AtomicReference<>(1D);
         List<CaseDTO> caseDTOS = problemDTO.getCases();
-        caseDTOS.forEach(aCase -> aCase.setProblem(id));
+        caseDTOS.forEach(aCase -> {
+            aCase.setProblem(id);
+            aCase.setOrdIndex(ordIndex.getAndSet(ordIndex.get() + 1));
+        });
         problemDTO.setId(id);
 
         Problem problem1 = problemRepository.save(ProblemDTO.DTO(problemDTO, section));
