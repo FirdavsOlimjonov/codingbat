@@ -60,7 +60,7 @@ public class RestExceptionHandler {
     @ExceptionHandler(value = AccessDeniedException.class)
     public ResponseEntity<ApiResult<List<ErrorData>>> exceptionHandle(AccessDeniedException ex) {
         ApiResult<List<ErrorData>> apiResult = ApiResult.failResponse(
-                "Huquqingiz yo'q okasi",
+                "You do not have access!",
                 HttpStatus.FORBIDDEN.value());
         return new ResponseEntity<>(apiResult, HttpStatus.FORBIDDEN);
     }

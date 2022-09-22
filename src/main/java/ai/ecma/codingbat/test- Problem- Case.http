@@ -1,9 +1,39 @@
 
+###  Tizimga kirish
+POST localhost:8090/api/auth/sign-in
+Content-Type: application/json
+
+{
+  "email": "admin@codingbat.com",
+  "password": "root123"
+}
+
+###  Language qo`shish
+POST localhost:8090/api/language/add
+Content-Type: application/json
+Authorization: Bearer eyJhbGciOiJIUzUxMiJ9.eyJzdWIiOiJhZG1pbkBjb2RpbmdiYXQuY29tIiwiaWF0IjoxNjYzNjU2NDAzLCJleHAiOjE2NjM3Mjg0MDN9.FvLDuYL62UEa1elWcwt8RX8E5fGpL4SAMtvuAT_Hu94UyIwk3_UKcfPTacRs7FmOK5oDWpANsflnnx_LfbAaLQ
+
+{
+  "title": "Java"
+}
+
+###  Section qo`shish
+POST localhost:8090/api/section/add
+Content-Type: application/json
+Authorization: Bearer eyJhbGciOiJIUzUxMiJ9.eyJzdWIiOiJhZG1pbkBjb2RpbmdiYXQuY29tIiwiaWF0IjoxNjYzNjU2NDAzLCJleHAiOjE2NjM3Mjg0MDN9.FvLDuYL62UEa1elWcwt8RX8E5fGpL4SAMtvuAT_Hu94UyIwk3_UKcfPTacRs7FmOK5oDWpANsflnnx_LfbAaLQ
+
+{
+  "title": "String 1",
+  "languageId": 1,
+  "description": "Bunda string haqida urganamiz",
+  "maxRate": 8
+}
+
+
 ### Problem qo`shish
 POST http://localhost:8090/api/problem
 Content-Type: application/json
-Authorization: Bearer eyJhbGciOiJIUzUxMiJ9.eyJzdWIiOiJhZG1pbkBjb2RpbmdiYXQuY29tIiwiaWF0IjoxNjYyNzAwMDI1LCJleHAiOjE2NjI3NzIwMjV9.6V7Ii_YquDdfSf6wY0Jpb7Edw08vjycikwYAHxtwUJYvjqq0WPwE6CJNlAo96deuk9aKPmJgNN7p7jS0DI7noA
-
+Authorization: Bearer eyJhbGciOiJIUzUxMiJ9.eyJzdWIiOiJhZG1pbkBjb2RpbmdiYXQuY29tIiwiaWF0IjoxNjYzNjU2NDAzLCJleHAiOjE2NjM3Mjg0MDN9.FvLDuYL62UEa1elWcwt8RX8E5fGpL4SAMtvuAT_Hu94UyIwk3_UKcfPTacRs7FmOK5oDWpANsflnnx_LfbAaLQ
 
 {
   "title": "concat",
@@ -32,35 +62,26 @@ Authorization: Bearer eyJhbGciOiJIUzUxMiJ9.eyJzdWIiOiJhZG1pbkBjb2RpbmdiYXQuY29tI
 
 
 ### Update
-PUT http://localhost:8090/api/problem/30
+PUT http://localhost:8090/api/problem/1
 Content-Type: application/json
+Authorization: Bearer eyJhbGciOiJIUzUxMiJ9.eyJzdWIiOiJhZG1pbkBjb2RpbmdiYXQuY29tIiwiaWF0IjoxNjYzNjU2NDAzLCJleHAiOjE2NjM3Mjg0MDN9.FvLDuYL62UEa1elWcwt8RX8E5fGpL4SAMtvuAT_Hu94UyIwk3_UKcfPTacRs7FmOK5oDWpANsflnnx_LfbAaLQ
 
 {
-  "title": "Problem",
-  "description": "Hard range",
-  "methodSignature": "nkdakcasfdad(ASFDAS){}",
+  "title": "concat",
+  "description": "middle range",
+  "methodSignature": "public String concat(String a, String b){}",
   "section": 1,
   "cases": [
     {
-      "args": "a, b, d, c",
-      "expected": "askdksad",
+      "args": "\"a\", \"b\"",
+      "expected": "\"adsCWdb\"",
       "visible": true
     },
     {
-      "args": "JAHKANJ JDA",
-      "expected": "DKSJAKHKCNSKN<W",
-      "visible": true
-    },
-    {
-      "args": "!#@!#(*!@)#",
-      "expected": "hjdsjkcw  4i ci",
-      "visible": true
-    },
-    {
-      "args": "1229739  139229 131",
-      "expected": "=-==0=-=0-",
+      "id": 2,
+      "args": "\"ketmon\", \"bolta\"",
+      "expected": "\"ketmonsXZcbolta\"",
       "visible": false
     }
   ]
 }
-

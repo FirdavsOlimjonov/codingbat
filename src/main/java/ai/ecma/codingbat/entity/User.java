@@ -33,7 +33,7 @@ public class User extends AbsUUIDEntity implements UserDetails {
 
     private boolean enabled;
 
-    @ManyToOne
+    @ManyToOne(fetch = FetchType.LAZY)
     private Role role;
 
     @OneToOne(fetch = FetchType.LAZY)

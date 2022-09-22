@@ -1,17 +1,18 @@
 package ai.ecma.codingbat.service.implemention;
 
-import ai.ecma.codingbat.entity.Role;
-import ai.ecma.codingbat.entity.enums.RoleEnum;
-import ai.ecma.codingbat.repository.RoleRepository;
-import ai.ecma.codingbat.service.contract.AuthService;
-import io.jsonwebtoken.*;
 import ai.ecma.codingbat.entity.User;
+import ai.ecma.codingbat.entity.enums.RoleEnum;
 import ai.ecma.codingbat.exceptions.RestException;
 import ai.ecma.codingbat.payload.ApiResult;
 import ai.ecma.codingbat.payload.SignDTO;
 import ai.ecma.codingbat.payload.TokenDTO;
+import ai.ecma.codingbat.repository.RoleRepository;
 import ai.ecma.codingbat.repository.UserRepository;
+import ai.ecma.codingbat.service.contract.AuthService;
 import ai.ecma.codingbat.util.MessageLang;
+import io.jsonwebtoken.ExpiredJwtException;
+import io.jsonwebtoken.Jwts;
+import io.jsonwebtoken.SignatureAlgorithm;
 import org.springframework.beans.factory.annotation.Value;
 import org.springframework.context.annotation.Lazy;
 import org.springframework.http.HttpStatus;
@@ -35,7 +36,7 @@ public class AuthServiceImpl implements AuthService {
     @Value("${jwt.access.key}")
     private String ACCESS_TOKEN_KEY;
 
-//    @Value("${server.port}")
+    //    @Value("${server.port}")
     private String API_PORT = "8090";
 
     private final String API = " http://localhost:";
@@ -61,7 +62,7 @@ public class AuthServiceImpl implements AuthService {
 
     public AuthServiceImpl(UserRepository userRepository,
                            @Lazy PasswordEncoder passwordEncoder,
-                           JavaMailSender javaMailSender,
+                           @SuppressWarnings("SpringJavaInjectionPointsAutowiringInspection") JavaMailSender javaMailSender,
                            @Lazy AuthenticationManager authenticationManager,
                            RoleRepository roleRepository
     ) {
@@ -73,14 +74,13 @@ public class AuthServiceImpl implements AuthService {
     }
 
 
-
     @Override
     public UserDetails loadUserByUsername(String username) throws UsernameNotFoundException {
         return userRepository
                 .findByEmail(username)
                 .orElseThrow(
                         () -> RestException.restThrow(String.format("%s email not found", username), HttpStatus.UNAUTHORIZED));
-                        
+
     }
 
     @Override
@@ -98,7 +98,7 @@ public class AuthServiceImpl implements AuthService {
                 passwordEncoder.encode(signDTO.getPassword()));
 
         user.setRole(roleRepository.findByName(RoleEnum.ROLE_USER.name()).get());
-        CompletableFuture.runAsync(()->sendVerificationCodeToEmail(user));
+        CompletableFuture.runAsync(() -> sendVerificationCodeToEmail(user));
 
         userRepository.save(user);
         return ApiResult.successResponse();
@@ -215,7 +215,7 @@ public class AuthServiceImpl implements AuthService {
         mailMessage.setFrom(sender);
         mailMessage.setTo(user.getEmail());
         mailMessage.setSubject("");
-        mailMessage.setText(MessageLang.getMessageSource("CLICK_LINK") + API +API_PORT+"/api/auth/verification-email/" + user.getEmail());
+        mailMessage.setText(MessageLang.getMessageSource("CLICK_LINK") + API + API_PORT + "/api/auth/verification-email/" + user.getEmail());
 
         // Sending the mail
         javaMailSender.send(mailMessage);

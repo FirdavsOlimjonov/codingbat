@@ -1,5 +1,6 @@
 package ai.ecma.codingbat.controller.implementation;
 
+import ai.ecma.codingbat.payload.AddProblemDTO;
 import lombok.RequiredArgsConstructor;
 import ai.ecma.codingbat.controller.cotract.ProblemController;
 import ai.ecma.codingbat.payload.ApiResult;
@@ -26,12 +27,13 @@ public class ProblemControllerImp implements ProblemController {
     }
 
     @PreAuthorize(value = "hasAnyAuthority('ADD_LANGUAGE')")
-    public ApiResult<ProblemDTO> add(ProblemDTO problemDTO) {
-        return service.addProblem(problemDTO);
+    public ApiResult<ProblemDTO> add(AddProblemDTO addProblemDTO) {
+
+        return service.addProblem(AddProblemDTO.convert(addProblemDTO));
     }
 
-    public ApiResult<ProblemDTO> update(Integer id, ProblemDTO problemDTO) {
-        return service.updateProblemById(id, problemDTO);
+    public ApiResult<ProblemDTO> update(Integer id, AddProblemDTO addProblemDTO) {
+        return service.updateProblemById(id, AddProblemDTO.convert(addProblemDTO));
     }
 
     public void deleteById(Integer id) {
