@@ -74,6 +74,13 @@ public class UserProblemServiceImpl implements UserProblemService {
         if (user.isEmpty())
             throw RestException.restThrow("User Not Found!!!!!", HttpStatus.NOT_FOUND);
 
+
+        if (userProblemDTO.getSolution().contains("System") ||
+                userProblemDTO.getSolution().contains("threw")){
+            throw RestException.restThrow("Common problems: code should not use println or class or static or exceptions",
+                    HttpStatus.BAD_REQUEST);
+        }
+
         List<Case> allByProblemId = caseRepository.getAllByProblemId(problem.getId());
 
         userProblemDTO.setProblemDTO(ProblemDTO.mapProblemToProblemDTO(problem));
