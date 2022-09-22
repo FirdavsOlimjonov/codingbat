@@ -17,8 +17,13 @@ import javax.persistence.*;
         @UniqueConstraint(columnNames = {"url", "language_id"}),
 }
 )
-public class Section extends AbsTitleIntegerEntity {
+public class Section {
+    @Id
+    @GeneratedValue(strategy = GenerationType.IDENTITY)
+    private Integer id;
 
+    @Column(nullable = false)
+    private String title;
     @Column(nullable = false)
     private String url;
 
@@ -33,19 +38,19 @@ public class Section extends AbsTitleIntegerEntity {
 
     public Section(String title, String url) {
         this.url = url;
-        super.setTitle(title);
+        setTitle(title);
     }
 
 
     public Section(String title, String url, Integer id) {
         this.url = url;
-        super.setTitle(title);
+        setTitle(title);
         this.setId(id);
     }
 
     public Section(String title, String url, Language language) {
         this.url = url;
-        super.setTitle(title);
+        setTitle(title);
         this.language = language;
     }
 
@@ -63,9 +68,8 @@ public class Section extends AbsTitleIntegerEntity {
         this.url = CommonUtils.makeUrl(title);
     }
 
-    @Override
     public void setTitle(String title) {
-        super.setTitle(title);
+        setTitle(title);
         setUrl(title);
 
     }

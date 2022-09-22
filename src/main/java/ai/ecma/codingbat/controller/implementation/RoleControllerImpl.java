@@ -2,6 +2,7 @@ package ai.ecma.codingbat.controller.implementation;
 
 import ai.ecma.codingbat.controller.cotract.RoleController;
 import ai.ecma.codingbat.entity.Role;
+import ai.ecma.codingbat.entity.enums.PermissionEnum;
 import ai.ecma.codingbat.payload.AddRoleDTO;
 import ai.ecma.codingbat.payload.ApiResult;
 import ai.ecma.codingbat.payload.RoleDTO;
@@ -31,5 +32,10 @@ public class RoleControllerImpl implements RoleController {
     @Override
     public ApiResult<List<RoleDTO>> getRoles() {
         return roleService.getRoles();
+    }
+
+    @Override
+    public ApiResult<PermissionEnum[]> getPermissions() {
+        return roleService.getPermissions();
     }
 }

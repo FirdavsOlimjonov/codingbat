@@ -21,7 +21,15 @@ import java.util.List;
 @NoArgsConstructor
 @DynamicInsert
 @DynamicUpdate
-public final class Language extends AbsTitleIntegerEntity {
+public final class Language {
+
+    @Id
+    @GeneratedValue(strategy = GenerationType.IDENTITY)
+    private Integer id;
+
+    @Column(nullable = false)
+    private String title;
+
     @Column(unique = true, nullable = false)
     private String url;
 
@@ -46,12 +54,12 @@ public final class Language extends AbsTitleIntegerEntity {
 
 
     private void setUrl() {
-        this.url = CommonUtils.makeUrl(super.getTitle());
+        this.url = CommonUtils.makeUrl(getTitle());
     }
 
-    @Override
+
     public void setTitle(String title) {
-        super.setTitle(title);
+        setTitle(title);
         setUrl();
     }
 }
