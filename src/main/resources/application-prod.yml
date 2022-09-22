@@ -2,9 +2,9 @@ server:
   port: 8165
 spring:
   datasource:
-    url: jdbc:postgresql://localhost:5432/codingbat
-    username: codingbat
-    password: ketmon123
+    url: jdbc:postgresql://localhost:5432/postgres
+    username: postgres
+    password: yusufbek205
   jpa:
     hibernate:
       ddl-auto: create
