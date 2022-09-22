@@ -25,7 +25,7 @@ public class ProblemDTO {
     private Integer section;
 
     private List<CaseDTO> cases;
-    public static Problem DTO(ProblemDTO problemDTO, Section section){
+    public static Problem mapProblemDTOToProblem(ProblemDTO problemDTO, Section section){
         Problem problem = new Problem();
         problem.setId(problemDTO.getId());
         problem.setTitle(problemDTO.getTitle());
@@ -36,7 +36,7 @@ public class ProblemDTO {
         return problem;
     }
 
-    public static ProblemDTO OTD(Problem problem){
+    public static ProblemDTO mapProblemToProblemDTO(Problem problem){
         return new ProblemDTO(
                 problem.getId(),
                 problem.getTitle(),
@@ -47,10 +47,10 @@ public class ProblemDTO {
         );
     }
 
-    public static List<ProblemDTO> ListOTDs(List<Problem> problems){
+    public static List<ProblemDTO> mapProblemListToProblemDTOList(List<Problem> problems){
         List<ProblemDTO> problemDTOS = new ArrayList<>();
         for (Problem problem : problems)
-            problemDTOS.add(ProblemDTO.OTD(problem));
+            problemDTOS.add(ProblemDTO.mapProblemToProblemDTO(problem));
         return problemDTOS;
     }
 

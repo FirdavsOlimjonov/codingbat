@@ -44,7 +44,7 @@
 //    @Order(10)
 //    @Test
 //    public void mapCaseToCaseDTO() {
-//        caseDTOS.add(CaseDTO.OTD(cases.get(0)));
+//        caseDTOS.add(CaseDTO.mapProblemToProblemDTO(cases.get(0)));
 //        assertEquals(caseDTOS.get(caseDTOS.size() - 1).getArgs(), cases.get(0).getArgs());
 //    }
 //
@@ -54,14 +54,14 @@
 //    public void mapCaseDTOToCase(){
 //        mapCaseToCaseDTO();
 //
-//        assertEquals(CaseDTO.DTO(caseDTOS.get(0),problem).getArgs(), caseDTOS.get(0).getArgs());
+//        assertEquals(CaseDTO.mapProblemDTOToProblem(caseDTOS.get(0),problem).getArgs(), caseDTOS.get(0).getArgs());
 //    }
 //
 //
 //    @Order(30)
 //    @Test
 //    public void mapCasesListToCaseDTOsList() {
-//        caseDTOS = CaseDTO.ListOTDs(cases);
+//        caseDTOS = CaseDTO.mapProblemListToProblemDTOList(cases);
 //        assertEquals(caseDTOS.size(), caseDTOS.size());
 //    }
 //
@@ -77,7 +77,7 @@
 //    @Test
 //    public void mapProblemToProblemDTO() {
 //
-//        problemDTO = ProblemDTO.OTD(problem);
+//        problemDTO = ProblemDTO.mapProblemToProblemDTO(problem);
 //
 //        assertEquals(problemDTO.getTitle(), problem.getTitle());
 //
@@ -87,7 +87,7 @@
 //    @Test
 //    public void mapProblemDTOToProblem(){
 //        mapProblemToProblemDTO();
-//        assertEquals(ProblemDTO.DTO(problemDTO,section).getTitle(), problemDTO.getTitle());
+//        assertEquals(ProblemDTO.mapProblemDTOToProblem(problemDTO,section).getTitle(), problemDTO.getTitle());
 //    }
 //
 //}

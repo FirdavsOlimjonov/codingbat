@@ -18,7 +18,6 @@ import javax.persistence.*;
 public class UserProblem extends AbsLongEntity {
 
     @OnDelete(action = OnDeleteAction.CASCADE)
-//    @Cascade(value = org.hibernate.annotations.CascadeType.REMOVE)
     @ManyToOne(optional = false,fetch = FetchType.LAZY)
     private User user;
 

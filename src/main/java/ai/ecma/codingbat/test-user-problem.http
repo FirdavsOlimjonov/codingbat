@@ -1,10 +1,10 @@
 POST localhost:8090/api/user-problem/solve-user-problem
 Content-Type: application/json
-Authorization: Bearer eyJhbGciOiJIUzUxMiJ9.eyJzdWIiOiJhZG1pbkBjb2RpbmdiYXQuY29tIiwiaWF0IjoxNjYzMjE0NTY3LCJleHAiOjE2NjMyODY1Njd9.ji1vdBey7-AvSb7rpS7P70Zn8PlCJeC1zNC-2TKIm_yguvP6x2E9zbWAWkTinZ-Bu-VhOMt49al0eRrbaOZJ0A
+Authorization: Bearer eyJhbGciOiJIUzUxMiJ9.eyJzdWIiOiJhZG1pbkBjb2RpbmdiYXQuY29tIiwiaWF0IjoxNjYzODE2OTM4LCJleHAiOjE2NjM4ODg5Mzh9.n2xOGnDXT-ju1XRsqp1J_Ir5QY5mHulE1zj2NdC3T8_qS5i3OEIFkMHhYD2KB7Ed5SBarnu1Su6xJI3T8k4dNw
 
 {
   "problemId": 1,
-  "userId": 1,
+  "userId": "45c790f0-6dfe-4e90-a8d1-e90bb15d1d1d",
   "solution": "public String concat(String a, String b){return a+b;}"
 }
 

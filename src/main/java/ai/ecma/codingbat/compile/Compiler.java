@@ -1,6 +1,7 @@
 package ai.ecma.codingbat.compile;
 
 import ai.ecma.codingbat.entity.Case;
+import ai.ecma.codingbat.payload.CaseDTO;
 import ai.ecma.codingbat.payload.UserProblemDTO;
 
 import javax.tools.*;
@@ -19,41 +20,28 @@ public class Compiler {
         String classNameA = "Test";
 
         String solution = userProblemDTO.getSolution();
-        String codeA =
-                "public class Test {" + "\n" +
-                        solution
-                        +
-                        "}" + "\n";
+        String codeA = "public class Test {" + "\n" + solution + "}" + "\n";
 
         List<CompileResult> compileResults = new ArrayList<>();
-        String methodName = userProblemDTO.getProblem().getTitle();
+        String methodName = userProblemDTO.getProblemDTO().getTitle();
         String type = getType(userProblemDTO.getSolution());
 
         for (Case aCase : caseList) {
             String classNameB = "Testing";
-            String codeB =
-                    "public class Testing {" + "\n" +
-                            "    public static " + type + " methodB20() {" + "\n" +
-                            "        Test test = new Test();" +
-                            "        return test." + methodName + "(" + aCase.getArgs() + ");" + "\n" +
-                            "    }" + "\n" +
-                            "}" + "\n";
+            String codeB = "public class Testing {" + "\n" + "    public static " + type + " methodB20() {" + "\n" + "        Test test = new Test();" + "        return test." + methodName + "(" + aCase.getArgs() + ");" + "\n" + "    }" + "\n" + "}" + "\n";
 
             RuntimeCompiler r = new RuntimeCompiler();
             r.addClass(classNameA, codeA);
             r.addClass(classNameB, codeB);
             String compile = r.compile();
 
-            if (!compile.equals("true"))
-                throw new IllegalArgumentException(compile);
+            if (!compile.equals("true")) throw new IllegalArgumentException(compile);
 
             Object o = null;
-            String message = "ishlamadi ablax";
+            String message = "";
 
             try {
-                o = MethodInvocationUtils.invokeStaticMethod(
-                        r.getCompiledClass(classNameB),
-                        "methodB20");
+                o = MethodInvocationUtils.invokeStaticMethod(r.getCompiledClass(classNameB), "methodB20");
             } catch (RuntimeException ex) {
                 message = ex.getCause().getCause().toString();
             }
@@ -61,13 +49,13 @@ public class Compiler {
             CompileResult compileResult;
 
             if (Objects.isNull(o)) {
-                compileResult = new CompileResult(aCase, message, false);
+                compileResult = new CompileResult(CaseDTO.OTD(aCase), message, false);
                 compileResults.add(compileResult);
             } else if (Objects.equals(o.toString(), aCase.getExpected())) {
-                compileResult = new CompileResult(aCase, o.toString(), true);
+                compileResult = new CompileResult(CaseDTO.OTD(aCase), o.toString(), true);
                 compileResults.add(compileResult);
             } else {
-                compileResult = new CompileResult(aCase, o.toString(), false);
+                compileResult = new CompileResult(CaseDTO.OTD(aCase), o.toString(), false);
                 compileResults.add(compileResult);
             }
         }
@@ -119,16 +107,12 @@ public class Compiler {
         public RuntimeCompiler() {
             this.javaCompiler = ToolProvider.getSystemJavaCompiler();
             if (javaCompiler == null) {
-                throw new NullPointerException(
-                        "No JavaCompiler found. Make sure to run this with "
-                                + "a JDK, and not only with a JRE");
+                throw new NullPointerException("No JavaCompiler found. Make sure to run this with " + "a JDK, and not only with a JRE");
             }
-            this.classData = new LinkedHashMap<String, byte[]>();
+            this.classData = new LinkedHashMap<>();
             this.mapClassLoader = new MapClassLoader();
-            this.classDataFileManager =
-                    new ClassDataFileManager(
-                            javaCompiler.getStandardFileManager(null, null, null));
-            this.compilationUnits = new ArrayList<JavaFileObject>();
+            this.classDataFileManager = new ClassDataFileManager(javaCompiler.getStandardFileManager(null, null, null));
+            this.compilationUnits = new ArrayList<>();
         }
 
         /**
@@ -140,8 +124,7 @@ public class Compiler {
          */
         public void addClass(String className, String code) {
             String javaFileName = className + ".java";
-            JavaFileObject javaFileObject =
-                    new MemoryJavaSourceFileObject(javaFileName, code);
+            JavaFileObject javaFileObject = new MemoryJavaSourceFileObject(javaFileName, code);
             classData.put(className, className.getBytes());
             compilationUnits.add(javaFileObject);
         }
@@ -153,24 +136,18 @@ public class Compiler {
          * @return Whether the compilation succeeded
          */
         String compile() {
-            DiagnosticCollector<JavaFileObject> diagnosticsCollector =
-                    new DiagnosticCollector<JavaFileObject>();
-            JavaCompiler.CompilationTask task =
-                    javaCompiler.getTask(null, classDataFileManager,
-                            diagnosticsCollector, null, null,
-                            compilationUnits);
+            DiagnosticCollector<JavaFileObject> diagnosticsCollector = new DiagnosticCollector<>();
+            JavaCompiler.CompilationTask task = javaCompiler.getTask(null, classDataFileManager, diagnosticsCollector, null, null, compilationUnits);
             boolean success = task.call();
             compilationUnits.clear();
 
-            if (success)
-                return "true";
+            if (success) return "true";
 
             else {
                 StringBuilder stringBuilder = new StringBuilder();
                 for (Diagnostic<?> diagnostic : diagnosticsCollector.getDiagnostics()) {
 
-                    stringBuilder.append(
-                            diagnostic.getMessage(null)).append("\nLine ").append(diagnostic.getLineNumber() - 1);
+                    stringBuilder.append(diagnostic.getMessage(null)).append("\nLine ").append(diagnostic.getLineNumber() - 1);
                 }
 
                 return stringBuilder.toString();
@@ -192,8 +169,7 @@ public class Compiler {
         /**
          * In-memory representation of a source JavaFileObject
          */
-        private static final class MemoryJavaSourceFileObject extends
-                SimpleJavaFileObject {
+        private static final class MemoryJavaSourceFileObject extends SimpleJavaFileObject {
             /**
              * The source code of the class
              */
@@ -211,8 +187,7 @@ public class Compiler {
             }
 
             @Override
-            public CharSequence getCharContent(boolean ignoreEncodingErrors)
-                    throws IOException {
+            public CharSequence getCharContent(boolean ignoreEncodingErrors) {
                 return code;
             }
         }
@@ -245,13 +220,12 @@ public class Compiler {
              * @param className THe name of the class
              */
             private MemoryJavaClassFileObject(String className) {
-                super(URI.create("string:///" + className + ".class"),
-                        Kind.CLASS);
+                super(URI.create("string:///" + className + ".class"), Kind.CLASS);
                 this.className = className;
             }
 
             @Override
-            public OutputStream openOutputStream() throws IOException {
+            public OutputStream openOutputStream() {
                 return new ClassDataOutputStream(className);
             }
         }
@@ -261,22 +235,18 @@ public class Compiler {
          * A JavaFileManager that manages the compiled classes by passing
          * them to the {@link #classData} map via a ClassDataOutputStream
          */
-        private class ClassDataFileManager extends
-                ForwardingJavaFileManager<StandardJavaFileManager> {
+        private class ClassDataFileManager extends ForwardingJavaFileManager<StandardJavaFileManager> {
             /**
              * Create a new file manager that delegates to the given file manager
              *
              * @param standardJavaFileManager The delegate file manager
              */
-            private ClassDataFileManager(
-                    StandardJavaFileManager standardJavaFileManager) {
+            private ClassDataFileManager(StandardJavaFileManager standardJavaFileManager) {
                 super(standardJavaFileManager);
             }
 
             @Override
-            public JavaFileObject getJavaFileForOutput(final Location location,
-                                                       final String className, JavaFileObject.Kind kind, FileObject sibling)
-                    throws IOException {
+            public JavaFileObject getJavaFileForOutput(final Location location, final String className, JavaFileObject.Kind kind, FileObject sibling) {
                 return new MemoryJavaClassFileObject(className);
             }
         }
@@ -336,8 +306,7 @@ public class Compiler {
          * @throws RuntimeException If either the class or a matching method
          *                          could not be found
          */
-        public static Object invokeStaticMethod(
-                Class<?> c, String methodName, Object... args) {
+        public static Object invokeStaticMethod(Class<?> c, String methodName, Object... args) {
             Method m = findFirstMatchingStaticMethod(c, methodName, args);
             if (m == null) {
                 throw new RuntimeException("No matching method found");
@@ -361,12 +330,10 @@ public class Compiler {
          * @param args       The arguments
          * @return The first matching static method.
          */
-        private static Method findFirstMatchingStaticMethod(
-                Class<?> c, String methodName, Object... args) {
+        private static Method findFirstMatchingStaticMethod(Class<?> c, String methodName, Object... args) {
             Method[] methods = c.getDeclaredMethods();
             for (Method m : methods) {
-                if (m.getName().equals(methodName) &&
-                        Modifier.isStatic(m.getModifiers())) {
+                if (m.getName().equals(methodName) && Modifier.isStatic(m.getModifiers())) {
                     Class<?>[] parameterTypes = m.getParameterTypes();
                     if (areAssignable(parameterTypes, args)) {
                         return m;
@@ -384,7 +351,7 @@ public class Compiler {
          * @param args  The arguments
          * @return Whether the arguments are assignable
          */
-        private static boolean areAssignable(Class<?> types[], Object... args) {
+        private static boolean areAssignable(Class<?>[] types, Object... args) {
             if (types.length != args.length) {
                 return false;
             }

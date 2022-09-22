@@ -18,7 +18,7 @@ public class UserProblemDTO {
 
     private UUID userId;
 
-    private Problem problem;
+    private ProblemDTO problemDTO;
 
     private String solution;
 
@@ -31,9 +31,9 @@ public class UserProblemDTO {
         this.solution = solution;
     }
 
-    public UserProblemDTO(UUID userId, Problem problem, String solution, Boolean solved) {
+    public UserProblemDTO(UUID userId, ProblemDTO problemDTO, String solution, Boolean solved) {
         this.userId = userId;
-        this.problem = problem;
+        this.problemDTO = problemDTO;
         this.solution = solution;
         this.solved = solved;
     }

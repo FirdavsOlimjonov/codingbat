@@ -28,6 +28,6 @@ public class Problem extends AbsTitleIntegerEntity {
 
     @JsonIgnore
     @OrderBy(value = "ordIndex ASC")
-    @OneToMany(mappedBy = "problem", cascade = {CascadeType.PERSIST})
+    @OneToMany(mappedBy = "problem",  cascade = {CascadeType.PERSIST})
     private List<Case> cases;//slect from where problem_di=5 order
 }
