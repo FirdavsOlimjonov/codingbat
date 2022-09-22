@@ -1,12 +1,10 @@
 package ai.ecma.codingbat.service.implemention;
 
-import ai.ecma.codingbat.entity.Language;
 import ai.ecma.codingbat.entity.Role;
+import ai.ecma.codingbat.entity.enums.PermissionEnum;
 import ai.ecma.codingbat.exceptions.RestException;
-import ai.ecma.codingbat.mapper.RoleMapper;
 import ai.ecma.codingbat.payload.AddRoleDTO;
 import ai.ecma.codingbat.payload.ApiResult;
-import ai.ecma.codingbat.payload.LanguageDTO;
 import ai.ecma.codingbat.payload.RoleDTO;
 import ai.ecma.codingbat.repository.RoleRepository;
 import ai.ecma.codingbat.service.contract.RoleService;
@@ -51,6 +49,11 @@ public class RoleServiceImpl implements RoleService {
         List<RoleDTO> roleDTOList = mapLanguagesToLanguageDTOList(all);
 
         return ApiResult.successResponse(roleDTOList);
+    }
+
+    @Override
+    public ApiResult<PermissionEnum[]> getPermissions() {
+        return ApiResult.successResponse(PermissionEnum.values());
     }
 
     private List<RoleDTO> mapLanguagesToLanguageDTOList(List<Role> roles) {

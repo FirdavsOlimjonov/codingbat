@@ -8,11 +8,11 @@ public interface LanguageDTOProjection {
 
     String getUrl();
 
-    Integer getSectionCount();
+    Integer getSectioncount();
 
-    Integer getProblemCount();
+    Integer getProblemcount();
 
-    Long getTryCount();
+    Long getTrycount();
 
-    Long getSolutionCount();
+    Long getSolutioncount();
 }
