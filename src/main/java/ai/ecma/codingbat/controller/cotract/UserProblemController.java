@@ -20,6 +20,7 @@ public interface UserProblemController {
 
     @ApiOperation(value = "Getting all user problems for admin panel path")
     @GetMapping("/list")
+    @PreAuthorize(value = "hasAnyAuthority('GET_USER_PROBLEMS')")
     ApiResult<List<UserProblemDTO>> getUserProblems();
 
     @ApiOperation(value = "solve problem by user path")
