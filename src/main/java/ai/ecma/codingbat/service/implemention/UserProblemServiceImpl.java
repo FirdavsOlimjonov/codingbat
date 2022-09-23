@@ -6,10 +6,7 @@ import ai.ecma.codingbat.entity.Problem;
 import ai.ecma.codingbat.entity.User;
 import ai.ecma.codingbat.entity.UserProblem;
 import ai.ecma.codingbat.exceptions.RestException;
-import ai.ecma.codingbat.payload.ApiResult;
-import ai.ecma.codingbat.payload.CompileDTO;
-import ai.ecma.codingbat.payload.ProblemDTO;
-import ai.ecma.codingbat.payload.UserProblemDTO;
+import ai.ecma.codingbat.payload.*;
 import ai.ecma.codingbat.repository.CaseRepository;
 import ai.ecma.codingbat.repository.ProblemRepository;
 import ai.ecma.codingbat.repository.UserProblemRepository;
@@ -65,21 +62,26 @@ public class UserProblemServiceImpl implements UserProblemService {
     }
 
     @Override
-    public ApiResult<CompileDTO> solveProblemByUser(UserProblemDTO userProblemDTO) {
+    public ApiResult<CompileDTO> solveProblemByUser(UserProblemRequestDTO userProblemRequestDTO) {
 
-        Problem problem = problemRepository.findById(userProblemDTO.getProblemId()).orElseThrow(
+        Problem problem = problemRepository.findById(userProblemRequestDTO.getProblemId()).orElseThrow(
                 () -> RestException.restThrow("Problem Not Found", HttpStatus.NOT_FOUND));
 
-        Optional<User> user = userRepository.findById(userProblemDTO.getUserId());
+        Optional<User> user = userRepository.findById(userProblemRequestDTO.getUserId());
         if (user.isEmpty())
             throw RestException.restThrow("User Not Found!!!!!", HttpStatus.NOT_FOUND);
 
 
-        if (userProblemDTO.getSolution().contains("System") ||
-                userProblemDTO.getSolution().contains("threw")){
+        if (userProblemRequestDTO.getSolution().contains("System") ||
+                userProblemRequestDTO.getSolution().contains("threw")){
             throw RestException.restThrow("Common problems: code should not use println or class or static or exceptions",
                     HttpStatus.BAD_REQUEST);
         }
+
+        UserProblemDTO userProblemDTO = new UserProblemDTO();
+        userProblemDTO.setProblemId(userProblemRequestDTO.getProblemId());
+        userProblemDTO.setUserId(userProblemRequestDTO.getUserId());
+        userProblemDTO.setSolution(userProblemRequestDTO.getSolution());
 
         List<Case> allByProblemId = caseRepository.getAllByProblemId(problem.getId());
 
