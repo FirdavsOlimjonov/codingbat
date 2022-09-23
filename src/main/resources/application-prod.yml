@@ -34,10 +34,10 @@ spring:
 jwt:
   access:
     key: tHaX54Hwk^YMzKd@e@p7#70@!@*6d7676K8C1%T&hBnrzgqK28o
-    expiration-time: 7200000
+    expiration-time: 7200
   refresh:
     key: tHaX54Hwk^Ydfd()(+__$$%#%70OZ()BK8C1%T&hBnrzgqK287
-    expiration-time: 604800000
+    expiration-time: 86400
 logging:
   file:
     name: codingbat.log

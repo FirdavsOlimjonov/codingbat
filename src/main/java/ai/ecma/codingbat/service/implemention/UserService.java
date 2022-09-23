@@ -3,10 +3,7 @@ package ai.ecma.codingbat.service.implemention;
 import ai.ecma.codingbat.entity.Role;
 import ai.ecma.codingbat.entity.User;
 import ai.ecma.codingbat.exceptions.RestException;
-import ai.ecma.codingbat.payload.ApiResult;
-import ai.ecma.codingbat.payload.RoleDTO;
-import ai.ecma.codingbat.payload.UserDTO;
-import ai.ecma.codingbat.payload.UserListDTO;
+import ai.ecma.codingbat.payload.*;
 import ai.ecma.codingbat.repository.RoleRepository;
 import ai.ecma.codingbat.repository.UserRepository;
 import ai.ecma.codingbat.util.MessageLang;
@@ -21,7 +18,6 @@ import java.util.UUID;
 import java.util.stream.Collectors;
 
 @Service
-//@RequiredArgsConstructor
 public class UserService {
 
     private final UserRepository userRepository;
@@ -126,8 +122,8 @@ public class UserService {
     }
 
 
-    public ApiResult<RoleDTO> userMe(String email) {
-        User user = userRepository.findByEmail(email)
+    public ApiResult<RoleDTO> userMe(UserMe userMe) {
+        User user = userRepository.findByEmail(userMe.getEmail())
                 .orElseThrow(() -> RestException.restThrow(" User not found ", HttpStatus.NOT_FOUND));
         Role role = user.getRole();
 

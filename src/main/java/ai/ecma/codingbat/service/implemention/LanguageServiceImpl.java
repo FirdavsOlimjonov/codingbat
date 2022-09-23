@@ -38,6 +38,8 @@ public class LanguageServiceImpl implements LanguageService {
     @Override
     public ApiResult<List<LanguageDTOProjection>> getLanguagesBySuperMethod(
             ViewDTO viewDTO, int page, int size) {
+        if (true)
+            return ApiResult.successResponse(languageRepository.getTest());
 
         StringBuilder stringBuilder = new StringBuilder(
                 "with temp as(\n" +
@@ -84,6 +86,8 @@ public class LanguageServiceImpl implements LanguageService {
 
         return ApiResult.successResponse(languagesByStringQuery);
     }
+
+
 
     /**
      * Add new language
