@@ -43,8 +43,8 @@ public class UserController {
         return userService.getUsersWithRole(roleId);
     }
 
-    @GetMapping("/{email}")
-    public ApiResult<RoleDTO> userMe(@PathVariable String email) {
+    @GetMapping("/user-me")
+    public ApiResult<RoleDTO> userMe(@RequestBody String email) {
         return userService.userMe(email);
     }
 
