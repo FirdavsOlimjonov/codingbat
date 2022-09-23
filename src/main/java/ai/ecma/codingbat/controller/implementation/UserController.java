@@ -43,9 +43,9 @@ public class UserController {
         return userService.getUsersWithRole(roleId);
     }
 
-    @GetMapping("/{id}")
-    public ApiResult<RoleDTO> userMe(@PathVariable UUID id) {
-        return userService.userMe(id);
+    @GetMapping("/{email}")
+    public ApiResult<RoleDTO> userMe(@PathVariable String email) {
+        return userService.userMe(email);
     }
 
 }

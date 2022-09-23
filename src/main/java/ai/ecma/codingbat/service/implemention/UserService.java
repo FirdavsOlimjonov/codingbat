@@ -126,8 +126,8 @@ public class UserService {
     }
 
 
-    public ApiResult<RoleDTO> userMe(UUID id) {
-        User user = userRepository.findById(id)
+    public ApiResult<RoleDTO> userMe(String email) {
+        User user = userRepository.findByEmail(email)
                 .orElseThrow(() -> RestException.restThrow(" User not found ", HttpStatus.NOT_FOUND));
         Role role = user.getRole();
 
