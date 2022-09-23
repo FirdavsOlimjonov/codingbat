@@ -14,6 +14,7 @@ import ai.ecma.codingbat.repository.UserRepository;
 import ai.ecma.codingbat.service.contract.UserProblemService;
 import lombok.RequiredArgsConstructor;
 import org.springframework.http.HttpStatus;
+import org.springframework.security.core.context.SecurityContextHolder;
 import org.springframework.stereotype.Service;
 
 import java.util.*;
@@ -67,9 +68,12 @@ public class UserProblemServiceImpl implements UserProblemService {
         Problem problem = problemRepository.findById(userProblemRequestDTO.getProblemId()).orElseThrow(
                 () -> RestException.restThrow("Problem Not Found", HttpStatus.NOT_FOUND));
 
-        Optional<User> user = userRepository.findById(userProblemRequestDTO.getUserId());
-        if (user.isEmpty())
-            throw RestException.restThrow("User Not Found!!!!!", HttpStatus.NOT_FOUND);
+        User user = (User) SecurityContextHolder.getContext().getAuthentication().getPrincipal();
+
+
+//        Optional<User> user = userRepository.findById(userProblemRequestDTO.getUserId());
+//        if (user.isEmpty())
+//            throw RestException.restThrow("User Not Found!!!!!", HttpStatus.NOT_FOUND);
 
 
         if (userProblemRequestDTO.getSolution().contains("System") ||
@@ -80,7 +84,7 @@ public class UserProblemServiceImpl implements UserProblemService {
 
         UserProblemDTO userProblemDTO = new UserProblemDTO();
         userProblemDTO.setProblemId(userProblemRequestDTO.getProblemId());
-        userProblemDTO.setUserId(userProblemRequestDTO.getUserId());
+        userProblemDTO.setUserId(user.getId());
         userProblemDTO.setSolution(userProblemRequestDTO.getSolution());
 
         List<Case> allByProblemId = caseRepository.getAllByProblemId(problem.getId());

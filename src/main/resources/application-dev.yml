@@ -5,9 +5,9 @@ server:
       timeout: 10m
 spring:
   datasource:
-    url: jdbc:postgresql://localhost:5432/postgres
+    url: jdbc:postgresql://localhost:5432/codingbat
     username: postgres
-    password: 123
+    password: 1223
 
   jpa:
     hibernate:
