@@ -40,10 +40,10 @@ public interface LanguageRepository extends JpaRepository<Language, Integer> {
             "         LEFT JOIN problem p on s.id = p.section_id\n" +
             "         LEFT JOIN user_problem up on p.id = up.problem_id\n" +
             "GROUP BY l.id, l.title\n" +
-            "ORDER BY title\n" +
-            "LIMIT 10 OFFSET 0",nativeQuery = true)
+            "ORDER BY title\n", nativeQuery = true)
     List<LanguageDTOProjection> getTest();
 
     boolean existsByTitleIgnoreCaseAndIdNot(String title, Integer id);
+
     boolean existsByTitleIgnoreCase(String title);
 }

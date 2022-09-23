@@ -1,9 +1,6 @@
 package ai.ecma.codingbat.controller.implementation;
 
-import ai.ecma.codingbat.payload.ApiResult;
-import ai.ecma.codingbat.payload.RoleDTO;
-import ai.ecma.codingbat.payload.UserDTO;
-import ai.ecma.codingbat.payload.UserListDTO;
+import ai.ecma.codingbat.payload.*;
 import ai.ecma.codingbat.service.implemention.UserService;
 import lombok.RequiredArgsConstructor;
 import org.springframework.security.access.prepost.PreAuthorize;
@@ -43,9 +40,9 @@ public class UserController {
         return userService.getUsersWithRole(roleId);
     }
 
-    @GetMapping("/{email}")
-    public ApiResult<RoleDTO> userMe(@PathVariable String email) {
-        return userService.userMe(email);
+    @GetMapping("/user-me")
+    public ApiResult<RoleDTO> userMe(@RequestBody UserMe userMe) {
+        return userService.userMe(userMe);
     }
 
 }
