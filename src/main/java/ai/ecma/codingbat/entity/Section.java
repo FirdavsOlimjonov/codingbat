@@ -69,7 +69,7 @@ public class Section {
     }
 
     public void setTitle(String title) {
-        setTitle(title);
+        this.title = title;
         setUrl(title);
 
     }

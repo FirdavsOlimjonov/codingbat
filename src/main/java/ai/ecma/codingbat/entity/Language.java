@@ -59,7 +59,7 @@ public final class Language {
 
 
     public void setTitle(String title) {
-        setTitle(title);
+        this.title = title;
         setUrl();
     }
 }

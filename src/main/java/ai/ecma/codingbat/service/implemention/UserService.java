@@ -126,5 +126,13 @@ public class UserService {
     }
 
 
+    public ApiResult<RoleDTO> userMe(String email) {
+        User user = userRepository.findByEmail(email)
+                .orElseThrow(() -> RestException.restThrow(" User not found ", HttpStatus.NOT_FOUND));
+        Role role = user.getRole();
 
+        RoleDTO roleDTO = new RoleDTO(role.getId(), role.getName(), role.getDescription(), role.getPermissions());
+
+        return ApiResult.successResponse(roleDTO);
+    }
 }
