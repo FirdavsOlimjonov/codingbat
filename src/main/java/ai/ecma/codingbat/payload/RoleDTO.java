@@ -20,6 +20,7 @@ import java.util.Set;
 public class RoleDTO {
 
     Integer id;
+
     @NotBlank
     private String name;
 

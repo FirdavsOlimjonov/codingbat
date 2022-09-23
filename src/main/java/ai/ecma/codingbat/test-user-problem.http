@@ -1,11 +1,13 @@
 POST localhost:8090/api/user-problem/solve-user-problem
 Content-Type: application/json
-Authorization: Bearer eyJhbGciOiJIUzUxMiJ9.eyJzdWIiOiJhZG1pbkBjb2RpbmdiYXQuY29tIiwiaWF0IjoxNjYyNzA2NTQxLCJleHAiOjE2NjI3Nzg1NDF9.7Rw4an4AJLibYrqT09RL807cGE-pM_TgKQse_TZRN8K7y24hYCuWc8-fGFq3p0TWSyw9a3gP-2aeEZcDqptUHQ
+Authorization: Bearer eyJhbGciOiJIUzUxMiJ9.eyJzdWIiOiJhZG1pbkBjb2RpbmdiYXQuY29tIiwiaWF0IjoxNjYzOTI4MTQyLCJleHAiOjE2NjQwMDAxNDJ9.NzQbD-AQm3Fw-X-JnyJuiCY74U2YM8PP0fKwaM9FVIonjvdyWrUrsyroCZhdNiqZSfJn5u1JxPBga0h41P7YzA
 
 {
+
   "problemId": 1,
-  "userId": 1,
-  "solution": "public String concat(String a, String b){return a+b;}"
+  "userId": "da23188a-01bd-412e-8156-88b25f7c04ad",
+  "solution": "public String smth(String s1, String s1){return a+b;}"
+
 }
 
 ###
