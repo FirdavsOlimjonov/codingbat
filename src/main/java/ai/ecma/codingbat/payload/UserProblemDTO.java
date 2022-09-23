@@ -5,7 +5,7 @@ import lombok.AllArgsConstructor;
 import lombok.Getter;
 import lombok.NoArgsConstructor;
 import lombok.Setter;
-import ai.ecma.codingbat.entity.Problem;
+
 
 import java.util.UUID;
 

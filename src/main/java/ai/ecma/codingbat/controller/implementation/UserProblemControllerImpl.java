@@ -1,5 +1,6 @@
 package ai.ecma.codingbat.controller.implementation;
 
+import ai.ecma.codingbat.payload.UserProblemRequestDTO;
 import lombok.RequiredArgsConstructor;
 import ai.ecma.codingbat.controller.cotract.UserProblemController;
 import ai.ecma.codingbat.payload.ApiResult;
@@ -25,7 +26,7 @@ public class UserProblemControllerImpl implements UserProblemController {
     }
 
     @Override
-    public ApiResult<CompileDTO> solveProblem(UserProblemDTO userProblemDTO) {
+    public ApiResult<CompileDTO> solveProblem(UserProblemRequestDTO userProblemDTO) {
         return userProblemService.solveProblemByUser(userProblemDTO);
     }
 

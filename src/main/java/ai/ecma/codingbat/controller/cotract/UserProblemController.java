@@ -25,7 +25,7 @@ public interface UserProblemController {
 
     @ApiOperation(value = "solve problem by user path")
     @PostMapping("/solve-user-problem")
-    ApiResult<CompileDTO> solveProblem(@RequestBody UserProblemDTO userProblemDTO);
+    ApiResult<CompileDTO> solveProblem(@RequestBody UserProblemRequestDTO userProblemDTO);
 
 
 }
