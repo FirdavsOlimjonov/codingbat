@@ -5,13 +5,13 @@ server:
       timeout: 10m
 spring:
   datasource:
-    url: jdbc:postgresql://localhost:5432/postgres
+    url: jdbc:postgresql://localhost:5432/codingbat
     username: postgres
-    password: cyberhack25
+    password: 1223
 
   jpa:
     hibernate:
-      ddl-auto: create
+      ddl-auto: update
     show-sql: true
     properties:
       hibernate:
@@ -56,4 +56,4 @@ app:
     username: admin@codingbat.com
     password: root123
   upload:
-    folder: /home/ubuntu/app-codingbat/
+    folder: D:\TestB20\

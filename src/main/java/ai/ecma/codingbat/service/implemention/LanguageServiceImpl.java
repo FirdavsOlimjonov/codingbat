@@ -146,7 +146,7 @@ public class LanguageServiceImpl implements LanguageService {
     public ApiResult<LanguageDTO> edit(AddLanguageDTO addLanguageDTO, Integer id) {
 
         //Java - 1 DB
-        //Java - 1 DTO
+        //Java - 1 mapProblemDTOToProblem
         //Python - 2 DB
         if (languageRepository.existsByTitleIgnoreCaseAndIdNot(addLanguageDTO.getTitle(), id))
             throw RestException.restThrow("ALREADY_EXISTS", HttpStatus.ALREADY_REPORTED);

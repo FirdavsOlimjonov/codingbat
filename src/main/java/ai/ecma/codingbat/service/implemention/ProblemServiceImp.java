@@ -32,7 +32,7 @@ public class ProblemServiceImp implements ProblemService {
     private final SectionRepository sectionRepository;
 
     public ApiResult<List<ProblemDTO>> getAllProblemsBySectionId(Integer sectionId) {
-        return ApiResult.successResponse(ProblemDTO.ListOTDs(problemRepository
+        return ApiResult.successResponse(ProblemDTO.mapProblemListToProblemDTOList(problemRepository
                 .getAllBySection_Id(sectionId)
                 .orElseThrow(
                         () -> RestException.restThrow("Bunday ID li Section topilmadi", HttpStatus.NOT_FOUND)
@@ -41,7 +41,7 @@ public class ProblemServiceImp implements ProblemService {
 
 
     public ApiResult<ProblemDTO> getProblemById(Integer id) {
-        return ApiResult.successResponse(ProblemDTO.OTD(problemRepository
+        return ApiResult.successResponse(ProblemDTO.mapProblemToProblemDTO(problemRepository
                 .findById(id)
                 .orElseThrow(
                         () -> RestException.restThrow("Bunday ID li Problem topilmadi", HttpStatus.NOT_FOUND)
@@ -59,7 +59,7 @@ public class ProblemServiceImp implements ProblemService {
                 .orElseThrow(() -> RestException.restThrow("Berilgan id li Section topilmadi", HttpStatus.NOT_FOUND));
 
 
-        Problem problem = ProblemDTO.DTO(problemDTO, section);
+        Problem problem = ProblemDTO.mapProblemDTOToProblem(problemDTO, section);
 
         AtomicReference<Double> ordIndex = new AtomicReference<>(1D);
         if (Objects.nonNull(problemDTO.getCases()))
@@ -75,7 +75,7 @@ public class ProblemServiceImp implements ProblemService {
 
         problemRepository.save(problem);
 
-        return ApiResult.successResponse(ProblemDTO.OTD(problem));
+        return ApiResult.successResponse(ProblemDTO.mapProblemToProblemDTO(problem));
     }
 
     public ApiResult<ProblemDTO> updateProblemById(Integer id, ProblemDTO problemDTO) {
@@ -103,14 +103,14 @@ public class ProblemServiceImp implements ProblemService {
         });
         problemDTO.setId(id);
 
-        Problem problem1 = problemRepository.save(ProblemDTO.DTO(problemDTO, section));
+        Problem problem1 = problemRepository.save(ProblemDTO.mapProblemDTOToProblem(problemDTO, section));
 
         problem1.setCases(caseDTOS
                 .stream()
                 .map(caseDTO -> caseRepository.save(CaseDTO.DTO(caseDTO, problem1, caseDTO.getOrdIndex())))
                 .collect(Collectors.toList()));
 
-        return ApiResult.successResponse(ProblemDTO.OTD(problem1));
+        return ApiResult.successResponse(ProblemDTO.mapProblemToProblemDTO(problem1));
     }
 
     public void deleteById(Integer id) {

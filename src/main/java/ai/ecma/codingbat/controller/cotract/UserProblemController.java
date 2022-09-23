@@ -3,6 +3,7 @@ package ai.ecma.codingbat.controller.cotract;
 
 import io.swagger.annotations.ApiOperation;
 import ai.ecma.codingbat.payload.*;
+import org.springframework.security.access.prepost.PreAuthorize;
 import org.springframework.web.bind.annotation.*;
 
 import java.util.List;
@@ -19,6 +20,7 @@ public interface UserProblemController {
 
     @ApiOperation(value = "Getting all user problems for admin panel path")
     @GetMapping("/list")
+    @PreAuthorize(value = "hasAnyAuthority('GET_USER_PROBLEMS')")
     ApiResult<List<UserProblemDTO>> getUserProblems();
 
     @ApiOperation(value = "solve problem by user path")

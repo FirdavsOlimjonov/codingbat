@@ -8,6 +8,7 @@ import ai.ecma.codingbat.entity.UserProblem;
 import ai.ecma.codingbat.exceptions.RestException;
 import ai.ecma.codingbat.payload.ApiResult;
 import ai.ecma.codingbat.payload.CompileDTO;
+import ai.ecma.codingbat.payload.ProblemDTO;
 import ai.ecma.codingbat.payload.UserProblemDTO;
 import ai.ecma.codingbat.repository.CaseRepository;
 import ai.ecma.codingbat.repository.ProblemRepository;
@@ -37,44 +38,52 @@ public class UserProblemServiceImpl implements UserProblemService {
     @Override
     public ApiResult<UserProblemDTO> get(UUID userId, Integer problemId) {
 
-        Optional<User> user = userRepository.findById(userId);
-        if (user.isEmpty())
-            throw RestException.restThrow("User Not Found!!!!!", HttpStatus.NOT_FOUND);
+        Optional<User> optionalUser = userRepository.findById(userId);
+        optionalUser.orElseThrow(
+                () -> RestException.restThrow("User Not Found!!!!!", HttpStatus.NOT_FOUND)
+        );
 
 
-        Optional<Problem> problemOp = problemRepository.findById(problemId);
-        if (problemOp.isEmpty())
-            throw RestException.restThrow("Problem Not Found", HttpStatus.NOT_FOUND);
+        Optional<Problem> optionalProblem = problemRepository.findById(problemId);
+        Problem problem = optionalProblem.orElseThrow(
+                () -> RestException.restThrow("Problem Not Found", HttpStatus.NOT_FOUND)
+        );
 
 
-        Optional<UserProblem> userProblemOp =
+        Optional<UserProblem> optionalUserProblem =
                 userProblemRepository.getUserProblemByProblemIdAndUserId(problemId, userId);
 
         UserProblemDTO userProblemDTO;
-        if (userProblemOp.isEmpty()) {
-            userProblemDTO = new UserProblemDTO(userId, problemOp.get(),
-                    problemOp.get().getMethodSignature(), null);
+        if (optionalUserProblem.isEmpty()) {
+            userProblemDTO = new UserProblemDTO(userId, ProblemDTO.mapProblemToProblemDTO(problem),
+                    optionalProblem.get().getMethodSignature(), null);
         } else {
-            userProblemDTO = new UserProblemDTO(userId, problemOp.get(),
-                    userProblemOp.get().getSolution(), userProblemOp.get().getSolved());
+            userProblemDTO = new UserProblemDTO(userId, ProblemDTO.mapProblemToProblemDTO(problem),
+                    optionalUserProblem.get().getSolution(), optionalUserProblem.get().getSolved());
         }
         return ApiResult.successResponse(userProblemDTO);
     }
 
-
     @Override
     public ApiResult<CompileDTO> solveProblemByUser(UserProblemDTO userProblemDTO) {
 
-        Problem problem = problemRepository.findById(userProblemDTO.getProblemId()).orElseThrow(() -> RestException.restThrow("Problem Not Found", HttpStatus.NOT_FOUND));
-
+        Problem problem = problemRepository.findById(userProblemDTO.getProblemId()).orElseThrow(
+                () -> RestException.restThrow("Problem Not Found", HttpStatus.NOT_FOUND));
 
         Optional<User> user = userRepository.findById(userProblemDTO.getUserId());
         if (user.isEmpty())
             throw RestException.restThrow("User Not Found!!!!!", HttpStatus.NOT_FOUND);
 
+
+        if (userProblemDTO.getSolution().contains("System") ||
+                userProblemDTO.getSolution().contains("threw")){
+            throw RestException.restThrow("Common problems: code should not use println or class or static or exceptions",
+                    HttpStatus.BAD_REQUEST);
+        }
+
         List<Case> allByProblemId = caseRepository.getAllByProblemId(problem.getId());
 
-        userProblemDTO.setProblem(problem);
+        userProblemDTO.setProblemDTO(ProblemDTO.mapProblemToProblemDTO(problem));
         boolean isPrime = true;
         String errorMessage = null;
         List<CompileResult> compileResults = new ArrayList<>();
@@ -134,7 +143,7 @@ public class UserProblemServiceImpl implements UserProblemService {
 
         return new UserProblemDTO(
                 userProblem.getUser().getId(),
-                userProblem.getProblem(),
+                ProblemDTO.mapProblemToProblemDTO(userProblem.getProblem()),
                 userProblem.getSolution(),
                 userProblem.getSolved()
         );
@@ -151,22 +160,26 @@ public class UserProblemServiceImpl implements UserProblemService {
     private void addUserProblem(UserProblemDTO userProblemDTO, boolean isSuccess) {
 
         Optional<UserProblem> optionalUserProblem = userProblemRepository.getUserProblemByProblemIdAndUserId(
-                userProblemDTO.getProblem().getId(),
+                userProblemDTO.getProblemId(),
                 userProblemDTO.getUserId());
 
+        Problem problem = problemRepository.findById(userProblemDTO.getProblemId()).orElseThrow(
+                () -> RestException.restThrow("Problem Not Found", HttpStatus.NOT_FOUND));
         UserProblem userProblem;
         if (optionalUserProblem.isEmpty()) {
             userProblem = new UserProblem();
-            userProblem.setProblem(userProblemDTO.getProblem());
-            userProblem.setUser(userRepository.findById(userProblemDTO.getUserId()).get());
+            userProblem.setProblem(problem);
+
+            User user = userRepository.findById(userProblemDTO.getUserId()).orElseThrow(
+                    () -> RestException.restThrow("User Not Found!!!!!", HttpStatus.NOT_FOUND)
+            );
+            userProblem.setUser(user);
         } else
             userProblem = optionalUserProblem.get();
-
 
         userProblem.setSolution(userProblemDTO.getSolution());
         userProblem.setSolved(isSuccess);
         userProblemRepository.save(userProblem);
     }
-
 
 }

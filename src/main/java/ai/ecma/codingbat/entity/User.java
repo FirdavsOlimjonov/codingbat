@@ -1,6 +1,5 @@
 package ai.ecma.codingbat.entity;
 
-import ai.ecma.codingbat.entity.template.AbsIntegerEntity;
 import ai.ecma.codingbat.entity.template.AbsUUIDEntity;
 import lombok.Getter;
 import lombok.NoArgsConstructor;
